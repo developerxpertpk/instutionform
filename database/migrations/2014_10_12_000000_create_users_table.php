@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('image',255);
             $table->string('address');
-            $table->integer('role_id')->unsigned();
+            $table->integer('role_id')->unsigned()->default(2);
            // $table->enum('status', ['block', 'unblock']);
             $table->rememberToken();
             $table->timestamps();
