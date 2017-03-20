@@ -19,7 +19,8 @@ Route::get('/', function () {
     return view('project_index');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
 
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
 
@@ -61,3 +62,34 @@ Route::prefix('/admin')->group(function(){
 
 // Route::post('auth/password/reset', 'Auth\PasswordController@resetAuthenticated');
 Auth::routes();
+
+
+/*USER ROUTES*/
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+/*USER HOME GROUP*/
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::group(['prefix' => 'home'],function(){
+
+		Route::get('my_profile',function(){
+			return view('user.my_profile');
+		});
+
+		Route::get('profile_edit',function(){
+			return view('user.user_edit');
+		});
+
+		Route::post('profile_edit','HomeController@profile_edit');
+
+		Route::get('password_user',function(){
+			return view('user.change_user_password');
+		});
+
+		Route::post('password_user','HomeController@change_user_password');
+
+
+	});
+
+});
