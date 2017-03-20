@@ -164,3 +164,8 @@
 .delete_user_block{
   display: block;
 }
+
+
+.profile_picture img{
+  width:100%;
+}
