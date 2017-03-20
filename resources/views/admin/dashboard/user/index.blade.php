@@ -41,55 +41,192 @@
 		        <td>{{ $user->fname }}</td>
 		        <td>{{ $user->lname }}</td>
 		        <td>{{ $user->email }}</td>
-		        <td>{{ $user->gender }}s</td>
+		        <td>{{ $user->gender }}</td>
 		        <td>{{ $user->image }}</td>
 		        <td>{{ $user->address }}</td>
 		        <td>{{ $user->role->role }}</td>
-            <td>{{ $user->activity }}</td>
+            <td>{{ $user->status }}</td>
 		        <td>
-		            <a class="btn btn-info" href= "{{ route('user.show',$user->id) }}"> Show </a>
-                @if($user->status=='0')
-                 <a class="btn btn-info" href= "{{ route('user.edit',$user->id) }}"> Block </a>
-                 @endif
 
-                  @if($user->status=='1')
-                 <a class="btn btn-info" href= "{{ route('user.edit',$user->id) }}"> Unblock </a>
-                 @endif
-<!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+		  <!-- show button  -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
+
+<!-- Model for show user Profile large model is used  -->
+<div class="modal fade profile{{$user->fname}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  
+          <h4 class="modal-title" id="myModalLabel">{{$user->fname}} Profile </h4>
+      </div>
+ 
+   <div class="modal-body">
+
+    <div class="row">
+         <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <!-- <h2> {{ $user->fname ." ".$user->lname}} Profile</h2> -->
+            </div>
+
+            <div class="pull-right">
+                <!-- <a class="btn btn-primary" href="{{route('user.index')}}"> Back</a> -->
+            </div>
+        </div>
+    </div> 
+
+    <div class="row user-show">
+
+      <div class="col-xs-6 col-sm-6 col-md-6" id="user-img">
+            <div class="form-group">
+                
+               <img src="{{asset('/upload')}}/{{ $user->image }}" width="250px" height="250px">
+
+            </div> 
+             <strong>{{ $user->image }}</strong>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Username:</strong>
+                {{ $user->fname." ".$user->lname}}
+            </div>
+        </div>
+
+         <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Email:</strong>
+                {{ $user->email }}
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Gender:</strong>
+                {{ $user->gender }}
+            </div>
+        </div>
+
+         <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group">
+                <strong>Address:</strong>
+                {{ $user->address }}
+            </div>
+        </div>
+
+         <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="form-group">
+            <strong>Role:</strong>
+                {{ $user->role->role}}
+            </div>
+        </div>
+
+         <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="form-group">
+            <strong>Status:</strong>
+                {{ $user->status}}
+            </div>
+        </div>
+
+    </div>
+
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+           
+
+<!-- Button trigger modal for  Delete-->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
               Delete
             </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <!-- Modal  for delete with id=01-->
+            <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">  </h4>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation  </h4>
                   </div>
                   <div class="modal-body">
-                   <h1> Do you want to delete {{$user->fname}} ?
+                   <h3> Do you want to delete {{$user->fname}} ? </h3>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                    {!! Form::open(['method' => 'DELETE','route' => ['user.destroy', $user->id],'style'=>'display:inline','class'=>'delete']) !!}
 
-                    {!! Form::submit('Yes', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
                         {!! Form::close() !!}
                   </div>
                 </div>
               </div>
             </div>
 
- <!-- block  button -->
+ <!-- block/unblock button -->
+  
+  @if($user->status=='0')
+ <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal001">
+            Block
+            </button>
+   @endif
+
+    @if($user->status=='1')
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal001">
+           UnBlock
+            </button>
+   @endif
+          <!-- Modal for block/unblock user -->
+            <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel0">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel0"> Confirmation  </h4>
+                  </div>
+                  <div class="modal-body">
+                   @if($user->status=="0")
+                   <h3> Do you want to block{{$user->fname}} ? </h3>
+                   @else
+                   <h3> Do you want to Unblock {{ $user->fname}} ? </h3>
+                   @endif
+                  </div>
+                  <div class="modal-footer">
 
 
-		        </td>
-    </tr>
-                 @endif
-                @endforeach
-            </table>
+    {!! Form::open(['route' =>['user.update1',$user->id],'method'=>'POST','class'=>'',]) !!}
+
+     <!--   { !! Form::label('status') !! } -->
+       @if($user->status == 1)
+        {!! Form::radio('status', '0', true, ['class' => 'hidden name','value' => 0]) !!} <!-- unblock  -->
+        
+
+        @else($user->status == 0)
+          {!! Form::radio('status', '1', true, ['class' => 'hidden name','value' => 1]) !!}<!--  block -->
+        @endif
+
+            <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
+          {!! Form::submit('yes', ['class' => 'btn btn-success']) !!}
+      {!! Form::close() !!}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </td>
+     </tr>
+   @endif
+  @endforeach
+
+  </table>
 
     {!! $users->render() !!}
 

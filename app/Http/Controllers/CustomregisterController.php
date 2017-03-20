@@ -28,15 +28,19 @@ class CustomregisterController extends Controller
 
 		$insert =new User();
 		// check weather request has image path or not 
+		echo "<pre>"; 
+		print_r($insert);
 
-		if($file = $request->hasFile('image')) {
+		if($file = $request->hasFile('image')) { 
+			
 	                   $file = $request->file('image');
 	                   $fileName = $file->getClientOriginalName() ;
 	                   $extention = $file->getClientOriginalExtension();
 	                   $destinationPath = public_path().'/upload/' ;
 	                   $file->move($destinationPath,$fileName);
+	                 
 	             }
-
+	            
 	              $insert->fname = $request['fname'];
 	              $insert->lname = $request['lname'];
 	              $insert->email = $request['email'];
@@ -45,7 +49,7 @@ class CustomregisterController extends Controller
 	              $insert->image = $fileName;
 	              $insert->address = $request['address'];
 	
-	               $insert->save() ;
+	            
 			return redirect()->route('show.login');
 	    }
 

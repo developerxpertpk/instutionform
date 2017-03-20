@@ -164,3 +164,20 @@
 .delete_user_block{
   display: block;
 }
+
+/* css for user profile admin/dashboard/user/show/image*/
+
+#user-img{
+    float:left;
+    width:250px;
+    height:250px;
+    overflow:hidden;
+    margin:0 50px;
+    color:white;
+    font-size:13px;
+    padding:10px;
+  
+    background-size:100% 100%;
+    /*declare shape using the shape function circle()*/
+    shape-inside: circle(160px at 400px 60px);
+}

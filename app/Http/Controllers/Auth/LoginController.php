@@ -39,33 +39,36 @@ class LoginController extends Controller
 
     public function login(){
         // store email and password in variables
+
         $email=$_POST['email'];
         $password=$_POST['password'];
 
-        // using attemp()
         if(Auth::attempt(array('email'=> $email,'password' => $password)))
             {  
-                // validate() is use to validate user 
-                if (Auth::validate(['email'=>$email, 'password'=>$password, 'status' => '1'])) {  
+                
+                
+               // validate() is use to validate user is blocked  if status 1= blocked
+                if(Auth::validate(['email'=>$email, 'password'=>$password, 'status' => '1'])){  
                    //   echo "u r no t allowed";
                       Auth::logout();
+                      die('a');
                       return redirect()->to('/');
                      
-                }else{
-                    
-                     if(Auth::user()->role_id == '2' && Auth::user()->status =='0')
-                        {   
-                            return redirect()->to('home');
-                        }   
-
                 }
+                
+                    //check  user role id 2 
+                if(Auth::user()->role_id == '2' || Auth::user()->status =='0') {  
+                            return redirect()->to('home');
+                            die('a');
+                }  
 
                 // check admin role id == 1
                 if(Auth::user()->role_id == '1')
                 {   
-                   return Redirect::to('admin/dashboard');
+                  
+                   return Redirect::to('admin/dashboard'); die('b');
                 }
-                //check  user role id 2    
+                   
             }else{
                     //if no email and password match then redirect to registration
                 return redirect::to('user_register');
@@ -89,19 +92,5 @@ class LoginController extends Controller
                     return redirect()->to('login');
                 }
     }
-
-
-                // if(Auth::check()){
-                //    echo "yes";
-                // }
-                // else{
-                //     echo "no";
-                // }
-               
-                // //print_r(Auth::user());
-                // die('a');
-                  // Auth::user()->role_id;
-                    // user dashboard      
-                    //die('b');
 
 }

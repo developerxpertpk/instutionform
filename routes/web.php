@@ -26,13 +26,13 @@ Route::post('/user_register','CustomregisterController@insert')->name('user.regi
 Route::get('/login_form','CustomregisterController@showloginform')->name('show.login');
 
 Route::get('/login', 'Auth\loginController@showLoginform')->name('login');
-Route::post('submit','Auth\LoginController@login')->name('login.submit');
+Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 
 				// Admin Routes
 Route::prefix('/admin')->group(function(){
 
 	Route::get('login', 'Auth\loginController@showLoginform')->name('admin.login');
-	Route::post('submit','Auth\LoginController@login')->name('login.submit');
+	Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 	Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 	Route::get('charts','DashboardController@chart')->name('charts');
 	Route::resource('user','UserController');

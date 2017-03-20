@@ -33,14 +33,39 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
+        $insert =new User();
+        // check weather request has image path or not
+        if($file = $request->hasFile('image')) { 
+            
+                       $file = $request->file('image');
+                       $fileName = $file->getClientOriginalName() ;
+                       $extention = $file->getClientOriginalExtension();
+                       $destinationPath = public_path().'/upload/' ;
+                       $file->move($destinationPath,$fileName);
+                     
+                 }
+                
+                  $insert->fname = $request['fname'];
+                  $insert->lname = $request['lname'];
+                  $insert->email = $request['email'];
+                  $insert->password = bcrypt($request['password']);
+                  $insert->gender = $request['gender'];
+                  $insert->image = $fileName;
+                  $insert->address = $request['address'];
+    
+                $insert->save();
+            //return redirect()->route('show.login');
+        
+
+    
         // $this->validate($request, [
         //     'email' => 'required'|'unique',
         //     'password' => 'required',
         // ]);
 
-        User::create($request->all());
+      
         return redirect()->route('user.index')
                         ->with('success','Item created successfully');
     }

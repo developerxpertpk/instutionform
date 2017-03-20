@@ -14,7 +14,7 @@ class AddStatusToUsers extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->boolean('status')->after('role_id');
+            $table->boolean('status')->after('role_id')->default(0);
         });
     }
     /**

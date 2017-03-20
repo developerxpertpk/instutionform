@@ -151,7 +151,7 @@
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
-                        <li class="divider"></li>
+                        <li class="divider">logout</li>
                         <li>
                             <a href="{{ route('logout') }}"
 
