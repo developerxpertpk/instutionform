@@ -22,14 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('image',255);
             $table->string('address');
-            $table->integer('role_id');
+            $table->integer('role_id')->unsigned();
            // $table->enum('status', ['block', 'unblock']);
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')
-            ->references('id')->on('roles')
-            ->onDelete('cascade');
+            
         });
 
     }
