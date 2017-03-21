@@ -181,9 +181,8 @@
     background-size:100% 100%;
     /*declare shape using the shape function circle()*/
     shape-inside: circle(160px at 400px 60px);
-=======
+  }
 
 .profile_picture img{
   width:100%;
->>>>>>> f4bece0924ba3000a562bebb13a9e25f5d7c028c
 }

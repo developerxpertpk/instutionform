@@ -11,6 +11,9 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        @if(Session::has('password_failed'))
+                            <span>{{ Session::get('password_failed') }}</span>
+                        @endif
                             <label for="password" class="col-md-4 control-label">
                             Old Password
                             </label>
