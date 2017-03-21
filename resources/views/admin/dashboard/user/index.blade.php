@@ -7,12 +7,27 @@
             <div class="pull-left">
                 <h2>User</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{route('user.create')}}"> Create New User</a>
+              <div class="pull-right">
+                <a class="btn btn-success" href="{{ route('user.create') }}" > Create New User
+                </a>
             </div>
-        </div>
-    </div>
+            <div>
+{!! Form::open(array('method' => 'GET', 'url' => '/search')) !!}
+<div class="form-group">
+<!-- {!! Form::label('SEARCH:') !!} -->
+{!! Form::text('search', null, ['class' => 'form-control',
+'placeholder' =>'(NSN or PN)', 'size' => '5']) !!}
+{!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+</div>
+{!! Form::close() !!}
+            </div>
 
+
+
+
+  </div>
+  
+   </div>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
