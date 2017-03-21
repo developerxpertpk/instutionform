@@ -40,6 +40,7 @@ Route::prefix('/admin')->group(function(){
 	Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
 });
 
+ Route::get('/search', 'UserController@search');
 //Route::resource('itemCRUD','DashboardController');
  
 //  /***   Password reset password ****/

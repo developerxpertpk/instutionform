@@ -22,6 +22,8 @@ class UserController extends Controller
            ->with('i', ($request->input('page', 1) - 1) * 5);
     	  
 		}
+
+
 	public function create()
     {
         return view('admin.dashboard.user.create');
@@ -33,6 +35,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request){
 
         $insert =new User();
@@ -52,7 +55,7 @@ class UserController extends Controller
                   $insert->email = $request['email'];
                   $insert->password = bcrypt($request['password']);
                   $insert->gender = $request['gender'];
-                  $insert->image = $fileName;
+                  $insert->image =  $fileName ;
                   $insert->address = $request['address'];
     
                 $insert->save();
@@ -113,12 +116,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         User::find($id)->delete();
         return redirect()->route('user.index')
                         ->with('success',auth()->user()->fname." ".auth()->user()->lname." ".' deleted successfully');
     }
+
 
     public function status_update(Request $request,$id){
 
@@ -138,11 +143,27 @@ class UserController extends Controller
 
                return redirect()->route('user.index')
                                 ->with('success','user blocked successfully');
-                }
-
-
-
-
-      
+                }  
     }
+
+
+
+public function search(Request $request)
+{
+
+  //  print_r($request);
+     
+    // Gets the query string from our form submission 
+    $query = Request::Input('search');
+    print_r($query);
+    die('a');
+    // Returns an array of articles that have the query string located somewhere within 
+    // our articles titles. Paginates them so we can break up lots of search results.
+    $articles = DB::table('articles')->where('title', 'LIKE', '%' . $query . '%')->paginate(10);
+        
+    // returns a view and passes the view the list of articles and the original query.
+    return view('page.search', compact('articles', 'query'));
+ 
+ }
+    
 }
