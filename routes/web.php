@@ -38,9 +38,11 @@ Route::prefix('/admin')->group(function(){
 	Route::get('charts','DashboardController@chart')->name('charts');
 	Route::resource('user','UserController');
 	Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
+	Route::get('admin/user/search', 'UserController@search');
+	//Route::get('/user/search', 'UserController@search');
 });
 
- Route::get('/search', 'UserController@search');
+  Route::get('/search', 'UserController@search');
 //Route::resource('itemCRUD','DashboardController');
  
 //  /***   Password reset password ****/
