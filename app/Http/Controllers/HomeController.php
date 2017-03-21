@@ -43,6 +43,7 @@ class HomeController extends Controller
         }
     }    
 
+   /*To Edit profile details of the current logged in  user*/
     public function profile_edit(Request $request){
         $result=DB::table('users')
                     ->where('id', Auth::id())
@@ -55,6 +56,7 @@ class HomeController extends Controller
          return redirect('/home/my_profile')->with('success','Updations Successful');
     }
 
+    /*To Change Password of the current logged in  user*/
     public function change_user_password(Request $request){
         if(Hash::check($request->input('old_password'),Auth::user()->password)){
             $new_password=Hash::make($request->input('new_password'));
@@ -65,6 +67,8 @@ class HomeController extends Controller
                         'password' => $new_password,
                         ]);
             return redirect('/home/my_profile')->with('password_success','Password Updated Successful');
+        }else{
+            return redirect('/home/password_user')->with('password_failed','Old password did not matched');
         }
         // $password=bcrypt($request->input('old_password'));
         // if($password == Auth::user()->password){

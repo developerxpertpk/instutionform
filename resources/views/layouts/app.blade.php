@@ -13,11 +13,19 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
      <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+     <<script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#myBtn").click(function(){
+                $("#change_password_user").modal();
+            });
+        });
     </script>
 </head>
 <body>
@@ -37,6 +45,9 @@
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
+                    </a> 
+                    <a class="navbar-brand" href="/home">
+                        Home
                     </a>
                 </div>
 

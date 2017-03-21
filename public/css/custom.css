@@ -197,7 +197,6 @@
     /*declare shape using the shape function circle()*/
     shape-inside: circle(160px at 400px 60px);
 }
-
 .profile_picture img{
   width:100%;
 }
