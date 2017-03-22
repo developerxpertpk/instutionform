@@ -166,18 +166,7 @@
 }
 /*neha*/
 
-.form-control {
-    width: 59%;
-    height: 36px;
-    padding: 6px 12px;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccd0d2;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    float: left;
+#user-search {
   } 
 
 /* endcode */
@@ -185,16 +174,13 @@
 
 /*#user-img{
     float:left;
-    width:250px;
+    width:50px
     height:250px;
     overflow:hidden;
-    margin:0 50px;
     color:white;
     font-size:13px;
-    padding:10px;
-  
     background-size:100% 100%;
-    /*declare shape using the shape function circle()
+    declare shape using the shape function circle()
     shape-inside: circle(160px at 400px 60px);
 }*/
 /*.profile_picture{

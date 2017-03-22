@@ -178,6 +178,10 @@
                         <a href="{{ route('user.index')}}"><i class="fa fa-fw fa-user"></i> Users </a>
                     </li>
                     <li>
+                        <a href="{{route('school.index')}}"><i class="fa fa-fw fa-table"></i> School</a>
+                    </li>
+
+                    <li>
                         <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                     </li>
                     <li>

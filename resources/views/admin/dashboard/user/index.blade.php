@@ -13,17 +13,18 @@
           <a class="btn btn-success" href="{{ route('user.create') }}" > Create New User
           </a>
       </div>
- 
-  <div class="col-md-4  pull-right">
-                         
-            {!! Form::open(array('method' => 'GET', 'url' => '/search')) !!}
-            {!! Form::text('search', null, ['class' => 'form-control',
-                'placeholder' =>'Enter any name or email']) !!}
+
+  <div class="col-md-4 pull-right user-search">
+            
+            {!! Form::open(['method' => 'GET', 'url' => '/search'] ) !!}
+            {!! Form::text('search', null, ['class'=>'form-control ','placeholder' =>'Enter any name or email']) !!}
 
             {!! Form::submit('search', ['class' => 'btn btn-success']) !!}
 
             {!! Form::close() !!}
+            </div>
         </div>
+
 
        
   </div>
@@ -47,7 +48,7 @@
             <th>Address</th>
             <th>Role</th>
             <th>status</th>
-            <th width="280px">Action</th>
+            <th width="290px">Action</th>
         </tr>
 
     @foreach ($users as $key => $user)
@@ -66,7 +67,7 @@
 		        <td>
 
 		  <!-- show button  -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
 
 <!-- Model for show user Profile large model is used  -->
 <div class="modal fade profile{{$user->fname}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -94,14 +95,12 @@
 
     <div class="row user-show">
 
-      <div class="col-xs-6 col-sm-6 col-md-6" id="user-img">
-            <div class="form-group">
-                
-               <img src="{{asset('/upload')}}/{{ $user->image }}" width="250px" height="250px">
-
-            </div> 
-             <strong>{{ $user->image }}</strong>
-        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6" id="user-img">
+              <div class="form-group"> 
+                <img src="{{asset('/upload')}}/{{ $user->image }}" width="250px" height="250px">
+              </div> 
+               <strong>{{ $user->image }}</strong>
+          </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
@@ -132,23 +131,21 @@
         </div>
 
          <div class="col-xs-6 col-sm-6 col-md-6">
-        <div class="form-group">
-            <strong>Role:</strong>
-                {{ $user->role->role}}
+            <div class="form-group">
+                <strong>Role:</strong>
+                    {{ $user->role->role}}
             </div>
         </div>
 
          <div class="col-xs-6 col-sm-6 col-md-6">
-        <div class="form-group">
+          <div class="form-group">
             <strong>Status:</strong>
-                {{ $user->status}}
+                  {{ $user->status}}
             </div>
         </div>
 
-    </div>
-
-
       </div>
+    </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
       </div>
@@ -160,8 +157,8 @@
 
            
 
-<!-- Button trigger modal for  Delete-->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+<!-- Button for  Delete-->
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
               Delete
             </button>
 
@@ -190,37 +187,38 @@
  <!-- block/unblock button -->
   
   @if($user->status=='0')
- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal001">
+ <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
             Block
-            </button>
+  </button>
    @endif
 
-    @if($user->status=='1')
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal001">
+  @if($user->status=='1')
+    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
            UnBlock
-            </button>
+    </button>
    @endif
           <!-- Modal for block/unblock user -->
-            <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel0">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel0"> Confirmation  </h4>
-                  </div>
-                  <div class="modal-body">
-                   @if($user->status=="0")
-                   <h3> Do you want to block{{$user->fname}} ? </h3>
-                   @else
-                   <h3> Do you want to Unblock {{ $user->fname}} ? </h3>
-                   @endif
-                  </div>
-                  <div class="modal-footer">
+        <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel0">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel0"> Confirmation  </h4>
+              </div>
+
+          <div class="modal-body">
+               @if($user->status=="0")
+               <h3> Do you want to block{{$user->fname}} ? </h3>
+               @else
+               <h3> Do you want to Unblock {{ $user->fname}} ? </h3>
+               @endif
+              </div>
+          <div class="modal-footer">
 
 
     {!! Form::open(['route' =>['user.update1',$user->id],'method'=>'POST','class'=>'',]) !!}
 
-     <!--   { !! Form::label('status') !! } -->
+      <!--   { !! Form::label('status') !! } -->
        @if($user->status == 1)
         {!! Form::radio('status', '0', true, ['class' => 'hidden name','value' => 0]) !!} <!-- unblock  -->
         

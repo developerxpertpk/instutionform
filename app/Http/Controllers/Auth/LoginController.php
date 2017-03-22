@@ -51,7 +51,6 @@ class LoginController extends Controller
                 if(Auth::validate(['email'=>$email, 'password'=>$password, 'status' => '1'])){  
                    //   echo "u r no t allowed";
                       Auth::logout();
-                      die('a');
                       return redirect()->to('/');
                      
                 }
@@ -59,14 +58,13 @@ class LoginController extends Controller
                     //check  user role id 2 
                 if(Auth::user()->role_id == '2' || Auth::user()->status =='0') {  
                             return redirect()->to('home');
-                            die('a');
                 }  
 
                 // check admin role id == 1
                 if(Auth::user()->role_id == '1')
                 {   
                   
-                   return Redirect::to('admin/dashboard'); die('b');
+                   return Redirect()->to('admin/dashboard');
                 }
                    
             }else{
@@ -83,11 +81,12 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        
+               
                 if(Auth::user()->role_id == '1'){
                     Auth::logout();
-                    return redirect()->to('admin/login');
+                    return redirect()->to('login');
                 }else{
+
                     Auth::logout();
                     return redirect()->to('login');
                 }
