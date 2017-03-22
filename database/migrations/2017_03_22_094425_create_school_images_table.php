@@ -14,9 +14,9 @@ class CreateSchoolImagesTable extends Migration
     public function up()
     {
          Schema::create('school_images', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('image');
-            $table->integer('school_id')->unsign();
+            $table->integer('school_id')->unsigned();
             $table->rememberToken();
             $table->timestamps();
 

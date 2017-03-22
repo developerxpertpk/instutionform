@@ -14,7 +14,7 @@ class CreateLocationsTable extends Migration
     public function up()
     {
          Schema::create('locations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('country');
             $table->string('state');
             $table->string('city');
@@ -31,7 +31,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        //
           Schema::dropIfExists('locations');
     }
 }

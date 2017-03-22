@@ -16,15 +16,13 @@ class CreateSchoolsTable extends Migration
         //
 
      Schema::create('schools', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('school_name');
             $table->string('school_address');
             $table->boolean('status')->default(0);
             $table->integer('location_id')->unsigned();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('location_id')
-                ->references('id')->on('locations');
        });
     }
     /**
@@ -34,12 +32,6 @@ class CreateSchoolsTable extends Migration
      */
     public function down()
     {
-           Schema::table('schools', function (Blueprint $table) {
-            $table->dropForeign(['location_id']);
-        });
-
         Schema::dropIfExists('schools');
-
-
     }
 }
