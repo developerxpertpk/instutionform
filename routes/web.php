@@ -29,41 +29,31 @@ Route::get('/login_form','CustomregisterController@showloginform')->name('show.l
 Route::get('/login', 'Auth\loginController@showLoginform')->name('login');
 Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 
-				// Admin Routes
-Route::prefix('/admin')->group(function(){
+	
 
-	Route::get('login', 'Auth\loginController@showLoginform')->name('admin.login');
-	Route::post('/submit','Auth\LoginController@login')->name('login.submit');
-	Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
-	Route::get('charts','DashboardController@chart')->name('charts');
-	Route::resource('user','UserController');
-	Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
-	Route::get('admin/user/search', 'UserController@search');
-	//Route::get('/user/search', 'UserController@search');
+	/*   Admin Routes */
+Route::group(['middleware' => ['auth']], function () {
+
+		Route::prefix('/admin')->group(function(){
+
+			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
+
+			Route::get('charts','DashboardController@chart')->name('charts');
+
+			Route::resource('user','UserController');
+
+			Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
+			Route::get('admin/user/search', 'UserController@search');
+
+			/*  route for school-institue */
+			Route::get('school','SchoolController@index')->name('school.index');
+			Route::resource('school','SchoolController');
+
+			//Route::get('/user/search', 'UserController@search');
+			});
 });
 
-  Route::get('/search', 'UserController@search');
-//Route::resource('itemCRUD','DashboardController');
- 
-//  /***   Password reset password ****/
-
-// Route::prefix('/password')->group(function(){
-
-// Route::get('/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-
-// Route::post('/reset','Auth\ResetPasswordController@reset')->name('reset');
-
-// });
-
-// Route::get('password/reset/{token?}','Auth\PasswordController@ahowResetForm');
-// Route::post('password/email','Auth\PasswordController@sendResetLinkEmail');
-// Route::get('auth/logout',['as'=>'logout','uses'=>'Auth\PasswordController@sendResetLinkEmail']);
-
-
-// Route::get('auth/password/reset','Auth\PasswordController@getResetAuthenticatedView');
-
-// Route::post('auth/password/reset', 'Auth\PasswordController@resetAuthenticated');
+Route::get('/search', 'UserController@search');
 Auth::routes();
 
 

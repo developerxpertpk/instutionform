@@ -1,13 +1,13 @@
 @extends('layouts.admin.adminLayout')
 
 @section('content')
-	<div>
+	<div class="row">
 	<div class="pull-left">
                 <h2> Search Result Found </h2>
      </div>	
 
      <div class="pull-right">
-              <a href="{{ route('user.index') }}">  back </a>
+      <a href="{{ route('user.index') }}">  back </a>
      </div>
 
 </div>

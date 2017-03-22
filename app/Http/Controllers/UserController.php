@@ -170,12 +170,12 @@ static  function search(Request $request)
 
             return view('admin.dashboard.user.search',compact('users'))
                ->with('i', ( $request->input('page', 1) - 1) * 5)
-               ->with('success',' User found');
+               ->with('success',' data found');
 
             }else{    
 
              return view('admin.dashboard.default')
-                ->with('success','Sorry User Not found');
+                ->with('success','Sorry data not found');
             }
      }else{  
                       
@@ -184,4 +184,6 @@ static  function search(Request $request)
         }
 
     }
+
+}
    

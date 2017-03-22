@@ -28,8 +28,6 @@ class CustomregisterController extends Controller
 
 		$insert =new User();
 		// check weather request has image path or not 
-		echo "<pre>"; 
-		print_r($insert);
 
 		if($file = $request->hasFile('image')) { 
 			
@@ -48,13 +46,10 @@ class CustomregisterController extends Controller
 	              $insert->gender = $request['gender'];
 	              $insert->image = $fileName;
 	              $insert->address = $request['address'];
-	
+				  $insert->save();
 	            
-			return redirect()->route('show.login');
+			return redirect()->route('show.login')
+			       ->with('success','Register successfully');
 	    }
-
-		// public function showDashboard(){
-		// 	return view('admin.dashboard.index');	
-		// }
 
 }
