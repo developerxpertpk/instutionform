@@ -71,7 +71,7 @@ class LoginController extends Controller
                    
             }else{
                     //if no email and password match then redirect to registration
-                return redirect::to('user_register');
+                return view('auth.register');
             }
           
     }

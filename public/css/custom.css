@@ -183,7 +183,7 @@
 /* endcode */
 /* css for user profile admin/dashboard/user/show/image*/
 
-#user-img{
+/*#user-img{
     float:left;
     width:250px;
     height:250px;
@@ -194,9 +194,9 @@
     padding:10px;
   
     background-size:100% 100%;
-    /*declare shape using the shape function circle()*/
+    /*declare shape using the shape function circle()
     shape-inside: circle(160px at 400px 60px);
-}
+}*/
 /*.profile_picture{
   position: relative;
 }*/

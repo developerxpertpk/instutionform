@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use Auth;
+use File;
 use App\User;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -77,8 +79,7 @@ class HomeController extends Controller
     public function change_user_password(Request $request){
         $rules=array(
                 'old_password' => 'required|max:50',
-                'new_password' => 'required|max:50',
-                'confirm_password' => 'required|max:50',
+                'new_password' => 'required|min:6|confirmed',
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -123,7 +124,7 @@ class HomeController extends Controller
     public function change_dp_user(Request $request){
 
         $rules=array(
-                'image' => 'required',
+                'image' => 'required|image',
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -134,55 +135,43 @@ class HomeController extends Controller
 
         } else {
 
+
                 $file = Input::file('image');
-                $fileName = $file->getClientOriginalName() ;
-                /*$extention = $file->getClientOriginalExtension();*/
-                $fileName=str_ireplace(" ","_",$fileName);
 
-                $name=Auth::user()->fname."_".Auth::user()->lname."_".Auth::user()->email;
-                
+                $extention = $file->getClientOriginalExtension();
 
-                $user_folder_=str_ireplace(" ","_",Auth::user()->email);
-                
-                $destinationPath = public_path().'/upload/'.$school_folder.'/';
-                
-                $pic_existance=DB::table('school_images')
-                                            ->where(['photo_path' => $school_folder.$fileName]);
+                if( $extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
+                    $fileName = $file->getClientOriginalName() ;
+                    
+                    $image_name=str_ireplace(" ","_",$fileName);
 
-                $school_id=DB::table('schools')
-                                        ->orderBy('id', 'desc')
-                                        ->limit(1)
-                                        ->select('id')
-                                        ->get();
+                    $imagedata=explode("/",Auth::user()->image);
+                    $imagefolder=$imagedata[0];
 
-                foreach($school_id as $school){
-                        $s_id=$school->id;
-                }
-                
-                if($pic_existance->count()){
+                    $path='upload/'.$imagefolder;
+                    $image_path=$imagefolder.'/'.$image_name;
 
-                    $random_number=rand();
+                    /*Check if image exists*/
+                    if (File::exists ( public_path ( $image_path ) ) ) {
+                        //Overwrite Image name and path  
+                        $image_name=$image_name.rand(5);
+                        $image_path=$imagefolder.'/'.$image_name;   
+                    }
+                    
+                    $destinationPath = public_path($path);
+                    
+                    $file->move($destinationPath,$image_name);
 
 
-                    $fileName_new=$random_number.$fileName;
-
-                    $file->move($destinationPath,$fileName_new);
-
-                    DB::table('school_images')->insert([
-                            'school_id' => $s_id,
-                            'photo_path' => $school_folder.$fileName_new,
-                        ]);
-                    return Redirect::to('/admin/tables')
-                            ->with('success','School Is Successfully Registered');
+                    DB::table('users')
+                            ->where('id', Auth::id())
+                            ->update([
+                                    'image' => $image_path,
+                                ]);
+                    return redirect('/home/my_profile');
                 }else{
-
-                    DB::table('school_images')->insert([
-                            'school_id' => $s_id,
-                            'photo_path' => $school_folder.$fileName,
-                        ]);
-
-                    return Redirect::to('/admin/tables')
-                            ->with('success','School Is Successfully Registered');
+                    return redirect('/home/my_profile')
+                    ->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
                 }
             }
     }
