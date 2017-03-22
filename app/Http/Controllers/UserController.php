@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Input;
 use App\User;
 use Auth;
 use Validate;
@@ -148,22 +150,38 @@ class UserController extends Controller
 
 
 
-public function search(Request $request)
+static  function search(Request $request)
 {
-
-  //  print_r($request);
-     
-    // Gets the query string from our form submission 
-    $query = Request::Input('search');
-    print_r($query);
-    die('a');
-    // Returns an array of articles that have the query string located somewhere within 
-    // our articles titles. Paginates them so we can break up lots of search results.
-    $articles = DB::table('articles')->where('title', 'LIKE', '%' . $query . '%')->paginate(10);
-        
-    // returns a view and passes the view the list of articles and the original query.
-    return view('page.search', compact('articles', 'query'));
- 
- }
     
-}
+    $user = User::all();
+    $search = $request->input('search');  
+
+     // if serach bar is not empty
+
+     if(!empty($search)){
+
+            $users = User::where('fname','LIKE','%'.$search.'%')
+                    ->orWhere('lname', 'LIKE', '%'. $search .'%')
+                    ->orWhere('email', 'LIKE', '%'. $search .'%')
+                    ->orderBy('fname')
+                    ->get();
+
+            if(!$users->isEmpty()){
+
+            return view('admin.dashboard.user.search',compact('users'))
+               ->with('i', ( $request->input('page', 1) - 1) * 5)
+               ->with('success',' User found');
+
+            }else{    
+
+             return view('admin.dashboard.default')
+                ->with('success','Sorry User Not found');
+            }
+     }else{  
+                      
+             return redirect()->route('user.index')
+                ->with('success','Please Enter Name/email to find result ');
+        }
+
+    }
+   

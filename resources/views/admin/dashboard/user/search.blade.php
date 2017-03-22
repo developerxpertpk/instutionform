@@ -1,42 +1,34 @@
 @extends('layouts.admin.adminLayout')
 
 @section('content')
+	<div>
+	<div class="pull-left">
+                <h2> Search Result Found </h2>
+     </div>	
 
- <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left col-md-4">
-                <h2>User</h2>
-            </div>
+     <div class="pull-right">
+              <a href="{{ route('user.index') }}">  back </a>
+     </div>
 
-
-      <div class="col-md-4">
-          <a class="btn btn-success" href="{{ route('user.create') }}" > Create New User
-          </a>
-      </div>
- 
-  <div class="col-md-4  pull-right">
-                         
-            {!! Form::open(array('method' => 'GET', 'url' => '/search')) !!}
-            {!! Form::text('search', null, ['class' => 'form-control',
-                'placeholder' =>'Enter any name or email']) !!}
-
-            {!! Form::submit('search', ['class' => 'btn btn-success']) !!}
-
-            {!! Form::close() !!}
-        </div>
-
-       
-  </div>
 </div>
-      
-
-    @if ($message = Session::get('success'))
+	  @if ($message = Session::get('success'))
         <div class="alert alert-success">
-            <p>{{  $message }}</p>
+            <p>{{ $message }}</p>
         </div>
     @endif
 
-    <table class="table table-bordered">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+ <table class="table table-bordered">
         <tr>
             <th>ID</th>
             <th>First Name</th>
@@ -50,23 +42,21 @@
             <th width="280px">Action</th>
         </tr>
 
-    @foreach ($users as $key => $user)
 
-    	@if($user->role->role == 'user')
-    		<tr>
+        @foreach ($users as $key => $user)
+        
+           @if($user->role->role == 'user') 
 		        <td>{{ ++$i }}</td>
 		        <td>{{ $user->fname }}</td>
 		        <td>{{ $user->lname }}</td>
 		        <td>{{ $user->email }}</td>
-		        <td>{{ $user->gender }}</td>
 		        <td>{{ $user->image }}</td>
+		        <td>{{ $user->gender }}</td>
 		        <td>{{ $user->address }}</td>
 		        <td>{{ $user->role->role }}</td>
-            <td>{{ $user->status }}</td>
-		        <td>
-
-		  <!-- show button  -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
+          		<td>{{ $user->status }}</td>
+				<td>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
 
 <!-- Model for show user Profile large model is used  -->
 <div class="modal fade profile{{$user->fname}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -245,8 +235,4 @@
 
   </table>
 
-    {!! $users->render() !!}
-
 @endsection
-
-
