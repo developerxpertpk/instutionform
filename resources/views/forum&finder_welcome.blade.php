@@ -34,8 +34,15 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="./">Login<span class="sr-only">(current)</span></a></li>
-              <li><a href="../navbar-static-top/">Register</a></li>
+            @if(Route::has('login'))            
+                @if (Auth::check())
+                    <li><a href="{{ url('/home') }}">Home</a></li>
+                @else
+                    <li><a href="{{ url('/login') }}">Login</a></li>
+              		<li><a href="{{ url('/register') }}">Register</a></li>
+                @endif
+	        @endif
+              
               
             </ul>
           </div>

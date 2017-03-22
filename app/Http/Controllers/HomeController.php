@@ -50,10 +50,10 @@ class HomeController extends Controller
    /*To Edit profile details of the current logged in  user*/
     public function profile_edit(Request $request){
         $rules=array(
-                'fname' => 'required|max:100',
-                'lname' => 'required',
-                'email' => 'required|email|max:100',
-                'address' => 'required|max:150',
+                'fname' => 'required|max:100|regex:/^[\pL\s]+$/u',
+                'lname' => 'required|max:100|regex:/^[\pL\s]+$/u',
+                'email' => 'required|email|max:100|regex:/^[a-zA-Z0-9@_.]*$/',
+                'address' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:]*$/',
             );
 
         $validator = Validator::make($request->all(), $rules);
@@ -78,8 +78,9 @@ class HomeController extends Controller
     /*To Change Password of the current logged in  user*/
     public function change_user_password(Request $request){
         $rules=array(
-                'old_password' => 'required|max:50',
-                'new_password' => 'required|min:6|confirmed',
+                'old_password' => 'required|max:50|regex:/^[a-zA-Z0-9@_.]*$/',
+                'new_password' => 'required|min:6|regex:/^[a-zA-Z0-9@_.]*$/',
+                'confirm_password' => 'required|min:6|regex:/^[a-zA-Z0-9@_.]*$/',
             );
 
         $validator = Validator::make($request->all(), $rules);

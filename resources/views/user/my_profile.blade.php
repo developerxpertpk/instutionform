@@ -105,9 +105,9 @@
 												<strong>{{ $errors->first('confirm_password') }}</strong>
 											</span>
 											@endif
-											@if ($errors->has('message'))
+											@if ($errors->has('cnf_pwd'))
 											<span class="help-block">
-												<strong>{{ $errors->first('message') }}</strong>
+												<strong>{{ $errors->first('cnf_pwd') }}</strong>
 											</span>
 											@endif
 										</div>
