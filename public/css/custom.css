@@ -182,6 +182,32 @@
     /*declare shape using the shape function circle()*/
     shape-inside: circle(160px at 400px 60px);
 }
+/*.profile_picture{
+  position: relative;
+}*/
+
 .profile_picture img{
   width:100%;
+  transition: opacity 1s;
+}
+
+.profile_picture img:hover{
+  opacity:0.5;
+}
+
+.profile_picture a{
+  text-decoration: none;
+  color:red;
+}
+
+.profile_picture:hover p{
+  visibility:visible;
+}
+.profile_picture p{
+  font-size: 25px;
+  font-weight: 900;
+  position:relative;
+  bottom:200px;
+  left:50px;
+  visibility:hidden;
 }

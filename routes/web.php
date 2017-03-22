@@ -78,17 +78,11 @@ Route::group(['middleware' => ['auth']], function () {
 			return view('user.my_profile');
 		});
 
-		Route::get('profile_edit',function(){
-			return view('user.user_edit');
-		});
-
 		Route::post('profile_edit','HomeController@profile_edit');
 
-		Route::get('password_user',function(){
-			return view('user.change_user_password');
-		});
-
 		Route::post('password_user','HomeController@change_user_password');
+
+		Route::post('change_dp_user','HomeController@change_dp_user');
 
 
 	});

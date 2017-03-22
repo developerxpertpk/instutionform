@@ -12,8 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-     <<script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('js/velocity_model_animation.js') }}" type="text/javascript"></script>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -23,9 +24,40 @@
     <script>
         $(document).ready(function(){
             $("#myBtn").click(function(){
-                $("#change_password_user").modal();
+                change_password_user();
             });
+            
+            $("#my_editBtn").click(function(){
+                edit_user();
+            });
+
+            $("#change_dp").click(function(){
+                change_dp_model();
+            });
+            
+
+
+
+            window.change_password_user = function(){
+                $("#change_password_user").modal();
+            }
+
+            window.edit_user = function(){
+                $("#edit_user").modal();
+            }
+
+            window.change_dp_model = function(){
+                $("#change_dp_model").modal();
+            }
         });
+
+        function form_submit() {
+            document.getElementById("change_password").submit();
+        }
+
+        function form_edit() {
+            document.getElementById("profile_editor").submit();
+        } 
     </script>
 </head>
 <body>
