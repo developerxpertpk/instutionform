@@ -13,7 +13,6 @@ class CreateSchoolsTable extends Migration
      */
     public function up()
     {
-        //
 
      Schema::create('schools', function (Blueprint $table) {
             $table->increments('id')->unsigned();
