@@ -13,6 +13,6 @@ class Location extends Model
     ];
 
     public function schools(){
-    	return $this->hasOne('App/School','location_id');
+    	return $this->hasOne('App\School','location_id');
     }
 }

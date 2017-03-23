@@ -15,33 +15,44 @@ use App\location;
 class SchoolController extends Controller
 {
     //
-    public function index(){
-    	return view('admin.dashboard.school.index');
+    public function index(Request $request){
+      $schools=DB::table('schools')->where('id','1')->first();
+      $locations=DB::table('locations')->where('id','1')->first();
+      echo "<pre>";
+      print_r($locations);
+      $schools=schools()->locations;
+       $schools = Location::find(1)->id;
+        print_r($schools);
+      die('a');
+    	return view('admin.dashboard.school.index',compact('schools'))
+          ->with('i', ($request->input('page', 1) - 1) * 5);
+    
     }
 
     public function store(Request $request){
 
-        // validation on input data
-  //        $rules = array(
-  //       'school_name' => 'required|min:3|alpha',
-  //       'address' => 'required|min:3|alpha',
-  //       'country' => 'required|min:1|max:50|',
-  //       'state' =>   'required|min:5|alpha',
-  //       'city' => 'required|alpha|min:5'
-  //   );
-  //   $validator = Validator::make(Input::all(), $rules);
+       // validation on input data
+    	
+         $rules = array(
+        'school_name' => 'required|min:3|alpha',
+        'address' => 'required|min:3|alpha',
+        'country' => 'required|min:1|max:50|',
+        'state' =>   'required|min:5|alpha',
+        'city' => 'required|alpha|min:5'
+    );
+    $validator = Validator::make(Input::all(), $rules);
 
-		// if($validator->fails()){
-		// 		return redirect()->to('admin/school')
-  //           ->withErrors($validator)
-  //           ->withInput();
-		// }
+		if($validator->fails()){
+				return redirect()->to('admin/school')
+            ->withErrors($validator)
+            ->withInput();
+		}
 
 		/*  make model objects */
-
+		 $location= new Location(); /*location object*/
 		 $school= new School(); /*  School object*/
 		 $image= new School_image();   
-		 $location= new Location(); /*location object*/
+		
 
 
         // check weather request has image path or not
@@ -54,17 +65,24 @@ class SchoolController extends Controller
                        $file->move($destinationPath,$fileName);
                      
                  }
-             
-            echo  	$school->school_name = $request['school_name'];
-            echo    $school->school_address = $request['school_address'];
-            echo    $image->image = $fileName;
-            echo    $loc_country->country = $request['country'];
-            echo    $loc_state->state = $request['state'];
-            echo    $loc_city->city = $request['city'];
-                                             
-               	$location->save();
+         $location->country = $request['country'];
+         $location->state = $request['state'];
+         $location->city = $request['city'];
+                                     
+         $location->save();
+       
+      	 $school->location_id=$location->id;
+      	 $school->school_name=$request['school_name'];
+      	 $school->school_address=$request['school_address'];
 
-        }
+      	 $school->save();
+
+      	 $image->school_id=$school->id;
+      	 $image->image=$request['image'];
+
+      	 $image->save();
+
+	}
     
     
 }
