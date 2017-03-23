@@ -46,8 +46,9 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('admin/user/search', 'UserController@search');
 
 			/*  route for school-institue */
-			Route::get('school','SchoolController@index')->name('school.index');
+			//Route::get('school','SchoolController@index');
 			Route::resource('school','SchoolController');
+			//Route::get('school','SchoolController@list');
 
 			//Route::get('/user/search', 'UserController@search');
 			});

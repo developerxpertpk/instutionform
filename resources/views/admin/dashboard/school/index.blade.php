@@ -25,21 +25,72 @@
 
       <div class="pull-right">
       <button class="btn btn-primery" data-toggle="modal" data-target=".add">add School</button>
+
       </div>
+
+      <div class="pull-right">
+      <button class="btn btn-primery" > School list</button> 
+
+      </div>
+</div>
+
+<!-- container to show detail of schools -->
+<div class="container">
+
+  @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{  $message }}</p>
+        </div>
+    @endif
+
+    <table class="table table-bordered">
+        <tr><h1>
+            <th>ID</th>
+            <th>School Name </th>
+            <th>School Address </th>
+            <th>location </th>
+            <th>Status</th>
+            <th width="320px">Action</th></h1>
+        </tr>
+
+    @foreach ($schools as $key => $school)
+    		<tr>
+		        <td>{{ ++$i }}</td>
+		        <td>{{ $school->school_name }}</td>
+		        <td>{{ $school->school_address }}</td>
+		        <td>{{ $school->location_id }} </td>	   
+            	<td>{{ $school->status }}</td>
+		        <td> 
+		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile">Show</button>
+		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile">block</button>
+		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile}">delete</button>
+		         </td>
+		    </tr>
+	@endforeach
+
 
 </div>
 
-<!--  Bootstrap Model  for add schools  -->
+
+
+
+
+
+<!--  Bootstrap Model  for add  button schools  -->
 <!-- Large modal  Model data-target=".add"-->
 
 
 <div class="modal fade add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-           
+    <div class="modal-content">  
+          <div class="modal-header">
 
+          <h4 class="modal-title" id="myModalLabel">Register</h4>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      </div>         
 	<div class="container">
-			<h2> Register</h2>
+			
     <div class="row">
 
         <div class="col-md-8">
@@ -47,7 +98,7 @@
                 <div class="panel-heading"> <h4>  </h4></div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{route('school.store')}}">
+                    <form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -58,7 +109,8 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label">School Name</label>
 					<div class="col-md-6">
-						<input id="school_name" type="text" class="form-control" name="school_name" value="{{ old('school_name') }}" required>
+						<input id="school_name" type="text" class="form-control" name="school_name" value=" " required>
+
 						@if ($errors->has('school_name'))
 							<span class="help-block">
 								<strong>{{ $errors->first('school_name') }}</strong>
@@ -84,7 +136,7 @@
 					<label for="file_upload" class="col-md-4 control-label">Image
 					</label>
 					<div class="col-md-6">
-						<input id="file_upload" type="file" name="image" multiple>optional
+						<input id="file_upload" type="file" name="image" multiple >optional
 						@if ($errors->has('file_up'))
 							<span class="help-block">
 								<strong>{{ $errors->first('file_up') }}</strong>
@@ -99,7 +151,7 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label">Select Country:</label>
 					<div class="col-lg-3">
-						<input  type="text" id="countryId" class="countries form-control" name="country">
+						<input  type="text" id="countryId" class="countries form-control" name="country" required>
 							
 				
 						@if ($errors->has('country'))
@@ -112,7 +164,7 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label">Select State:</label>
 					<div class="col-lg-3">
-						<input id="stateId" class="states form-control" name="state">
+						<input id="stateId" class="states form-control" name="state" required >
 						
 						@if ($errors->has('state'))
 							<span class="help-block">
@@ -124,7 +176,7 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label">Select City:</label>
 					<div class="col-lg-3">
-						<input id="cityId" class="cities form-control" name="city">
+						<input id="cityId" class="cities form-control" name="city" required>
 					
 						@if ($errors->has('city'))
 							<span class="help-block">

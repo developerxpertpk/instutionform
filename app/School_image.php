@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class School_image extends Model
 {
     //
-
+     
     protected $fillable = [
-        'country','state','city',
+        'image','school_id',
     ];
 
     public function schools(){
-    	return $this->hasOne('App\School','location_id');
+        return $this->belongsTo('App\School','school_id');
     }
+
 }

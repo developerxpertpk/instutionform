@@ -16,7 +16,7 @@ class CreateLocationsTable extends Migration
         //
          Schema::create('locations', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('country');
+            $table->string('country')->nullable();
             $table->string('state');
             $table->string('city');
             $table->rememberToken();
