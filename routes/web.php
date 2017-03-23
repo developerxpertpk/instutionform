@@ -16,7 +16,7 @@
 // });
 
 Route::get('/', function () {
-    return view('project_index');
+    return view('forum&finder_welcome');
 });
 
 
