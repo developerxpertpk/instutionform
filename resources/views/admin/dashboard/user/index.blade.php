@@ -2,6 +2,29 @@
 
 @section('content')
 
+  <div id="page-wrapper">
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">
+        Manage users
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <i class="fa fa-dashboard"></i>Dashboard
+          </li>
+          <li class="active">
+            <i class="fa fa-anchor"></i> users
+          </li>
+            <li class="active">
+            <i class="fa fa-anchor"></i> List
+            </li>
+        
+        </ol>
+      </div>
+    </div>
+
  <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left col-md-4">
@@ -30,7 +53,7 @@
   </div>
 </div>
       
-
+ <!--  check if any error -->
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{  $message }}</p>
@@ -48,7 +71,7 @@
             <th>Address</th>
             <th>Role</th>
             <th>status</th>
-            <th width="290px">Action</th>
+            <th width="320px">Action</th>
         </tr>
 
     @foreach ($users as $key => $user)
@@ -66,7 +89,7 @@
             <td>{{ $user->status }}</td>
 		        <td>
 
-		  <!-- show button  -->
+		  <!-- show  button  -->
 <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
 
 <!-- Model for show user Profile large model is used  -->
@@ -244,7 +267,8 @@
   </table>
 
     {!! $users->render() !!}
-
+</div>
+</div>
 @endsection
 
 

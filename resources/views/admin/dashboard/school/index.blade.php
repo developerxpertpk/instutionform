@@ -35,11 +35,15 @@
 
 <div class="modal fade add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-           
+    <div class="modal-content">  
+          <div class="modal-header">
 
+          <h4 class="modal-title" id="myModalLabel">Register</h4>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      </div>         
 	<div class="container">
-			<h2> Register</h2>
+			
     <div class="row">
 
         <div class="col-md-8">
@@ -47,7 +51,7 @@
                 <div class="panel-heading"> <h4>  </h4></div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{route('school.store')}}">
+                    <form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
                         {{ csrf_field() }}
 
                         <div class="form-group">
