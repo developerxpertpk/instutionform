@@ -58,7 +58,7 @@
 		        <td>{{ ++$i }}</td>
 		        <td>{{ $school->school_name }}</td>
 		        <td>{{ $school->school_address }}</td>
-		        <td>{{ $school->location_id }} </td>	   
+		        <td>{{ $school->locations->city }} </td>	   
             	<td>{{ $school->status }}</td>
 		        <td> 
 		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile">Show</button>

@@ -16,14 +16,20 @@ class SchoolController extends Controller
 {
     //
     public function index(Request $request){
-      $schools=DB::table('schools')->where('id','1')->first();
-      $locations=DB::table('locations')->where('id','1')->first();
-      echo "<pre>";
-      print_r($locations);
-      $schools=schools()->locations;
-       $schools = Location::find(1)->id;
-        print_r($schools);
-      die('a');
+      
+     
+     // $schools =School::find(2)->location_id;
+
+      //$schools=schools()->locations->id;
+
+      //$location=Location::find(2)->country;
+
+      // $schools =School::orderby('id','asc')->get();
+      //     foreach($schools as $key => $school){
+      //       print_r($school->locations) ;
+      //     }
+
+      $schools =School::orderBy('id','asc')->get();
     	return view('admin.dashboard.school.index',compact('schools'))
           ->with('i', ($request->input('page', 1) - 1) * 5);
     
