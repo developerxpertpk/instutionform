@@ -15,9 +15,7 @@
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('forum&finder_welcome');
-});
+
 
 
 
