@@ -29,7 +29,7 @@ class SchoolController extends Controller
       //       print_r($school->locations) ;
       //     }
 
-      $schools =School::orderBy('id','asc')->get();
+      $schools =School::orderBy('id','desc')->get();
     	return view('admin.dashboard.school.index',compact('schools'))
           ->with('i', ($request->input('page', 1) - 1) * 5);
     
@@ -40,26 +40,26 @@ class SchoolController extends Controller
        // validation on input data
     	
          $rules = array(
-        'school_name' => 'required|min:3|alpha',
-        'address' => 'required|min:3|alpha',
-        'country' => 'required|min:1|max:50|',
-        'state' =>   'required|min:5|alpha',
-        'city' => 'required|alpha|min:5'
+        'school_name' => 'required',
+        'school_address' => 'required',
+        'country' => 'required',
+        'state' =>   'required',
+        'city' => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
-
+     
+     // server side validation
 		if($validator->fails()){
 				return redirect()->to('admin/school')
             ->withErrors($validator)
-            ->withInput();
-		}
+            ->withInput()
+            ->with('success','school not registered');
+		}else{
 
 		/*  make model objects */
-		 $location= new Location(); /*location object*/
-		 $school= new School(); /*  School object*/
-		 $image= new School_image();   
-		
-
+		 $location= new Location();  /*location object*/
+		 $school= new School();     /* School object */
+		 $image= new School_image(); /* image object */   
 
         // check weather request has image path or not
         if($file = $request->hasFile('image')) { 
@@ -87,6 +87,11 @@ class SchoolController extends Controller
       	 $image->image=$request['image'];
 
       	 $image->save();
+
+         return redirect()->route('school.index')
+                ->with('success','school Registerd successfully !!!!');
+
+        }
 
 	}
     

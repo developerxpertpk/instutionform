@@ -7,7 +7,7 @@
             <div class="panel panel-default animated bounce">
                 <div class="panel-heading"> User Login </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login.submit') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{  route('login.submit') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -28,7 +28,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" required autofocus>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

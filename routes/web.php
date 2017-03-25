@@ -54,11 +54,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/search', 'UserController@search');
 Auth::routes();
-
+// admin routes ended
 
 /*USER ROUTES*/
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
 /*USER HOME GROUP*/
 Route::group(['middleware' => ['auth']], function () {

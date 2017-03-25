@@ -19,7 +19,12 @@
     </script>   
 
     <!-- Bootstrap Core CSS -->
+    <!-- addes juery -->  
+    
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+        <!--  -->
     <script type="text/javascript" src="{{ asset('../js/app.js') }}"></script>
+
     
     <link href="{{ asset('../css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('../css/app.css') }}" rel="stylesheet">
