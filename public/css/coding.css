@@ -310,7 +310,7 @@ color:white;
 .f-list {
     padding-left: 0px;
     font-size: 14px;
-	color: #cccc;
+	color: #ffffff;
 }
 .f-list h3{
 margin-top: 0;
@@ -329,6 +329,28 @@ color:#cccc;
 .f-list a {
     color: #cccc;
     text-decoration: none;
+}
+
+.f-lists {
+    padding-left: 0px;
+    font-size: 14px;
+	color: #ffffff;
+}
+
+.f-lists a {
+    color: #cccc;
+    text-decoration: none;
+}
+
+.f-lists  li {
+    list-style: outside none;
+}
+
+.f-lists li h3{
+	margin-top: 0;
+    margin-bottom: 12px;
+	font-size:14px;
+	color:#ffffff;
 }
 
 h2 {

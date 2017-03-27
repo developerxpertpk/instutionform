@@ -134,48 +134,50 @@ class HomeController extends Controller
 
             return redirect('/home/my_profile')->withErrors($validator);
 
-        } else {
+        }else{
 
+            $file = Input::file('image');
 
-                $file = Input::file('image');
+            $extention = $file->getClientOriginalExtension();
 
-                $extention = $file->getClientOriginalExtension();
+            if( $extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
+                $fileName = $file->getClientOriginalName() ;
+                
+                $image_name=str_ireplace(" ","_",$fileName);
 
-                if( $extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
-                    $fileName = $file->getClientOriginalName() ;
-                    
-                    $image_name=str_ireplace(" ","_",$fileName);
+                $imagedata=explode("/",Auth::user()->image);
+                $imagefolder=$imagedata[0];
 
-                    $imagedata=explode("/",Auth::user()->image);
-                    $imagefolder=$imagedata[0];
+                $path='upload/'.$imagefolder;
+                $image_path=$imagefolder.'/'.$image_name;
 
-                    $path='upload/'.$imagefolder;
-                    $image_path=$imagefolder.'/'.$image_name;
-
-                    /*Check if image exists*/
-                    if (File::exists ( public_path ( $image_path ) ) ) {
-                        //Overwrite Image name and path  
-                        $image_name=$image_name.rand(5);
-                        $image_path=$imagefolder.'/'.$image_name;   
-                    }
-                    
-                    $destinationPath = public_path($path);
-                    
-                    $file->move($destinationPath,$image_name);
-
-
-                    DB::table('users')
-                            ->where('id', Auth::id())
-                            ->update([
-                                    'image' => $image_path,
-                                ]);
-                    return redirect('/home/my_profile');
-                }else{
-                    return redirect('/home/my_profile')
-                    ->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
+                /*Check if image exists*/
+                if (File::exists ( public_path ( $image_path ) ) ) {
+                    //Overwrite Image name and path  
+                    $image_name=$image_name.rand(5);
+                    $image_path=$imagefolder.'/'.$image_name;   
                 }
+                
+                $destinationPath = public_path($path);
+                
+                $file->move($destinationPath,$image_name);
+
+
+                DB::table('users')
+                        ->where('id', Auth::id())
+                        ->update([
+                                'image' => $image_path,
+                            ]);
+                return redirect('/home/my_profile');
+            }else{
+                return redirect('/home/my_profile')
+                ->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
             }
+        }
     }
+
+
+
 
 
 }

@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
     </head>
     <body>
@@ -25,10 +26,10 @@
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                 <li><a href="#">About</a></li>
                                 <li><a href="#">School Details</a></li>
-                                <li><a href="#">List of Schools</a></li>
+                                <li><a href="schools_list">List of Schools</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -68,7 +69,7 @@
                             <div class="col-md-12 col-sm-12">
                                 <div class="col-md-4 col-sm-4">
                                     <div class="head5">For Schools</div>
-                                    <ul class="f-list">
+                                    <ul class="f-lists">
                                         <li>
                                             <a href="/addSchool" target="_blank">
                                                 <h3>Add Your School</h3>
@@ -93,7 +94,7 @@
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <div class="head5">Help</div>
-                                    <ul class="f-list">
+                                    <ul class="f-lists">
                                         <li>
                                             <a href="mailto:info@sqoolz.com">
                                                 <h3>Contact Us</h3>
@@ -131,7 +132,7 @@
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <div class="head5">Terms</div>
-                                    <ul class="f-list">
+                                    <ul class="f-lists">
                                         <li>
                                             <a href="/termsofuse">
                                                 <h3>Terms Of Use</h3>

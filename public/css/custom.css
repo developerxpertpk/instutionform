@@ -212,3 +212,8 @@
   left:50px;
   visibility:hidden;
 }
+.src_err{
+  font-size:30px;
+  color:#ffffff; 
+  font-weight: 500;
+}
