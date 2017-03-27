@@ -25,6 +25,7 @@ Route::post('/user_register','CustomregisterController@insert')->name('user.regi
 Route::get('/login_form','CustomregisterController@showloginform')->name('show.login');
 
 Route::get('/login', 'Auth\loginController@showLoginform')->name('login');
+
 Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 
 	
@@ -47,8 +48,6 @@ Route::group(['middleware' => ['auth']], function () {
 			//Route::get('school','SchoolController@index');
 			Route::resource('school','SchoolController');
 			//Route::get('school','SchoolController@list');
-
-			//Route::get('/user/search', 'UserController@search');
 			});
 });
 
@@ -58,7 +57,7 @@ Auth::routes();
 
 /*USER ROUTES*/
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 /*USER HOME GROUP*/
 Route::group(['middleware' => ['auth']], function () {

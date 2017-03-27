@@ -6,4 +6,4 @@
    lname:   {{  Auth::user()->lname }}
     </h2>
     </div>
-    @endsection
+@endsection
