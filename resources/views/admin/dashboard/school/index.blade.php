@@ -9,72 +9,29 @@
 				<h1 class="page-header">
 				Manage Schools & Institutes
 				</h1>
-				<ol class="breadcrumb">
+				<!-- <ol class="breadcrumb">
 					<li>
 						<i class="fa fa-dashboard"></i>Dashboard
 					</li>
+					<li >
+						<i class="fa fa-anchor"></i> School
+					</li>
+
 					<li class="active">
-						<i class="fa fa-anchor"></i> Schools
+						<i class="fa fa-anchor"></i> list
 					</li>
 				
-				</ol>
+				</ol> -->
 			</div>
 		</div>
 		<!-- /.row -->
 
 
       <div class="pull-right">
-      <button class="btn btn-primery" data-toggle="modal" data-target=".add">add School</button>
-
-      </div>
-
-      <div class="pull-right">
-      <button class="btn btn-primery" > School list</button> 
+      <button class="btn btn-primery" data-toggle="modal" data-target=".add"> ADD</button>
 
       </div>
 </div>
-
-<!-- container to show detail of schools -->
-<div class="container">
-
-  @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{  $message }}</p>
-        </div>
-    @endif
-
-    <table class="table table-bordered">
-        <tr><h1>
-            <th>ID</th>
-            <th>School Name </th>
-            <th>School Address </th>
-            <th>location </th>
-            <th>Status</th>
-            <th width="320px">Action</th></h1>
-        </tr>
-
-    @foreach ($schools as $key => $school)
-    		<tr>
-		        <td>{{ ++$i }}</td>
-		        <td>{{ $school->school_name }}</td>
-		        <td>{{ $school->school_address }}</td>
-		        <td>{{ $school->locations->city }} </td>	   
-            	<td>{{ $school->status }}</td>
-		        <td> 
-		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile">Show</button>
-		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile">block</button>
-		        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile}">delete</button>
-		         </td>
-		    </tr>
-	@endforeach
-
-
-</div>
-
-
-
-
-
 
 <!--  Bootstrap Model  for add  button schools  -->
 <!-- Large modal  Model data-target=".add"-->
@@ -89,22 +46,23 @@
            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
       </div>         
-	<div class="container">
+	<div class="container register-model " style="border:5px solid black;width:800px; height:500px; overflow:scroll;">
+
+	<script>
+		$(document).ready(function(){
+		    $("register-model").scroll(function();
+		});
+	</script>
 			
     <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-12 col-sm-6 col-lg-12">
 
-                <div class="panel-heading"> <h4>  </h4></div>
+                <div class="panel-heading"> <h2> School Details </h2></div>
                 <div class="panel-body">
 
                     <form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
                         {{ csrf_field() }}
-
-                        <div class="form-group">
-					<label class="col-md-2 control-label"></label>
-					<h3 class="col-md-4"> School Details</h3>
-				</div>
 
 				<div class="form-group">
 					<label class="col-md-4 control-label">School Name</label>
@@ -204,7 +162,52 @@
 </div>
 </div>
  <!-- end of model0 (add model) -->
+
+ <!-- container to show detail of schools -->
+ <div class="container">
+
+
+  @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{  $message }}</p>
+        </div>
+    @endif
+
+<div class="list-school">
+    <table class="table table-bordered">
+        <tr><h1>
+            <th>ID</th>
+            <th>NAME </th>
+            <th>ADDRESS </th>
+            <th>CITY </th>
+            <th>STATE</th>
+            <th>COUNTRY</th>
+            <th>STATUS</th>
+            <th width="320px">Action</th></h1>
+        </tr>
+
+    @foreach ($schools as $key => $school)
+    		<tr>
+		        <td>{{ ++$i }}</td>
+		        <td>{{ $school->school_name }}</td>
+		        <td>{{ $school->school_address }}</td>
+		        <td>{{ $school->locations->city }} </td>
+		        <td>{{ $school->locations->state}} </td>
+		        <td>{{ $school->locations->country}} </td>	   
+            	<td>{{ $school->status }}</td>
+		        <td> 
+		        <button type="button" class="btn btn-success" >Show</button>
+		        <button type="button" class="btn btn-success">block</button>
+		        <button type="button" class="btn btn-success">delete</button>
+		        <>
+		         </td>
+		    </tr>
+	@endforeach
+
+			</table>
+		</div>
+ 	</div>
  </div>
- </div>
+
 
 @endsection
