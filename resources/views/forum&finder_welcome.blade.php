@@ -1,9 +1,10 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
-<!-- banner and search portion --->
+<!-- banner and search portion 
 <section class="search_banner">
 	<div id="slidermy" class="carousel slide" data-ride="carousel">
-		<!-- Indicators -->
+		 Indicators -->
+		
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
 				<img src="image\school1.jpg" alt="First slide">
@@ -26,32 +27,110 @@
 					</div>
 				</div>
 				
-			</div>
+			</div>		
+			<a class="left carousel-control" href="#slidermy" role="button" data-slide="prev">
+				<span class="fa fa-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#slidermy" role="button" data-slide="next">
+				<span class="fa fa-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
 		</div>
-		
-		<a class="left carousel-control" href="#slidermy" role="button" data-slide="prev">
-			<span class="fa fa-chevron-left" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="right carousel-control" href="#slidermy" role="button" data-slide="next">
-			<span class="fa fa-chevron-right" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
 	<div class="search-container">
-		<div class="container search_control">
-			<div class="col-xs-12 col-sm-4">
-				<input type="text" class="form-control input-lg" placeholder="Search the location">
+		<form class="form-horizontal" role="form" method="GET"  enctype="multipart/form-data" action="search_location">
+        	{{ csrf_field() }}
+			
+			<div class="container search_control">
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control input-lg" name="location" placeholder="Search the location">
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<input type="text" class="form-control input-lg" name="school_name" placeholder="Enter the name of school ">
+				</div>
+				<div class="col-xs-12 col-sm-2">
+					<button type="submit" class="btn btn-success btn-lg">Search</button>
+				</div>
+				@if(Session::has('search_failed'))
+					<div class="col-sm-12 text-center">
+						<span class="src_err">{{ Session::get('search_failed') }}</span>
+					</div>
+				@endif
 			</div>
-			<div class="col-xs-12 col-sm-6">
-				<input type="text" class="form-control input-lg" placeholder="Enter the name of school ">
-			</div>
+		</form>
 			
-			<div class="col-xs-12 col-sm-2">
-			<button type="button" class="btn btn-success btn-lg">Search</button></div>
-			
-			
-		</div>
+	</div>
+</section>
+
+
+<section class="search_results">
+	<div class="container">
+		@if(isset($schools_byName) || isset($schools_byLocation))
+			<h2>Search Results</h2>
+			<p>
+				<strong>Showing results for:
+					@if(isset($message_1))
+						{{ $message_1 }}
+					@endif
+					@if(isset($message_2))
+						{{ "& ".$message_2 }}
+					@endif
+				</strong>
+			</p>
+			<table class="table table-striped table-hover">
+				@if(isset($schools_byName))
+					@if($schools_byName->count())
+							<tbody>
+								@foreach($schools_byName as $schools)
+									<tr>
+										<td>
+											{{ $schools->school_name}}
+										</td>
+										<td>
+											{{ $schools->locations->city.", ".$schools->locations->state.", ".$schools->locations->country}}
+										</td>
+										<td>
+											<a href="show_school/{{ $schools->id }}">
+												<button type="submit" class="btn btn-primary  btn-xs">View</button>
+											</a>
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+					@else
+						<?php $count=1; ?>	
+					@endif		
+				@endif
+				@if(isset($schools_byLocation))
+					@if($schools_byLocation->count())
+						<tbody>
+								@foreach($schools_byLocation as $schools)
+									@if(count($schools->schools['school_name']))
+										<tr>
+											<td>
+												{{ $schools->schools['school_name']}}
+											</td>
+											<td>
+												{{ $schools->city.", ".$schools->state.", ".$schools->country}}
+											</td>
+											<td>
+												<a href="show_school/{{ $schools->schools['id'] }}">
+													<button type="submit" class="btn btn-primary  btn-xs">View</button>
+												</a>
+											</td>
+										</tr>
+									@endif
+								@endforeach
+							</tbody>
+					@else
+						<?php $count=1; ?>
+					@endif
+				@endif
+			</table>
+			@if(!empty($count))
+				<h3>Sorry, School Not Found</h3>
+			@endif
+		@endif
 	</div>
 </section>
 
@@ -63,7 +142,7 @@
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
 					<div class="col-xs-12 col-sm-3 Main_features">
-						<img src="image\oakridge.png">
+						<img src="{{asset('image\oakridge.png')}}">
 						<h3 class="first-slide">Oakridge International....</h3>
 						<h5>Chandigarh</h5>
 						<p>This school is affiliated by Central Board of Education,provide all facilities to students.</p>

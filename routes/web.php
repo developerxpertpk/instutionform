@@ -11,9 +11,9 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('forum&finder_welcome');
+});
 
 
 
@@ -58,6 +58,13 @@ Auth::routes();
 /*USER ROUTES*/
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/search_location','UnregisteredController@search_location_school');
+
+Route::get('/show_school/{id}','UnregisteredController@show_school');
+
+Route::get('/schools_list','UnregisteredController@schools_list');
+
 
 /*USER HOME GROUP*/
 Route::group(['middleware' => ['auth']], function () {
