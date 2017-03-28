@@ -61,16 +61,8 @@ class SchoolController extends Controller
 		 $school= new School();     /* School object */
 		 $image= new School_image(); /* image object */   
 
-        // check weather request has image path or not
-        if($file = $request->hasFile('image')) { 
 
-                       $file = $request->file('image');
-                       $fileName = $file->getClientOriginalName() ;
-                       $extention = $file->getClientOriginalExtension();
-                       $destinationPath = public_path().'/upload/' ;
-                       $file->move($destinationPath,$fileName);
-                     
-                 }
+
          $location->country = $request['country'];
          $location->state = $request['state'];
          $location->city = $request['city'];
@@ -83,10 +75,21 @@ class SchoolController extends Controller
 
       	 $school->save();
 
-      	 $image->school_id=$school->id;
-      	 $image->image=$request['image'];
+         // check weather request has image path or not
+        if($file = $request->hasFile('image')) { 
 
-      	 $image->save();
+                       $file = $request->file('image');
+                       $fileName = $file->getClientOriginalName() ;
+                       $extention = $file->getClientOriginalExtension();
+                       $destinationPath = public_path().'/upload/' ;
+                       $file->move($destinationPath,$fileName);
+                      
+                        $image->school_id=$school->id;
+                        $image->image=$request['image'];
+
+                       $image->save();
+                 }
+      	 
 
          return redirect()->route('school.index')
                 ->with('success','school Registerd successfully !!!!');

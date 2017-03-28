@@ -61,14 +61,14 @@ class HomeController extends Controller
 
             return redirect('/home/my_profile')->withErrors($validator);
         } else {
-            $result=DB::table('users')
-                        ->where('id', Auth::id())
-                        ->update([
-                                'fname' => $request->input('fname'),
-                                'lname' => $request->input('lname'),
-                                'email' => $request->input('email'),
-                                'address' => $request->input('address'),
-                            ]);
+            $result=User::find(Auth::id());
+
+            $result->fname=$request->input('fname');
+            $result->lname=$request->input('lname');
+            $result->email=$request->input('email');
+            $result->address=$request->input('address');
+            $result->save();
+
             return redirect('/home/my_profile')->with('success','Updations Successful');
         }
     }
@@ -98,14 +98,13 @@ class HomeController extends Controller
             }else{
 
                 if(Hash::check($request->input('old_password'),Auth::user()->password)){
-                $new_password=Hash::make($request->input('new_password'));
 
-                DB::table('users')
-                        ->where('id', Auth::id())
-                        ->update([
-                            'password' => $new_password,
-                            ]);
-                return redirect('/home/my_profile')->with('password_success','Password Updated Successful');
+                    $new_password=Hash::make($request->input('new_password'));
+                    $result=User::find(Auth::id());
+                    $result->password=$new_password;
+                    $result->save();
+
+                    return redirect('/home/my_profile')->with('password_success','Password Updated Successful');
                 }else{
                     return redirect('/home/my_profile')->withErrors(array('password_failed' => 'Old password did not matched'));
                 }
@@ -162,12 +161,10 @@ class HomeController extends Controller
                 
                 $file->move($destinationPath,$image_name);
 
-
-                DB::table('users')
-                        ->where('id', Auth::id())
-                        ->update([
-                                'image' => $image_path,
-                            ]);
+                $result=User::find(Auth::id());
+                    $result->image=$image_path;
+                    $result->save();
+        
                 return redirect('/home/my_profile');
             }else{
                 return redirect('/home/my_profile')

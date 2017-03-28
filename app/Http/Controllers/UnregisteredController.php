@@ -74,6 +74,10 @@ class UnregisteredController extends Controller
     /*For Showing all Schools*/
     public function schools_list(){
         $schools=School::all();
-        return view('user.guests.list_of_schools')->with('schools',$schools);
+        $schools_latest=School::all()
+                        ->sortByDesc('created_at');
+
+        return view('user.guests.list_of_schools')->with('schools',$schools)
+                                                    ->with('schools_latest',$schools_latest);
     }
 }
