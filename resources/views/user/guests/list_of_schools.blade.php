@@ -56,13 +56,13 @@
 								</a>
 							</div>
 						</div>
-							
-						
-							
 						@endforeach
 					</div>
+
 					<div role="tabpanel" class="tab-pane fade in" id="Highest_Rated">
-						<div class="col-xs-12 col-sm-3"><img  src="image/Medical.jpg"></div>
+						<div class="col-xs-12 col-sm-3">
+							<img  src="image/Medical.jpg">
+						</div>
 						<div class="heading col-xs-12 col-sm-9">
 							<h3>Medical stream is still a very popular choice among Indian
 							students who have passed 10th standard.  </h3>
