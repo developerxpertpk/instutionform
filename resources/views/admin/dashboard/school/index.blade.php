@@ -73,6 +73,8 @@
 		        <button type="button" class="btn btn-success" >Show</button>
 		        <button type="button" class="btn btn-success">block</button>
 
+            <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">  Edit  </a>
+
 		      <!-- Button for  Delete-->
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
               Delete
@@ -89,7 +91,7 @@
               </div>
 
             <div class="modal-body">
-             <h3> Do you want to delete {{$school->school_name}} ? </h3>
+             <h3> Do you want to delete {{$school->id}} ? </h3>
             </div>
 
             <div class="modal-footer">

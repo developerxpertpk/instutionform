@@ -81,15 +81,8 @@ class LoginController extends Controller
     }
 
     public function logout(){
-               
-                if(Auth::user()->role_id == '1'){
                     Auth::logout();
                     return redirect()->to('login');
-                }else{
-
-                    Auth::logout();
-                    return redirect()->to('login');
-                }
     }
 
 }

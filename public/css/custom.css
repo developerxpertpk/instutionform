@@ -217,3 +217,33 @@
   color:#ffffff; 
   font-weight: 500;
 }
+
+.pro_pic {
+    width: 25%;
+    float: left;
+}
+
+.img-circle.profile_img {
+    width: 100%;
+    background: #fff;
+    z-index: 1000;
+    position: inherit;
+    border: 1px solid rgba(52,73,94,.44);
+    padding: 4px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+.profile_info h2 {
+    font-size: 14px;
+    color: #ECF0F1;
+    margin: 0;
+    margin-top: 10px;
+    font-weight: 300;
+    width:100px;
+}
+.profile{
+  width:200px;
+  height:25px;
+}

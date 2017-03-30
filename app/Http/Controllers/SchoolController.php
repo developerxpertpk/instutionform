@@ -29,15 +29,30 @@ class SchoolController extends Controller
 
       public function destroy($id)
       {
-              //echo "<pre>";
-                     print_r(School::find($id));
-                     print_r(School::locations()->id);
-                       die('a');
-                       return redirect()->route('school.index')
-                                       ->with('success','Data Deleted successfully');
+                   //function to destroy datd
+                     $school = School::find($id);
+                    // $location_id = School::find($id)->location_id;
+
+                     $school->locations()->delete();
+                     $school->school_images()->delete();
+                     $school->documents()->delete();
+                     $school->delete();
+
+                     return redirect()->route('school.index')
+                                       ->with('success','Deleted successfully');
        }
-      
+
+       public function edit($id){
+           
+            // get data from databse
+           $school = School::find($id);
+            return view('admin.dashboard.school.edit',compact('school'));
+
+       }
+
+    
       public function store(Request $request){
+
                   $rules = array(
                      'school_name' => 'required',
                      'school_address' => 'required',
@@ -77,40 +92,40 @@ class SchoolController extends Controller
             
                // code for upload images if any 
                if($request->hasFile('image')){
-                        
+                          
+                          
+                          
+                   
+                    $rules = [];
+                    $files = count($request->file('image')) - 1;
+
+                  //  echo "<pre>"; 
+
+                    foreach(range(0, $files) as $index) {
+
+                    $rules['files.' . $index] = 'image|mimes:png,jpeg,jpg,gif';
+                    //print_r($rules);
+                    }
+
+                    $validator = Validator::make($request->all() , $rules);
+                    
+                    if ($validator->fails()) {
+
+                     return response()->json(array(
+                    'success' => false,
+                    'errors' => $validator->getMessageBag()->toArray()
+                    ) , 400);
+
+                     // return redirect()->route('school.create');
+                     //                    withErrors($validator);
+                    }
+                    
                         $files=$request->file('image');
                       
                           // Making counting of uploaded images
                         $file_count = count($files);
                           // start count how many uploaded
                         $uploadcount = 0;
-
-                              $rules=array(
-                                 'image' => 'image|mimes:png,jpeg,jpg,gif');
-                              $messages = [
-                                'image.image' => 'file must be an image',
-                                'image.mimes' => 'file must be jpeg'
-                              ];
-
-                              $bnt = count($files) - 1;
-
-                              foreach(range(0, $bnt) as $index) {
-                                 $rules['image.' . $index] = 'image|mimes:png,jpeg,jpg,gif|max:3000';
-                              
-                              }
-
-
-                        $validate =Validator::make($files ,$rules ,$messages);
-
-                        if($validate->fails()){
-
-                              return redirect()->route('school.create')
-                                        ->withErrors($validate)
-                                        ->withInput();
-
-                        }else{
-
-                       
 
                         $school_id=$school->id;
                         $schoolfolder = str_replace (" ", "_", $school->school_name);
@@ -141,18 +156,14 @@ class SchoolController extends Controller
                         }  
 
                       DB::table('school_images')->insert($dataSet);
-                  }        
-                  if($uploadcount == $file_count ){     
+
+                      if($uploadcount == $file_count ){     
                      return redirect()->route('school.index')
                                        ->with('success','school Registerd successfully !!!!');
                      }else{
                         die('a');
-                     }         
-                           
-          }else{
-                  die('b');
-          } //end of if 
-         
+                     }  
+                  }       
 
             // code to upload files 
         if($request->hasFile('document')){
@@ -211,3 +222,19 @@ class SchoolController extends Controller
             }
       }
    }
+     
+     // $schools =School::find(2)->location_id;
+
+      //$schools=schools()->locations->id;
+
+      //$location=Location::find(2)->country;
+
+      // $schools =School::orderby('id','asc')->get();
+      //     foreach($schools as $key => $school){
+      //       print_r($school->locations) ;
+      //     }
+
+    
+  
+
+   

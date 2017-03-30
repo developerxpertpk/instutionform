@@ -11,19 +11,7 @@
 				<h1 class="page-header">
 				School Register 
 				</h1>
-				<!-- <ol class="breadcrumb">
-					<li>
-						<i class="fa fa-dashboard"></i>Dashboard
-					</li>
-					<li >
-						<i class="fa fa-anchor"></i> School
-					</li>
 
-					<li class="active">
-						<i class="fa fa-anchor"></i> list
-					</li>
-				
-				</ol> -->
 			</div>
 		</div>
 		<!-- /.row -->
@@ -32,7 +20,8 @@
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                     <li>{{ $error }}</li>
+                  
                 @endforeach
             </ul>
         </div>
@@ -43,11 +32,13 @@
             <p>{{  $message }}</p>
         </div>
     @endif
-            <div>  <h3> School Details </h3></div>
-           
-                   
-   				<form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
-              {{ csrf_field() }}
+
+            <div class=conatiner>  
+			<form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
+			{{ csrf_field() }}
+             <h3 class="page-header"> School Details 
+
+             </h3>
 
 				<div class="form-group">
 					<label class="col-sm-6 col-md-4 col-lg-4 control-label">School Name </label>
@@ -75,18 +66,14 @@
 					</div>
 				</div>
 		
+ 			 <h3 class="page-header"> School location 
 
+             </h3>
 		
-			<div class="form-group">
-					<label class="col-md-2 control-label"></label>
-					<h3 class="col-md-4"> School Location </h3>
-			</div>
 				<div class="form-group">
 					<label class="col-md-4 control-label">Select Country:</label>
 					<div class="col-lg-4">
-						<input  type="text" id="countryId" class="countries form-control" name="country" required>
-							
-				
+						<input  type="text" id="countryId" class="countries form-control" name="country" required>				
 						@if ($errors->has('country'))
 							<span class="help-block">
 								<strong>{{ $errors->first('country') }}</strong>
@@ -94,6 +81,7 @@
 						@endif
 					</div>
 				</div>
+
 				<div class="form-group">
 					<label class="col-md-4 control-label">Select State:</label>
 					<div class="col-lg-4">
@@ -120,8 +108,11 @@
 				</div>
 
 				<!-- code for images -->
+			<h3 class="page-header"> Images
+
+             </h3>
 				<div class="form-group">
-					<label for="file_upload" class="col-sm-6 col-md-4 col-lg-4 control-label"> <h4> Image</h4>
+					<label for="file_upload" class="col-sm-6 col-md-4 col-lg-4 control-label"> 
 					</label>
 					<div class="col-md-6">
 						<input id="file_upload" type="file" name="image[]" multiple accept='image/*' >optional
@@ -136,10 +127,11 @@
 
 				 <!-- code for upload multiple files  -->
 
-
+			<h3 class="page-header"> Documents 
+             </h3>
 				 <div class="form-group">
 					<label for="Documents" class="col-sm-6 col-md-4 col-lg-4 control-label">
-					 <h4>  Documents </h4>
+					 <h4> </h4>
 					</label>
 					<div class="col-md-6">
 						<input id="document_upload" type="file" name="document[]" multiple >optional ( Attach multiple file)
@@ -152,7 +144,7 @@
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-6 col-md-offset-4">
+					<div class=" col-md-offset-10 col-md-2">
 						<button type="submit" class="btn btn-primary">
 						Register
 						</button>

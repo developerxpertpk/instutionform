@@ -1,5 +1,6 @@
-@extends('layouts.app');
-@section('content')
+@extends('layouts.user_default')
+
+@section('content_user')
 <div class="container">
 	<div class="row">
 		@if(Session::has('success'))

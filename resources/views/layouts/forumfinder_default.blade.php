@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
+
+        
     </head>
     <body>
         <header>
@@ -34,7 +36,16 @@
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
                                     @if (Auth::check())
-                                        <li><a href="{{ url('/home') }}">Home</a></li>
+                                        <li><a href="{{ url('/home') }}">
+                                                <!-- menu profile quick info -->
+                                                <div class="profile">
+                                                    <div class="pro_pic">
+                                                        <img src="upload/{{Auth::user()->image}}" alt="..." class="img-circle profile_img">
+                                                    </div>
+                                                </div>
+                                                <!-- /menu profile quick info -->
+                                            </a>
+                                        </li>
                                     @else
                                         <li><a href="{{ url('/login') }}">Login</a></li>
                                         <li><a href="{{ url('/register') }}">Register</a></li>
