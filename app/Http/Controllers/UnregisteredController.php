@@ -80,4 +80,10 @@ class UnregisteredController extends Controller
         return view('user.guests.list_of_schools')->with('schools',$schools)
                                                     ->with('schools_latest',$schools_latest);
     }
+
+
+    /*For Retriving Nearby Locations*/
+    public function retrive_nearby_locations(Request $request){
+        return response()->json(['response' => 'This is post method']); 
+    }
 }
