@@ -23,4 +23,8 @@ class School extends Model
     public function school_images(){
     	return $this->hasMany('App\School_image','school_id');
     }
+
+    public function documents(){
+        return $this->hasMany('App\School_image','school_id');
+    }
 }

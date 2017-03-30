@@ -16,7 +16,7 @@ class AddForeignSchoolsLocID extends Migration
         //
         Schema::table('schools', function (Blueprint $table) {
             $table->foreign('location_id')
-                ->references('id')->on('locations');
+                ->references('id')->on('locations')->onDelete('cascade');
         });
     }
 

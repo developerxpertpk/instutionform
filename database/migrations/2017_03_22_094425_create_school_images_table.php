@@ -22,7 +22,7 @@ class CreateSchoolImagesTable extends Migration
             $table->timestamps();
 
             $table->foreign('school_id')
-                ->references('id')->on('schools');
+                ->references('id')->on('schools')->onDelete('cascade');
     });
 }
     /**

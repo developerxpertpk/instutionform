@@ -37,7 +37,18 @@ Route::group(['middleware' => ['auth']], function () {
 
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
+			Route::get('profile',function(){
+				return view('admin.dashboard.profile');
+			})->name('admin.profile');
+
+			Route::get('changepwd',function(){
+				return view('admin.dashboard.changepwd');
+			})->name('admin.changepwd');
+
+			Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
+
 			Route::get('charts','DashboardController@chart')->name('charts');
+
 
 			Route::resource('user','UserController');
 

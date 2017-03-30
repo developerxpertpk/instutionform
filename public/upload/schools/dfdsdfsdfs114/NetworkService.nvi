@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nvi name="Network.Service" title="${{title}}" version="${{version}}" versionText="${{version}}" timestamp="2014-01-13T11:25:07" disposition="demand" hidden="true" installerMin="2.1002.142.966">
+	<strings>
+		<string name="title" value="NVIDIA Network Service"/>
+		<string name="version" value="1.0"/>
+		<string name="serviceName" value="NvNetworkService"/>
+		<string name="serviceBinaryName" value="${{serviceName}}.exe"/>
+	</strings>
+	<constraints>
+		<overinstall name="Downgrade" whenCurrent="lowerversion" level="skip" text="${{NotAnUpgradeMessage}}" promoteCriticality="false"/>
+	</constraints>
+	<dependencies>
+	</dependencies>
+	<extensions>
+	</extensions>
+	<properties>
+		<bool name="FixedInstallLocation" value="true"/>
+		<string name="InstallLocation" value="${{NvidiaProgramFilesX86}}\NetService"/>
+		<bool name="IsGFExperienceComponent" value="true"/>
+	</properties>
+	<manifest>
+		<file name="NetworkService.nvi"/>
+		<file name="${{serviceBinaryName}}"/>
+		<file name="NVNetworkServiceAPI.dll"/>
+	</manifest>
+	<phases>
+		<standard phase="RemoveDownloadCache" when="uninstall" condition="!Global:CleanInstall">
+			<deleteDirectoryTree target="${{CommonAppData}}\NVIDIA Corporation\NetService"/>
+			<deleteDirectory target="${{CommonAppData}}\NVIDIA Corporation"/>
+		</standard>
+		<standard phase="InstallNetworkService">
+			<copyFile target="${{serviceBinaryName}}"/>
+			<copyFile target="NVNetworkServiceAPI.dll"/>
+			<createService name="${{serviceName}}" type="16" target="${{InstallLocation}}\${{serviceBinaryName}}" displayName="${{title}}" description="${{title}}" groupName="" startCode="2" errorControl="0" startNow="false"/>
+		</standard>
+		<firewall phase="OpenFirewall" activity="createRule" ruleName="${{title}} TCP Exception (HTTP)" applicationName="${{InstallLocation}}\${{serviceBinaryName}}" description="TCP exceptions for ${{title}}" localPorts="80" protocol="tcp" action="allow" enable="true" onError="ignore"/>
+		<firewall phase="OpenFirewall" activity="createRule" ruleName="${{title}} TCP Exception (HTTPS)" applicationName="${{InstallLocation}}\${{serviceBinaryName}}" description="TCP exceptions for ${{title}}" localPorts="443" protocol="tcp" action="allow" enable="true" onError="ignore"/>
+		<standard phase="LaunchNetworkService" when="installClose" condition="!InstallReboot">
+			<startService name="${{serviceName}}" timeOut="10000"/>
+		</standard>
+		<standard phase="StopNetworkService" when="uninstall" onError="ignore">
+			<stopService name="${{serviceName}}" timeOut="10000"/>
+		</standard>
+	</phases>
+	<strings>
+		<localized locale="0x0409">
+			<string name="NotAnUpgradeMessage" value="Did not install. A newer version already exists."/>
+		</localized>
+		<localized locale="0x0401">
+			<string name="NotAnUpgradeMessage" value="لم يتم التثبيت. توجد بالفعل نسخة أحدث."/>
+		</localized>
+		<localized locale="0x0405">
+			<string name="NotAnUpgradeMessage" value="Nenainstalován. Je již nainstalována novější verze."/>
+		</localized>
+		<localized locale="0x0406">
+			<string name="NotAnUpgradeMessage" value="Blev ikke installeret. Der findes allerede en nyere version."/>
+		</localized>
+		<localized locale="0x0407">
+			<string name="NotAnUpgradeMessage" value="Wurde nicht installiert. Es ist bereits eine neuere Version installiert."/>
+		</localized>
+		<localized locale="0x0408">
+			<string name="NotAnUpgradeMessage" value="Μην εγκαταστήσετε. Ήδη υπάρχει νεότερη έκδοση."/>
+		</localized>
+		<localized locale="0x0809">
+			<string name="NotAnUpgradeMessage" value="Did not install. A newer version already exists"/>
+		</localized>
+		<localized locale="0x040a">
+			<string name="NotAnUpgradeMessage" value="No se instaló. Ya existe una versión más actual."/>
+		</localized>
+		<localized locale="0x080a">
+			<string name="NotAnUpgradeMessage" value="No se instaló. Ya existe una versión más actual."/>
+		</localized>
+		<localized locale="0x040b">
+			<string name="NotAnUpgradeMessage" value="Ei asennettu. Uudempi versio on jo olemassa."/>
+		</localized>
+		<localized locale="0x040c">
+			<string name="NotAnUpgradeMessage" value="Installation non effectuée. Une version plus récente existe déjà."/>
+		</localized>
+		<localized locale="0x040d">
+			<string name="NotAnUpgradeMessage" value="אל תתקין. גרסה עדכנית יותר קיימת כבר."/>
+		</localized>
+		<localized locale="0x040e">
+			<string name="NotAnUpgradeMessage" value="Nem telepíthető. Már létezik egy újabb verzió."/>
+		</localized>
+		<localized locale="0x0410">
+			<string name="NotAnUpgradeMessage" value="Installazione non eseguita. È presente una nuova versione."/>
+		</localized>
+		<localized locale="0x0411">
+			<string name="NotAnUpgradeMessage" value="インストールされませんでした。新しいバージョンが既に存在します。"/>
+		</localized>
+		<localized locale="0x0412">
+			<string name="NotAnUpgradeMessage" value="설치하지 않았습니다. 새 버전이 이미 존재합니다."/>
+		</localized>
+		<localized locale="0x0413">
+			<string name="NotAnUpgradeMessage" value="Is niet geïnstalleerd. Er bestaat reeds een nieuwere versie."/>
+		</localized>
+		<localized locale="0x0414">
+			<string name="NotAnUpgradeMessage" value="Ble ikke installert. En nyere versjon finnes allerede."/>
+		</localized>
+		<localized locale="0x0415">
+			<string name="NotAnUpgradeMessage" value="Nie zainstalowano. Istnieje już nowsza wersja."/>
+		</localized>
+		<localized locale="0x0816">
+			<string name="NotAnUpgradeMessage" value="A instalação não foi concretizada. Já existe uma versão mais recente."/>
+		</localized>
+		<localized locale="0x0416">
+			<string name="NotAnUpgradeMessage" value="Não foi instalado. Já existe uma versão mais recente."/>
+		</localized>
+		<localized locale="0x0419">
+			<string name="NotAnUpgradeMessage" value="Установка не выполнена. Уже имеется более новая версия."/>
+		</localized>
+		<localized locale="0x041b">
+			<string name="NotAnUpgradeMessage" value="Nenainštalovalo sa. Existuje novšia verzia."/>
+		</localized>
+		<localized locale="0x0424">
+			<string name="NotAnUpgradeMessage" value="Ni namestil. Novejša različica že obstaja."/>
+		</localized>
+		<localized locale="0x041d">
+			<string name="NotAnUpgradeMessage" value="Installerades inte. En nyare version finns redan."/>
+		</localized>
+		<localized locale="0x041e">
+			<string name="NotAnUpgradeMessage" value="ไม่ได้ติดตั้ง มีรุ่นใหม่อยู่แล้ว"/>
+		</localized>
+		<localized locale="0x041f">
+			<string name="NotAnUpgradeMessage" value="Kurulmadı. Zaten daha yeni bir sürüm mevcut."/>
+		</localized>
+		<localized locale="0x0804">
+			<string name="NotAnUpgradeMessage" value="未安装。已存在更新的版本。"/>
+		</localized>
+		<localized locale="0x0404">
+			<string name="NotAnUpgradeMessage" value="未安裝。已有較新的版本。"/>
+		</localized>
+	</strings>
+	<include name="${{InstallerDllDirectory}}\GFExperienceProgressText*.cfg" select="/nvi/*"/>
+</nvi>

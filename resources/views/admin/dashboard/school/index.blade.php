@@ -1,7 +1,7 @@
 @extends ('layouts.admin.adminLayout')
 @section('content')
 
-	<div id="page-wrapper">
+<div id="page-wrapper">
 	<div class="container-fluid">
 		<!-- Page Heading -->
 		<div class="row">
@@ -28,139 +28,13 @@
 
 
       <div class="pull-right">
-      <button class="btn btn-primery" data-toggle="modal" data-target=".add"> ADD</button>
+      <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School 
+       </button></a>
 
       </div>
 </div>
 
-<!--  Bootstrap Model  for add  button schools  -->
-<!-- Large modal  Model data-target=".add"-->
 
-
-<div class="modal fade add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">  
-          <div class="modal-header">
-
-          <h4 class="modal-title" id="myModalLabel">Register</h4>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-      </div>         
-	<div class="container register-model " style="border:5px solid black;width:800px; height:500px; overflow:scroll;">
-
-	<script>
-		$(document).ready(function(){
-		    $("register-model").scroll(function();
-		});
-	</script>
-			
-    <div class="row">
-
-        <div class="col-md-12 col-sm-6 col-lg-12">
-
-                <div class="panel-heading"> <h2> School Details </h2></div>
-                <div class="panel-body">
-
-                    <form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
-                        {{ csrf_field() }}
-
-				<div class="form-group">
-					<label class="col-md-4 control-label">School Name</label>
-					<div class="col-md-6">
-						<input id="school_name" type="text" class="form-control" name="school_name" value=" " required>
-
-						@if ($errors->has('school_name'))
-							<span class="help-block">
-								<strong>{{ $errors->first('school_name') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-md-4 control-label">Address
-					</label>
-					<div class="col-md-6">
-						<textarea name="school_address" class="form-control" rows="4" required></textarea>  
-						@if ($errors->has('address'))
-							<span class="help-block">
-								<strong>{{ $errors->first('address') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="file_upload" class="col-md-4 control-label">Image
-					</label>
-					<div class="col-md-6">
-						<input id="file_upload" type="file" name="image" multiple >optional
-						@if ($errors->has('file_up'))
-							<span class="help-block">
-								<strong>{{ $errors->first('file_up') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-2 control-label"></label>
-					<h3 class="col-md-4">Location</h3>
-				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label">Select Country:</label>
-					<div class="col-lg-3">
-						<input  type="text" id="countryId" class="countries form-control" name="country" required>
-							
-				
-						@if ($errors->has('country'))
-							<span class="help-block">
-								<strong>{{ $errors->first('country') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label">Select State:</label>
-					<div class="col-lg-3">
-						<input id="stateId" class="states form-control" name="state" required >
-						
-						@if ($errors->has('state'))
-							<span class="help-block">
-								<strong>{{ $errors->first('state') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label">Select City:</label>
-					<div class="col-lg-3">
-						<input id="cityId" class="cities form-control" name="city" required>
-					
-						@if ($errors->has('city'))
-							<span class="help-block">
-								<strong>{{ $errors->first('city') }}</strong>
-							</span>
-						@endif
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-md-6 col-md-offset-4">
-						<button type="submit" class="btn btn-primary">
-						Register
-						</button>
-					</div>
-				</div>
-			</form>
-
-
-                      </form>
-                    </div>
-                 </div>
-              </div>
-    </div>
-  </div>
-</div>
-</div>
  <!-- end of model0 (add model) -->
 
  <!-- container to show detail of schools -->
@@ -198,8 +72,39 @@
 		        <td> 
 		        <button type="button" class="btn btn-success" >Show</button>
 		        <button type="button" class="btn btn-success">block</button>
-		        <button type="button" class="btn btn-success">delete</button>
-		        <>
+
+		      <!-- Button for  Delete-->
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+              Delete
+          </button>
+
+        <!-- Modal  for delete with id=01-->
+        <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmation  </h4>
+              </div>
+
+            <div class="modal-body">
+             <h3> Do you want to delete {{$school->school_name}} ? </h3>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                  {!! Form::open(['method' => 'DELETE','route' => ['school.destroy', $school->id],'style'=>'display:inline','class'=>'delete']) !!}
+
+                  {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
+                  {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
+       </div>
+
+
+		      
 		         </td>
 		    </tr>
 	@endforeach

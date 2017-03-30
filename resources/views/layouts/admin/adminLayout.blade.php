@@ -145,10 +145,10 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{  auth::user()->fname." ".auth::user()->lname }}<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{  Auth::user()->fname." ".Auth::user()->lname }}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                           <a href=" {{ route('admin.profile') }}"> <i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
@@ -156,6 +156,10 @@
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
+                        <li>
+                            <a href= "{{ route('admin.changepwd') }}" ><i class="fa fa-fw fa-gear"></i> Change Password</a>
+                        </li>
+
                         <li class="divider">logout</li>
                         <li>
                             <a href="{{ route('logout') }}"
@@ -169,6 +173,32 @@
                     </ul>
                 </li>
             </ul>
+<!-- 
+<li class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{  Auth::user()->fname." ".Auth::user()->lname }}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+           <li>
+         <a href=" {{ route('admin.profile') }}"> <i class="fa fa-fw fa-user"></i> Profile</a>
+            </li>
+        <li>
+         <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+        </li>
+                
+        <li class="divider">logout</li>
+        <li>
+            <a href="{{ route('logout') }}"
+
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+        </li>
+    </ul>
+  </li>
+</div>
+ -->
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
