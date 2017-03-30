@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('forum&finder_welcome');
+    return view('home');
 });
 
 
@@ -86,3 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 
 });
+
+Route::get('map_data','UnregisteredController@retrive_nearby_locations');
+
+//forum&finder_welcome
