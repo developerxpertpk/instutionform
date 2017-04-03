@@ -83,9 +83,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search_location','UnregisteredController@search_location_school');
 
-Route::get('/show_school/{id}','UnregisteredController@show_school');
+Route::get('show_school/{id}','UnregisteredController@show_school');
 
-Route::get('/schools_list','UnregisteredController@schools_list');
+Route::get('schools_list','UnregisteredController@schools_list');
+
+Route::get('details',function(){
+	return view('user.guests.view_school');
+});
 
 
 /*USER HOME GROUP*/
@@ -108,6 +112,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-//Route::get('map_data','UnregisteredController@retrive_nearby_locations');
+Route::get('map_data','UnregisteredController@retrive_nearby_locations');
 
 //forum&finder_welcome
