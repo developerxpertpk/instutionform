@@ -25,14 +25,19 @@
 			</div>
 		</div>
 		<!-- /.row -->
+	 <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School 
+      </button></a>
 
+	<div class="pull-right">
+		
+	<div class="search-bar">
+	
+		<form method="GET" action ="#" >
+		  <input type="text" id="search-bar" placeholder ="search" >
+		</form>
+		</div>
+    </div>
 
-      <div class="pull-right">
-      <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School 
-       </button></a>
-
-      </div>
-</div>
 
 
  <!-- end of model0 (add model) -->
@@ -95,7 +100,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                   {!! Form::open(['method' => 'DELETE','route' => ['school.destroy', $school->id],'style'=>'display:inline','class'=>'delete']) !!}
 
                   {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}

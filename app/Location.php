@@ -9,7 +9,7 @@ class Location extends Model
     //
 
     protected $fillable = [
-        'country','state','city',
+        'country','state','city','zip','latitute','longitude',
     ];
 
     public function schools(){

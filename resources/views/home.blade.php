@@ -1,3 +1,5 @@
+
+{{-- test page--}}
 <!-- <!DOCTYPE html>
 <html>
   <head>
@@ -122,8 +124,6 @@
                     var lat = position.coords.latitude;
                     var lng = position.coords.longitude;
 
-
-
                     /*test code*/
 
 
@@ -134,8 +134,6 @@
                     });
 
                     /*test code*/
-
-
 
                     codeLatLng(lat, lng);
 
@@ -173,7 +171,6 @@
     <!-- Map Script Close-->
 
     <!--Reverse geocoder linked with geolocation -->
-    
     <script type="text/javascript"> 
 
         function errorFunction(){

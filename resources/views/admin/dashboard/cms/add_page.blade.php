@@ -1,53 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title> Admin - dashboard Template</title>
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>   
-
-    <!-- Bootstrap Core CSS -->
-    <!-- addes juery -->  
-    
-    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/location.js') }}" type="text/javascript" ></script>
 	
+  <script src='//cloud.tinymce.com/stable/tinymce.min.js'></script>
+  <script>
+  tinymce.init({
+    selector: '#mytextarea',
+	theme: 'modern',
+    width: 600,
+    height: 300,
+	inline:true,
+	 plugins: [
+			  'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+			  'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+			  'save table contextmenu directionality emoticons template paste textcolor'
+	],
+
+	  content_css: 'css/content.css',
+	 toolbar:[ 'undo redo | styleselect | bold italic | link image',
+				'alignleft aligncenter alignright'
+	 
+	 ]
+  });
+  </script>
+
 	<link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="{{ asset('css/plugins/morris.css') }}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="{{ asset('../font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-	
- <!-- script for tinymce editor --> 
- 
+	<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+  
 </head>
 <body>
  <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -226,17 +216,73 @@
             </div>
             <!-- /.navbar-collapse -->
         </nav>
-        <div id="page-wrapper">
+		  <!-- /.wapper-collapse -->
+	
+		  <div id="page-wrapper">
+			<div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="page-header">
+                           Content Manager
+                        </h2>
+					</div>
+				</div>
+		<div class="pagecontainer">
+		  <div class="pagoverflow">
+			<form   method="post" class="form-horizontal" role="form"  enctype="multipart/form-data" action="{{route('school.store')}}">
+              {{ csrf_field() }}
+			
+				<div class="row">
+					<div class="col-lg-12">
+						<h3> Add Page Content</h3>
+						<div class="pull-right">	
+							<a class="btn btn-success"  type= "submit" href="{{ route('content')}}"> Submit </a>
+							<a class="btn btn-danger" href="{{ route('content')}}"> Back </a>
+						</div>	
+					</div>
+                </div>
+				
+				<div class="form-group">
+					<label class="col-sm-6 col-md-4 col-lg-4 control-label"> *Content Type </label>
+					
+					<div class="col-sm-6 col-md-6 ">
+						<select id="content_type" type="text" class="form-control" name="Content_type" required autofocus>
+							
+							<option value="">Content</option>
+								<option value="yellow">Static </option>
+								<option value="purple">Error Pgae</option>
+								<option value="purple">Redirecting Link</option>
+								<option value="purple">Interpage Link</option>
+								<option value="purple">Section Header</option>
+						
+						</select>
+				
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-6 col-md-4 col-lg-4 control-label"> *Title </label>
+					<div class="col-sm-6 col-md-6 ">
+						<input id="title" type="text" class="form-control" name="title" required autofocus>
+					
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-6 col-md-4 col-lg-4 control-label"> *Content </label>
+						<div class="col-sm-6 col-md-6 ">
+						<textarea id="mytextarea" name="content"></textarea>
+					</div>
+				
+			  </form>  
+			</div>
+			</div>
+		</div>
+		</div>
+		</div>
 
-            <div class="container-fluid">
-                @yield('content')
-            </div>
-        <!-- /#page-wrapper -->
-      </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+	 <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -247,5 +293,4 @@
     <script src="js/plugins/morris/morris-data.js"></script>
 
 </body>
-
 </html>

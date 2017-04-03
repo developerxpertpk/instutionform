@@ -2,10 +2,21 @@
 
 @section('content')
 
+<div id="page-wrapper">
+			<div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+					
+                        <h2 class="page-header">
+                          Manage User	
+                        </h2>
+					</div>
+				</div>
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Add New User</h2>
+                <h4 >Register Uesr </h4>
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('user.index') }}"> Back</a>
@@ -25,7 +36,7 @@
     @endif
 
     <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default animated bounce">
+         
                 <div class="panel-heading"> </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{ route('user.store') }}">
@@ -138,6 +149,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+         
+			</div>
+		</div>
+	</div>
 @endsection

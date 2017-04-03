@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
 			Route::get('profile',function(){
-				return view('admin.dashboard.profile');
+					return view('admin.dashboard.profile');
 			})->name('admin.profile');
 
 			Route::get('changepwd',function(){
@@ -56,10 +56,21 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('admin/user/search', 'UserController@search');
 
 			/*  route for school-institue */
-			//Route::get('school','SchoolController@index');
+			
 			Route::resource('school','SchoolController');
-			//Route::get('school','SchoolController@list');
-			});
+			//Route::get('school','SchoolController@list
+			
+			// Routes for cms
+			Route::get('content',function(){
+				  return view('admin.dashboard.cms.content');			
+			})->name('content');
+			
+			Route::get('pages',function(){
+				  return view('admin.dashboard.cms.add_page');			
+			})->name('addpages');
+			
+    	});
+				
 });
 
 Route::get('/search', 'UserController@search');
