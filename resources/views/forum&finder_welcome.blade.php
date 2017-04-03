@@ -4,6 +4,9 @@
 <section class="search_banner">
 	<div id="slidermy" class="carousel slide" data-ride="carousel">
 		 Indicators -->
+		<!-- <div class="map_div"> -->
+	        <div id="map"></div> 
+	    <!-- </div> -->
 		
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
@@ -69,11 +72,12 @@
 			<h2>Search Results</h2>
 			<p>
 				<strong>Showing results for:
-					@if(isset($message_1))
+					@if(isset($message_1) && isset($message_2))
+						{{ $message_1." & ".$message_2 }}
+					@elseif(isset($message_1))
 						{{ $message_1 }}
-					@endif
-					@if(isset($message_2))
-						{{ "& ".$message_2 }}
+					@elseif(isset($message_2))
+						{{ $message_2 }}
 					@endif
 				</strong>
 			</p>

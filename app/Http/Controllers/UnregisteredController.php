@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Schema;
 use App\School;
 use App\Location;
+use Illuminate\Support\Facades\DB;
 
 class UnregisteredController extends Controller
 {
@@ -68,8 +70,13 @@ class UnregisteredController extends Controller
 
     /*For Showing a particular school */
     public function show_school($id){
-        echo "under construction";
+
+        $particular_school=School::where('id','=',$id)->get();
+        return view('user.guests.view_school')->with('particular_school',$particular_school);
+        //echo "under construction";
     }
+
+
 
     /*For Showing all Schools*/
     public function schools_list(){
@@ -77,13 +84,34 @@ class UnregisteredController extends Controller
         $schools_latest=School::all()
                         ->sortByDesc('created_at');
 
+        $schools_oldest=School::all()
+                        ->sortBy('created_at');
+
         return view('user.guests.list_of_schools')->with('schools',$schools)
-                                                    ->with('schools_latest',$schools_latest);
+                                                    ->with('schools_latest',$schools_latest)
+                                                    ->with('schools_oldest',$schools_oldest);
     }
 
 
     /*For Retriving Nearby Locations*/
     public function retrive_nearby_locations(Request $request){
-        return response()->json(['response' => 'This is post method']); 
+
+        //print_r($request);
+        //$response=$request->all();
+        $distance=10;
+        $latitude=$request->latitude;
+        $longitude=$request->longitude;
+        $result=DB::raw('SELECT locations.*,schools.* FROM locations,schools where locations.`id` = schools.location_id AND '.$distance.' >= ( ((ACOS( SIN( ('.$latitude.' * PI( ) /180 ) ) * SIN( (locations.latitude * PI( ) /180 ) ) + COS( ('.$latitude.' * PI( ) /180 )) * COS( (locations.latitude * PI( ) /180 )) * COS( (('.$longitude.' - locations.longitude) * PI( ) /180 )))) *180 / PI( )) *60 * 1.1515)');
+
+        $response=$request->city;
+
+        if(count($result)){
+            return response()->json(false);
+        }else{
+            return response()->json([$result]);
+        }
+        
+        //['response' => 'This is post method']
+        //return response()->json($result); 
     }
 }
