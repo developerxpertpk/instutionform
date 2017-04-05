@@ -1,6 +1,7 @@
 @extends ('layouts.admin.adminLayout')
 @section('content')
 
+
 <div id="page-wrapper">
 	<div class="container-fluid">
 		<!-- Page Heading -->
@@ -29,13 +30,15 @@
       </button></a>
 
 	<div class="pull-right">
-		
-	<div class="search-bar">
-	
-		<form method="GET" action ="#" >
-		  <input type="text" id="search-bar" placeholder ="search" >
-		</form>
-		</div>
+
+        {!! Form::open(['method' => 'GET', 'url' => 'school.search'] ) !!}
+        {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any name or email']) !!}
+
+        {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
+
+        {!! Form::close() !!}
+
+
     </div>
 
 
@@ -43,7 +46,7 @@
  <!-- end of model0 (add model) -->
 
  <!-- container to show detail of schools -->
- <div class="container">
+
 
 
   @if ($message = Session::get('success'))
@@ -52,27 +55,27 @@
         </div>
     @endif
 
+
 <div class="list-school">
     <table class="table table-bordered">
         <tr><h1>
             <th>ID</th>
             <th>NAME </th>
-            <th>ADDRESS </th>
+            <th>ZIP</th>
             <th>CITY </th>
             <th>STATE</th>
             <th>COUNTRY</th>
             <th>STATUS</th>
             <th width="320px">Action</th></h1>
         </tr>
-
     @foreach ($schools as $key => $school)
     		<tr>
 		        <td>{{ ++$i }}</td>
 		        <td>{{ $school->school_name }}</td>
-		        <td>{{ $school->school_address }}</td>
+                <td>{{ $school->locations->zip }} </td>
 		        <td>{{ $school->locations->city }} </td>
 		        <td>{{ $school->locations->state}} </td>
-		        <td>{{ $school->locations->country}} </td>	   
+		        <td>{{ $school->locations->country}} </td>
             	<td>{{ $school->status }}</td>
 		        <td> 
 		        <button type="button" class="btn btn-success" >Show</button>
@@ -117,7 +120,7 @@
 	@endforeach
 
 			</table>
-		</div>
+
  	</div>
  </div>
 

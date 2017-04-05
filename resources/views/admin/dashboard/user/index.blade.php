@@ -26,31 +26,26 @@
       </div>
     </div>
 
-<div class="container row">
+
 
   <div class="col-lg-12 margin-tb">
 
-        <div class="pull-left col-md-4">
-              <h2>User</h2>
-        </div>
-
-
-        <div class="col-md-4">
-            <a class="btn btn-success" href="{{ route('user.create') }}" > Create New User
+        <div class="pull-left">
+            <a class="btn btn-success" href="{{ route('user.create') }}" > Add
             </a>
         </div>
 
-        <div class="col-md-4 pull-right user-search">
+        <div class="pull-right user-search">
                   
                 {!! Form::open(['method' => 'GET', 'url' => '/search'] ) !!}
                 {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any name or email']) !!}
 
-                {!! Form::submit('search', ['class' => 'btn btn-success']) !!}
+                {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
 
                 {!! Form::close() !!}
         </div>
   </div>
-</div>
+</>
 
  <!--  check if any error -->
     @if ($message = Session::get('success'))
@@ -267,5 +262,5 @@
 </div>
   {!! $users->render() !!}
   </div>
-</div>
+
 @endsection

@@ -1,119 +1,115 @@
-    function ajaxCall() {
-        this.send = function(data, url, method, success, type) {
-          type = type||'json';
-          var successRes = function(data) {
-              success(data);
-          }
 
-          var errorRes = function(e) {
-              console.log(e);
-              alert("Error found \nError Code: "+e.status+" \nError Message: "+e.statusText);
-          }
-            $.ajax({
-                url: url,
-                type: method,
-                data: data,
-                success: successRes,
-                error: errorRes,
-                dataType: type,
-                timeout: 60000
-            });
-
-          }
-
-        }
-
-function locationInfo() {
-    var rootUrl = "http://iamrohit.in/lab/php_ajax_country_state_city_dropdown/apiv1.php";
-    var call = new ajaxCall();
-    this.getCities = function(id) {
-        $(".cities option:gt(0)").remove();
-        var url = rootUrl+'?type=getCities&stateId=' + id;
-        var method = "post";
-        var data = {};
-        $('.cities').find("option:eq(0)").html("Please wait..");
-        call.send(data, url, method, function(data) {
-            $('.cities').find("option:eq(0)").html("Select City");
-            if(data.tp == 1){
-                $.each(data['result'], function(key, val) {
-                    var option = $('<option />');
-                    option.attr('value', key).text(val);
-                    $('.cities').append(option);
-                });
-                $(".cities").prop("disabled",false);
-            }
-            else{
-                 alert(data.msg);
-            }
-        });
-    };
-
-    this.getStates = function(id) {
-        $(".states option:gt(0)").remove(); 
-        $(".cities option:gt(0)").remove(); 
-        var url = rootUrl+'?type=getStates&countryId=' + id;
-        var method = "post";
-        var data = {};
-        $('.states').find("option:eq(0)").html("Please wait..");
-        call.send(data, url, method, function(data) {
-            $('.states').find("option:eq(0)").html("Select State");
-            if(data.tp == 1){
-                $.each(data['result'], function(key, val) {
-                    var option = $('<option />');
-                    option.attr('value', key).text(val);
-                    $('.states').append(option);
-                });
-                $(".states").prop("disabled",false);
-            }
-            else{
-                alert(data.msg);
-            }
-        }); 
-    };
-
-    this.getCountries = function() {
-        var url = rootUrl+'?type=getCountries';
-        var method = "post";
-        var data = {};
-        $('.countries').find("option:eq(0)").html("Please wait..");
-        call.send(data, url, method, function(data) {
-            $('.countries').find("option:eq(0)").html("Select Country");
-            console.log(data);
-            if(data.tp == 1){
-                $.each(data['result'], function(key, val) {
-                    var option = $('<option />');
-                    option.attr('value', key).text(val);
-                    $('.countries').append(option);
-                });
-                $(".countries").prop("disabled",false);
-            }
-            else{
-                alert(data.msg);
-            }
-        }); 
-    };
-
+function getLocation(){
+    var zip = $('.zip').val();
+    getAddressInfoByZip(zip);
+    return false;
 }
 
-$(function() {
-var loc = new locationInfo();
-loc.getCountries();
- $(".countries").on("change", function(ev) {
-        var countryId = $(this).val()
-        if(countryId != ''){
-        loc.getStates(countryId);
+    function response(obj){
+        console.log(obj);
+    }
+    function getAddressInfoByZip(zip){
+        //console.log(zip.length); return false;
+
+        if(zip.length >= 5 && typeof google != 'undefined') {
+            var addr = {};
+            var lat ='';
+            var lng ='';
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': zip}, function (results, status) {
+
+
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results.length >= 1) {
+
+                        for (var ii = 0; ii < results[0].address_components.length; ii++) {
+
+                            var street_number = route = street = city = state = zipcode = country = formatted_address = '';
+                            var types = results[0].address_components[ii].types.join(",");
+
+                            if (types == "street_number") {
+                                addr.street_number = results[0].address_components[ii].long_name;
+                            }
+                            if (types == "route" || types == "point_of_interest,establishment") {
+                                addr.route = results[0].address_components[ii].long_name;
+                            }
+                            if (types == "sublocality,political" || types == "locality,political" || types == "neighborhood,political" || types == "administrative_area_level_3,political" || types == "administrative_area_level_2,political") {
+                                addr.city = (city == '' || types == "locality,political") ? results[0].address_components[ii].long_name : city;
+                            }
+                            if (types == "administrative_area_level_1,political") {
+                                addr.state = results[0].address_components[ii].short_name;
+                            }
+                            if (types == "postal_code" || types == "postal_code_prefix,postal_code") {
+                                addr.zipcode = results[0].address_components[ii].long_name;
+                            }
+                            if (types == "country,political") {
+                                addr.country = results[0].address_components[ii].long_name;
+                            }
+
+                            if(addr.country == ""){
+                                $("#countryId").hide();
+                            }
+                            if(addr.state == ""){
+                                $("#stateId").hide();
+                            }
+                            if(addr.city== ""){
+                                $("#cityId").hide();
+                            }
+                            userlat = results[0].geometry.location.lat();
+
+                            userlng = results[0].geometry.location.lng();
+
+
+                                $('#countryId').removeAttr('value');
+                                $('#stateId').removeAttr('value');
+                                $('#cityId').removeAttr('value');
+                                $('#lat').removeAttr('value');
+                                $('#long').removeAttr('value');
+                                $('#countryId').val(addr.country);
+                                $('#stateId').val(addr.state);
+                                $('#cityId').val(addr.city);
+                                $('#lat').val(userlat);
+                                $('#long').val(userlng);
+
+
+
+                        }
+
+                        addr.success = true;
+                        for (name in addr) {
+                            console.log('### google maps api ### ' + name + ': ' + addr[name]);
+                        }
+                        console.log('Latitude: ' + userlat + ' Logitude: ' + userlng);
+                        response(addr);
+
+
+                        initMap(userlat,userlng);
+                    } else {
+                        alert("Geocode was not successful for the following reason: " + status);
+                    }
+                } else {
+                    response({success: false});
+                }
+            });
+        }else {
+                alert("yes");
+            response({success: false});
         }
-        else{
-            $(".states option:gt(0)").remove();
+        return false;
         }
+
+function initMap(userlat,userlng) {
+    var latlng = {lat: userlat, lng: userlng}
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center:latlng ,
+        zoom: 12
     });
- $(".states").on("change", function(ev) {
-        var stateId = $(this).val()
-        if(stateId != ''){
-        loc.getCities(stateId);
-        }
-        else{
-            $(".cities option:gt(0)").remove();
-        }
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map
     });
-});
+
+ return false;
+}
