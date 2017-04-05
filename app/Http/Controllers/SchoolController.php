@@ -56,6 +56,7 @@ class SchoolController extends Controller
                   $rules = array(
                      'school_name' => 'required',
                      'school_address' => 'required',
+                     'zip'=>'required',
                      'country' => 'required',
                      'state' =>   'required',
                      'city' => 'required'
@@ -75,12 +76,15 @@ class SchoolController extends Controller
                      /*  make model objects */
                       $location= new Location();  /*location object*/
                       $school= new School();     /* School object */
-                      $image= new School_image(); /* image object */
-                      $document= new Document(); /*document object */   
-                             // check weather request has image path or not
+                      $image = new School_image(); /* image object */
+                      $document = new Document(); /*document object */
+                      // check weather request has image path or not
                        $location->country = $request['country'];
                        $location->state = $request['state'];
                        $location->city = $request['city'];
+                       $location->zip=$request['zip'];
+                       $location->latitude=$request['latitude'];
+                       $location->longitude=$request['longitude'];
                                                    
                        $location->save();
                         
@@ -92,10 +96,7 @@ class SchoolController extends Controller
             
                // code for upload images if any 
                if($request->hasFile('image')){
-                          
-                          
-                          
-                   
+
                     $rules = [];
                     $files = count($request->file('image')) - 1;
 
@@ -221,7 +222,46 @@ class SchoolController extends Controller
             ->with('success','school Registerd successfully !!!!');
             }
       }
-   }
+
+    // add search()
+    function search(Request $request)
+    {
+        die('a');
+        $school = School::all();
+        $search = $request->input('search');
+        // if serach bar is not empty
+        if(!empty($ staticsearch)){
+
+        $users = User::where('fname','LIKE','%'.$search.'%')
+            ->orWhere('lname', 'LIKE', '%'. $search .'%')
+            ->orWhere('email', 'LIKE', '%'. $search .'%')
+            ->orderBy('fname')
+            ->get();
+
+        if(!$users->isEmpty()){
+
+            return view('admin.dashboard.user.search',compact('users'))
+                ->with('i', ( $request->input('page', 1) - 1) * 5)
+                ->with('success',' data found');
+
+        }else{
+
+            return view('admin.dashboard.default')
+                ->with('success','Sorry data not found');
+        }
+    }else{
+
+        return redirect()->route('user.index')
+            ->with('success','Please Enter Name/email to find result ');
+    }
+
+            }
+
+
+
+
+
+}
      
      // $schools =School::find(2)->location_id;
 

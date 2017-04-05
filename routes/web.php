@@ -58,8 +58,10 @@ Route::group(['middleware' => ['auth']], function () {
 			/*  route for school-institue */
 			
 			Route::resource('school','SchoolController');
+			Route::get('school/search','SchoolController@search')->name('school.search');
+
 			//Route::get('school','SchoolController@list
-			
+
 			// Routes for cms
 			Route::get('content',function(){
 				  return view('admin.dashboard.cms.content');			

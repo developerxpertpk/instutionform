@@ -17,7 +17,6 @@
 			<ul>
 				@foreach ($errors->all() as $error)
 				<li>{{ $error }}</li>
-				
 				@endforeach
 			</ul>
 		</div>
@@ -28,13 +27,15 @@
 			<p>{{  $message }}</p>
 		</div>
 		@endif
+
 		<div class=conatiner>
 			<form class="form-horizontal" role="form" method="post"  enctype="multipart/form-data" action="{{route('school.store')}}">
 				{{ csrf_field() }}
 				<h3 class="page-header"> School Details
 				</h3>
+
 				<div class="form-group">
-					<label class="col-sm-6 col-md-4 col-lg-4 control-label">School Name </label>
+					<label class="col-sm-6 col-md-4 col-lg-4 control-label">School Name* </label>
 					<div class="col-sm-6 col-md-6 ">
 						<input id="school_name" type="text" class="form-control" name="school_name" placeholder="A B C *" required autofocus>
 						@if ($errors->has('school_name'))
@@ -44,11 +45,14 @@
 						@endif
 					</div>
 				</div>
+
 				<div class="form-group">
-					<label class="col-sm-6 col-md-4 col-lg-4 control-label">Address
+					<label class="col-sm-6 col-md-4 col-lg-4 control-label">Address*
 					</label>
+
 					<div class=" col-sm-6 col-md-6 ">
 						<textarea name="school_address" class="form-control" rows="4" required></textarea>
+
 						@if ($errors->has('address'))
 						<span class="help-block">
 							<strong>{{ $errors->first('address') }}</strong>
@@ -56,17 +60,28 @@
 						@endif
 					</div>
 				</div>
+
+					<div class="form-group">
+						<label class="col-sm-6 col-md-4 control-label- control-label">Zip Code* </label>
+						<div class="col-lg-6 col-md-6">
+							<input class="zip form-control " type="text" name="zip" value=""  required onblur="getLocation()"; return false;>
+						</div>
+					</div>
+
+
 				
 				<h3 class="page-header"> School location
 				</h3>
 
+				<div class="row col-lg-12 col-md-12">
+					<div class="col-md-6 col-md-6">
+
 				<div class="form-group">
-					<label class="col-md-4 control-label">Select Country:</label>
-					<div class="col-lg-3">
-						<select id="countryId" class="countries form-control" name="country">
-							
-							<option value="">Select Country</option>
-						</select>
+
+					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
+
+						<input id="countryId" class="countries form-control" name="country" value ="country*">
+						</input>
 						@if ($errors->has('country'))
 							<span class="help-block">
 								<strong>{{ $errors->first('country') }}</strong>
@@ -74,25 +89,27 @@
 						@endif
 					</div>
 				</div>
+
+
 				<div class="form-group">
-					<label class="col-md-4 control-label">Select State:</label>
-					<div class="col-lg-3">
-						<select id="stateId" class="states form-control" name="state">
-							<option value="">Select State</option>
-						</select>
+
+					<div class="col-md-4 col-lg-4 col-lg-offset-2 col-md-offset-2">
+						<input id="stateId" class="states form-control" name="state" value="state*">
+						</input>
+					</div>
 						@if ($errors->has('state'))
 							<span class="help-block">
 								<strong>{{ $errors->first('state') }}</strong>
 							</span>
 						@endif
-					</div>
+
 				</div>
+
 				<div class="form-group">
-					<label class="col-md-4 control-label">Select City:</label>
-					<div class="col-lg-3">
-						<select id="cityId" class="cities form-control" name="city">
-							<option value="">Select City</option>
-						</select>
+					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
+						<input id="cityId" class="cities form-control" name="city" value="city*">
+
+						</input>
 						@if ($errors->has('city'))
 							<span class="help-block">
 								<strong>{{ $errors->first('city') }}</strong>
@@ -100,6 +117,30 @@
 						@endif
 					</div>
 				</div>
+
+				<div class="form-group">
+					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
+						<input id="lat" type="hidden" class="lat form-control" name="latitude" value="lat" class="hidden" >
+
+						</input>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
+						<input id="long"  type="hidden" class="long form-control" name="longitude" value="long" >
+
+						</input>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-md-6 col-lg-6 ">
+				<div id="map">
+
+				</div>
+			</div>
+		</div>
 				<!-- code for images -->
 				<h3 class="page-header"> Images
 				</h3>
@@ -143,8 +184,10 @@
 			</form>
 		</div>
 	</div>
+	</div>
 </div>
 </div>
 </div>
 </div>
+
 @endsection
