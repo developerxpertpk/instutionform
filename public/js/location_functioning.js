@@ -162,7 +162,7 @@
                     if(response==false){
                         console.log('empty: '+response);
                     }else{
-                        console.log()
+                        console.log(JSON.stringify(response))
                     }
                     //console.log(response);
                     //alert(JSON.stringify(response));

@@ -2,11 +2,14 @@
 <html>
     <head>
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+
+        <!-- User location Access and retriving School results Dynamically Script -->
+        <script src="{{ asset('js/location_functioning.js') }}" type="text/javascript"></script>
+
         <!-- Map Script -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARw1SIiaQjUQyJuqwJXu1YRnNUX81DXYk&callback=initMap"></script>
         
-        <!-- User location Access and retriving School results Dynamically Script -->
-        <script src="{{ asset('js/location_functioning.js') }}" type="text/javascript"></script>
+        
         
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
@@ -28,13 +31,13 @@
             margin: 0;
             padding: 0;
         }*/
-        .map_div{
+        /*.map_div{
             width:500px;
             height:600px;
             margin-left: 100px;
             margin-top: 30px;
             border:2px solid #000;
-        }
+        }*/
     </style>
 
         
@@ -52,13 +55,13 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#"><img src="{{asset('image\finallogo.png')}}"></a>
+                            <a class="navbar-brand" href="/"><img src="{{asset('image\finallogo.png')}}"></a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li><a href="/">Home</a></li>
                                 <li><a href="#">About</a></li>
-                                <li><a href="schools_list">List of Schools</a></li>
+                                <li><a href="/schools_list">List of Schools</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
