@@ -11,13 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('forum&finder_welcome');
-});
-
-
-
-
+Route::get('/','PageController@home');
 
 
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
@@ -58,24 +52,25 @@ Route::group(['middleware' => ['auth']], function () {
 			/*  route for school-institue */
 			
 			Route::resource('school','SchoolController');
-			Route::get('school/search','SchoolController@search')->name('school.search');
+            /*  route for school-institue */
+            Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
 			//Route::get('school','SchoolController@list
 
 			// Routes for cms
-			Route::get('content',function(){
-				  return view('admin.dashboard.cms.content');			
-			})->name('content');
-			
+			Route::get('content','PageController@index')->name('content');
+
 			Route::get('pages',function(){
-				  return view('admin.dashboard.cms.add_page');			
+				  return view('admin.dashboard.cms.add_page');
 			})->name('addpages');
+
+			Route::post('page/submit' ,'PageController@store')->name('page.submit');
 			
     	});
-				
 });
 
 Route::get('/search', 'UserController@search');
+Route::get('/school_search','SchoolController@search')->name('school_search');
 Auth::routes();
 // admin routes ended
 
@@ -117,3 +112,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('map_data','UnregisteredController@retrive_nearby_locations');
 
 //forum&finder_welcome
+
+
+/*  Route for pages */
+
+Route::get('/{slug}','PageController@page_show');

@@ -144,13 +144,13 @@ class UserController extends Controller
 
 
 
-         function search(Request $request)
+         static function search(Request $request)
         {
             
             $user = User::all();
             $search = $request->input('search');  
              // if serach bar is not empty
-             if(!empty($ staticsearch)){
+             if(!empty($search)){
                 
                 $users = User::where('fname','LIKE','%'.$search.'%')
                             ->orWhere('lname', 'LIKE', '%'. $search .'%')

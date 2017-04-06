@@ -68,6 +68,7 @@
 
 <section class="search_results">
 	<div class="container">
+
 		@if(isset($schools_byName) || isset($schools_byLocation))
 			<h2>Search Results</h2>
 			<p>

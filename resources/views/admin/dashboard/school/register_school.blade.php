@@ -80,7 +80,7 @@
 
 					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
 
-						<input id="countryId" class="countries form-control" name="country" value ="country*">
+						<input id="countryId" class="countries form-control" name="country" value ="" placeholder="country *">
 						</input>
 						@if ($errors->has('country'))
 							<span class="help-block">
@@ -94,7 +94,7 @@
 				<div class="form-group">
 
 					<div class="col-md-4 col-lg-4 col-lg-offset-2 col-md-offset-2">
-						<input id="stateId" class="states form-control" name="state" value="state*">
+						<input id="stateId" class="states form-control" name="state" value="" placeholder="state *">
 						</input>
 					</div>
 						@if ($errors->has('state'))
@@ -107,7 +107,7 @@
 
 				<div class="form-group">
 					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
-						<input id="cityId" class="cities form-control" name="city" value="city*">
+						<input id="cityId" class="cities form-control" name="city" value="" placeholder="city *">
 
 						</input>
 						@if ($errors->has('city'))
@@ -120,14 +120,14 @@
 
 				<div class="form-group">
 					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
-						<input id="lat" type="hidden" class="lat form-control" name="latitude" value="lat" class="hidden" >
+						<input id="lat" type="hidden" class="lat form-control" name="latitude" value=" " class="hidden" >
 
 						</input>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
-						<input id="long"  type="hidden" class="long form-control" name="longitude" value="long" >
+						<input id="long"  type="hidden" class="long form-control" name="longitude" value=" " >
 
 						</input>
 					</div>
@@ -145,17 +145,32 @@
 				<h3 class="page-header"> Images
 				</h3>
 				<div class="form-group">
-					<label for="file_upload" class="col-sm-6 col-md-4 col-lg-4 control-label">
-					</label>
+
+
+					<div class="col-md-4 col-md-offset-2">
+						<input id="file_upload" type="file" name="profile_pic">optional
+						(School Profile Pic)
+						@if ($errors->has('file_up'))
+							<span class="help-block">
+							<strong>{{ $errors->first('image') }}</strong>
+						</span>
+						@endif
+					</div>
+
 					<div class="col-md-6">
 						<input id="file_upload" type="file" name="image[]" multiple accept='image/*' >optional
-						( Attach multiple images)
+						( Gallery images)
 						@if ($errors->has('file_up'))
 						<span class="help-block">
 							<strong>{{ $errors->first('image') }}</strong>
 						</span>
 						@endif
 					</div>
+
+
+
+
+
 				</div>
 				<!-- code for upload multiple files  -->
 				<h3 class="page-header"> Documents
