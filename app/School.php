@@ -24,7 +24,7 @@ class School extends Model
     	return $this->hasMany('App\School_image','school_id');
     }
 
-    public function documents(){
-        return $this->hasMany('App\School_image','school_id');
+    public function School_detail(){
+        return $this->hasMany('App\School_detail','school_id');
     }
 }

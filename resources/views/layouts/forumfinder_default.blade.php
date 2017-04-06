@@ -31,13 +31,14 @@
             margin: 0;
             padding: 0;
         }*/
-        /*.map_div{
-            width:500px;
+        .map_div{
+            display: none;
+            /*width:500px;
             height:600px;
             margin-left: 100px;
             margin-top: 30px;
-            border:2px solid #000;
-        }*/
+            border:2px solid #000;*/
+        }
     </style>
 
         

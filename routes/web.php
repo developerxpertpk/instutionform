@@ -95,7 +95,7 @@ Route::get('details',function(){
 
 
 /*USER HOME GROUP*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','check.status']], function () {
 
     Route::group(['prefix' => 'home'],function(){
 

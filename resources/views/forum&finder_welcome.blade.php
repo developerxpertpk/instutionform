@@ -1,13 +1,11 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
-<!-- banner and search portion 
+<!-- banner and search portion  -->
+<div class="map_div">
+	<div id="map"></div> 
+</div>
 <section class="search_banner">
 	<div id="slidermy" class="carousel slide" data-ride="carousel">
-		 Indicators -->
-		<!-- <div class="map_div"> -->
-	        <div id="map"></div> 
-	    <!-- </div> -->
-		
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
 				<img src="image\school1.jpg" alt="First slide">
@@ -338,6 +336,11 @@
 				<h5>Eicher School,Srinagar</h5>
 			</div>
 			
+		</div>
+	</section>
+
+	<section class="Trend_School">
+		<div class="container nearBy_container">
 		</div>
 	</section>
 	

@@ -22,21 +22,6 @@
                     var lat = position.coords.latitude;
                     var lng = position.coords.longitude;
 
-
-
-                    /*test code*/
-
-
-                    var point = new google.maps.LatLng(lat, lng);
-                    new google.maps.Geocoder().geocode({'latLng': point}, function (res,status) {
-                        var zip = res[0].formatted_address.match(/,\s\w{2}\s(\d{5})/);
-                        console.log(zip); 
-                    });
-
-                    /*test code*/
-
-
-
                     codeLatLng(lat, lng);
 
                     var pos = {
@@ -145,24 +130,45 @@
         }
 
         function requestAjax(data){
+
+
             console.log(data);
             $.ajax({
                 url: 'map_data',
                 type: 'GET',
-                //dataType: "json",
+                // dataType: "JSON",
                 //processData:false,
                 data: data,
 
                 success: function(response){
 
+                    console.log('success');
 
-                    /*$.each(response, function (key, value) {
-                        alert(key + ":" + value);
-                    });*/
                     if(response==false){
                         console.log('empty: '+response);
                     }else{
-                        console.log(JSON.stringify(response))
+
+                        
+                        //console.log(JSON.stringify(response));
+                        // console.log(JSON.parse(JSON.stringify(response)));
+
+                        $('.nearBy_container').append("<h2>Nearby Schools</h2><h5>Explore schools next to you</h5>");
+
+                        var data=JSON.parse(JSON.stringify(response));
+                        data.forEach(function(item,index){
+
+                            // console.log('item'+item);
+                            // console.log('index'+index);
+                            
+                            console.log(item);
+                            $('.nearBy_container').append("<a class='nearBy_school' href='show_school/"+item.id+"'><div class='col-xs-12 col-sm-3 t_school'><img src='{{path('public/"+item.image+"')}}'><h5>"+item.school_name+"</h5></div>");
+                            //console.log(item.id);
+
+
+                        });
+                        
+                        // console.log(data['1'].id);
+
                     }
                     //console.log(response);
                     //alert(JSON.stringify(response));
@@ -172,7 +178,7 @@
                 },
 
                 error: function(response){
-                    console.log('error: '+response['response']);
+                    console.log('error: '+JSON.stringify(response));
                 }
 
             });

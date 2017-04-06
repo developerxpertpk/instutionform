@@ -67,7 +67,7 @@ class SchoolController extends Controller
                   // server side validation
                   if($validator->fails()){
 
-                  return redirect()->to('school.create')
+                  return redirect()->route('school.create')
                                     ->withErrors($validator)
                                     ->withInput();
                                   
@@ -196,14 +196,14 @@ class SchoolController extends Controller
                                     
                                     $dataSet[] = [                               
                                          'school_id'  => $school_id,
-                                         'document' => $file_path,
+                                         'documents' => $file_path,
                                          'created_at' => $now,
                                          'updated_at' => $now,
                                     ];
                                  $uploadcount++;      
 
                             } 
-                     DB::table('documents')->insert($dataSet);
+                     DB::table('school_details')->insert($dataSet);
 
                     if($uploadcount==$file_count){
                        return redirect()->route('school.index')
@@ -230,7 +230,7 @@ class SchoolController extends Controller
         $school = School::all();
         $search = $request->input('search');
         // if serach bar is not empty
-        if(!empty($ staticsearch)){
+        if(!empty($search)){
 
         $users = User::where('fname','LIKE','%'.$search.'%')
             ->orWhere('lname', 'LIKE', '%'. $search .'%')
