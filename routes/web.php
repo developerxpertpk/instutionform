@@ -128,10 +128,7 @@ Route::get('check_login','AjaxCallsController@check_login');
 
 Route::get('rate_school','AjaxCallsController@rate_school');
 /*Ajax calls close*/
-<<<<<<< HEAD
 
 // Route::get('/','DocumentController@test');
 //forum&finder_welcome
-=======
-//forum&finder_welcome
->>>>>>> 6560631b5f6028ff54dc685f57373bfba796a840
+
