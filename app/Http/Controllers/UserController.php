@@ -144,7 +144,7 @@ class UserController extends Controller
 
 
 
-         static function search(Request $request)
+        static function search(Request $request)
         {
             
             $user = User::all();

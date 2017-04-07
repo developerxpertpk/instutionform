@@ -254,3 +254,96 @@
   width:200px;
   height:25px;
 }
+
+/*guests*/
+.school_dp{
+  height:500px;
+}
+.school_dp img{
+  width: 100%;
+  height:100%;
+}
+.school_main span h3{
+  font-size: 45px;
+}
+.heading_box{
+  text-align: center;
+}
+
+/*stars ratings*/
+.rating_box{
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: 30px;
+}
+.rating_box > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating_box > span:hover:before,
+.rating_box > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   cursor: pointer;
+}
+
+.non_user{
+  float:left;
+  margin-top: 5px;
+}
+.modal-title{
+  width:auto;
+  float:left;
+  margin-right: 5px;
+}
+
+.x_panel {
+  width: 100%;
+  padding: 10px 17px;
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #E6E9ED;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+  opacity: 1;
+  transition: all .2s ease;
+}
+.x_title {
+  border-bottom: 2px solid #E6E9ED;
+  padding: 1px 5px 6px;
+}
+.x_title h3 {
+    margin: 5px 0 6px;
+    float: left;
+    display: block;
+}
+.panel_toolbox {
+
+    float: right;
+    min-width: 70px;
+
+}
+.x_content {
+  padding: 0 5px 6px;
+  float: left;
+  clear: both;
+  margin-top: 5px;
+}
+.x_content, table.tile td ul li a, table.tile_info {
+  width: 100%;
+}
+.x_content h4 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.widget_summary {
+  width: 100%;
+  display: -ms-inline-flexbox;
+  /*display: inline-flex;*/
+}
+/*.t_school:hover {
+  color:red;
+}*/
+

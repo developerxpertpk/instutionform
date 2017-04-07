@@ -12,6 +12,9 @@
 */
 
 Route::get('/','PageController@home');
+/*  Route for pages */
+
+Route::get('/{slug}','PageController@page_show');
 
 
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
@@ -76,9 +79,9 @@ Auth::routes();
 
 /*USER ROUTES*/
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('/search_location','UnregisteredController@search_location_school');
+Route::get('search_location','UnregisteredController@search_location_school');
 
 Route::get('show_school/{id}','UnregisteredController@show_school');
 
@@ -90,7 +93,7 @@ Route::get('details',function(){
 
 
 /*USER HOME GROUP*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','check.status']], function () {
 
     Route::group(['prefix' => 'home'],function(){
 
@@ -109,11 +112,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-Route::get('map_data','UnregisteredController@retrive_nearby_locations');
+/*Ajax calls*/
+Route::get('map_data','AjaxCallsController@retrive_nearby_locations');
 
+Route::get('check_status','AjaxCallsController@check_status');
+
+Route::get('rate_school','AjaxCallsController@rate_school');
+/*Ajax calls close*/
 //forum&finder_welcome
-
-
-/*  Route for pages */
-
-Route::get('/{slug}','PageController@page_show');
