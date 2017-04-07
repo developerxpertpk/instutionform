@@ -14,7 +14,6 @@
 Route::get('/','PageController@home');
 /*  Route for pages */
 
-Route::get('/{slug}','PageController@page_show');
 
 
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
@@ -128,6 +127,8 @@ Route::get('check_login','AjaxCallsController@check_login');
 
 Route::get('rate_school','AjaxCallsController@rate_school');
 /*Ajax calls close*/
+
+Route::get('/{slug}','PageController@page_show');
 
 // Route::get('/','DocumentController@test');
 //forum&finder_welcome

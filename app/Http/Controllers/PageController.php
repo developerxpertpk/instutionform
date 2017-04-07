@@ -13,15 +13,17 @@ class PageController extends Controller
 
     // function for home page
     public function home(){
-        $page = Page::orderBy('id','DESC')->paginate(5);
-        return view('forum&finder_welcome',compact('page'));
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        return view('forum&finder_welcome')->with('page',$page);
 
     }
 
     // function for show page
     public function page_show($slug){
-        $page = DB::table('pages')->where('slug','=',$slug)->get();
-         return view('admin.dashboard.cms.page',compact('page'));
+        $page = Page::where('slug','=',$slug)->get();
+        /*echo "<pre>";
+        print_r($page);*/
+        return view('admin.dashboard.cms.page')->with('page',$page);;
 
     }
 
@@ -64,3 +66,4 @@ class PageController extends Controller
 
     }
 }
+

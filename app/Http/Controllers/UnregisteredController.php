@@ -9,7 +9,7 @@ use App\School;
 use App\Location;
 use Illuminate\Support\Facades\DB;
 
-class UnregisteredController extends Controller
+class UnregisteredController extends BaseController
 {
     /*Homepage Search Location*/
     public function search_location_school(Request $request){
