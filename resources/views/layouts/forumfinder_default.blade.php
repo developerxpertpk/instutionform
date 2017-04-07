@@ -61,9 +61,13 @@
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#">About</a></li>
-                                <li><a href="/schools_list">List of Schools</a></li>
+
+
+                                    @foreach($page as $slug)
+                                        <li><a href="{{ $slug->slug }}" >{{$slug->title}}</a></li>
+                                    @endforeach
+
+                                <li><a href="schools_list">List of Schools</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))

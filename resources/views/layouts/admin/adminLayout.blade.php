@@ -19,6 +19,8 @@
 
     <!-- added google map api script and key -->
     <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns "async defer></script>
+
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -41,6 +43,21 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+    </script>
+
+
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            plugins: [
+                'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                'save table contextmenu directionality emoticons template paste textcolor'
+            ],
+
+        });
     </script>
  
 </head>

@@ -202,55 +202,54 @@
         </div>
        </div>
 
- <!-- block/unblock button -->
-  
-  @if($user->status=='0')
-    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
-        Block
-    </button>
-  @endif
+      <!-- block/unblock button -->
+      @if($user->status=='0')
+        <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+            Block
+        </button>
+      @endif
 
-  @if($user->status=='1')
-    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
-      UnBlock
-    </button>
-  @endif
-<!-- Modal for block/unblock user -->
-<div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+      @if($user->status=='1')
+        <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+          UnBlock
+        </button>
+      @endif
+    <!-- Modal for block/unblock user -->
+    <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel0"> Confirmation  </h4>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel0"> Confirmation  </h4>
+          </div>
+
+        <div class="modal-body">
+          @if($user->status=="0")
+            <h3> Do you want to block{{$user->fname}} ? </h3>
+          @else
+            <h3> Do you want to Unblock {{ $user->fname}} ? </h3>
+          @endif
+        </div>
+
+        <div class="modal-footer">
+          {!! Form::open(['route' =>['user.update1',$user->id],'method'=>'POST','class'=>'',]) !!}
+          <!--   { !! Form::label('status') !! } -->
+          @if($user->status == 1)
+          {!! Form::radio('status', '0', true, ['class' => 'hidden name','value' => 0]) !!} <!-- unblock  -->
+
+          @else($user->status == 0)
+          {!! Form::radio('status', '1', true, ['class' => 'hidden name','value' => 1]) !!}<!--  block -->
+          @endif
+
+          <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
+          {!! Form::submit('yes', ['class' => 'btn btn-success']) !!}
+          {!! Form::close() !!}
+
+        </div>
+        </div>
       </div>
-
-    <div class="modal-body">
-      @if($user->status=="0")
-        <h3> Do you want to block{{$user->fname}} ? </h3>
-      @else
-        <h3> Do you want to Unblock {{ $user->fname}} ? </h3>
-      @endif
     </div>
-
-    <div class="modal-footer">
-      {!! Form::open(['route' =>['user.update1',$user->id],'method'=>'POST','class'=>'',]) !!}
-      <!--   { !! Form::label('status') !! } -->
-      @if($user->status == 1)
-      {!! Form::radio('status', '0', true, ['class' => 'hidden name','value' => 0]) !!} <!-- unblock  -->
-
-      @else($user->status == 0)
-      {!! Form::radio('status', '1', true, ['class' => 'hidden name','value' => 1]) !!}<!--  block -->
-      @endif
-
-      <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
-      {!! Form::submit('yes', ['class' => 'btn btn-success']) !!}
-      {!! Form::close() !!}
-
-    </div>
-    </div>
-  </div>
-</div>
 
     </td>
 
