@@ -14,8 +14,6 @@
 Route::get('/','PageController@home');
 /*  Route for pages */
 
-
-
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
 
 Route::get('/login_form','CustomregisterController@showloginform')->name('show.login');
@@ -66,8 +64,16 @@ Route::group(['middleware' => ['auth']], function () {
 				  return view('admin.dashboard.cms.add_page');
 			})->name('addpages');
 
-			Route::post('page/submit' ,'PageController@store')->name('page.submit');
-			
+			Route::post('page/submit','PageController@store')->name('page.submit');
+
+			Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
+
+            Route::get('add_question',function(){
+                return view('admin.dashboard.cms.add_question');
+            })->name('add_question');
+
+            Route::post('question/submit','PageController@question_submit')->name('question_submit');
+
     	});
 });
 
@@ -133,3 +139,6 @@ Route::get('/{slug}','PageController@page_show');
 // Route::get('/','DocumentController@test');
 //forum&finder_welcome
 
+
+
+Route::get('/{slug}','PageController@page_show');

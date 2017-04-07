@@ -93,7 +93,7 @@
                     </div>
                 </nav>
             </div>
-        
+
         </header>
 
         @yield('user_content')

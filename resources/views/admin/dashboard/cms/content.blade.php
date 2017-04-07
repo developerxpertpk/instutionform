@@ -3,26 +3,23 @@
 
    <div id="page-wrapper">
 			<div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-					
-                        <h2 class="page-header">
-                            Content Manager	
-                        </h2>
-						
-					<div class="pull-right">
-					
-						<a class="btn btn-success" href="{{ route('addpages')}}"> ADD PAGE  </a>
-						<a class="btn btn-danger" href="#"> BACK  </a>
-					</div>
-							
-                    </div>
-			</div>
+		<!-- Page Heading -->
+		<div class="row">
+		<div class="col-lg-12">
 
-			<div class="row"> 
-					<h2>pages</h2>
-			</div>
+			<h2 class="page-header">
+				Content Manager
+			</h2>
+
+		<div class="pull-right">
+
+			<a class="btn btn-success" href="{{ route('addpages')}}"> ADD PAGE  </a>
+			<a class="btn btn-danger" href="{{ route('admin.dashboard') }}"> BACK  </a>
+
+		</div>
+
+		</div>
+	</div>
 
 	@if (count($errors))
 		<div class="alert alert-danger">
@@ -42,28 +39,32 @@
 		</div>
 	@endif
 
-				<div class="Pages">
-				<table class="table table-bordered">
-					<tr>
-						<th>ID</th>
-						<th>Content Type</th>
-						<th>Title</th>
-						<th>slug</th>
-						<th width="320px">Action</th>
-					</tr>
-
-						@foreach ($page as $pages)
+	<div class="Pages">
+					<table class="table table-bordered">
 						<tr>
-							<td>{{ ++$i }}</td>
-							<td>{{ $pages->content_type }}</td>
-							<td>{{ $pages->title }}</td>
-							<td>{{ $pages->slug }}</td>
-							<td>
-							<button>view</button>
-							 </td>
+							<h3>Pages </h3>
 						</tr>
-					@endforeach
-			</table>
-		</div>
+
+						<tr>
+							<th>ID</th>
+							<th>Content Type</th>
+							<th>Title</th>
+							<th>slug</th>
+							<th width="320px">Action</th>
+						</tr>
+						@foreach ($page as $pages)
+							<tr>
+								<td>{{ ++$i }}</td>
+								<td>{{ $pages->content_type }}</td>
+								<td>{{ $pages->title }}</td>
+								<td>{{ $pages->slug }}</td>
+								<td>
+									<button>view</button>
+								</td>
+							</tr>
+			@endforeach
+	</table>
 	</div>
+
+</div>
 @endsection
