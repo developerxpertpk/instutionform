@@ -1,13 +1,11 @@
 <!DOCTYPE html><!--Final Design-->
 <html>
     <head>
+        <title>School Finder</title>
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
 
-        <!-- User location Access and retriving School results Dynamically Script -->
-        <script src="{{ asset('js/location_functioning.js') }}" type="text/javascript"></script>
-
-        <!-- Map Script -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARw1SIiaQjUQyJuqwJXu1YRnNUX81DXYk&callback=initMap"></script>
+        <!-- Ajax Script -->
+        <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
         
         
         
@@ -17,6 +15,9 @@
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
+        <!-- close -->
+
+        <link rel="shortcut icon" href="/css/style.css">
         <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */

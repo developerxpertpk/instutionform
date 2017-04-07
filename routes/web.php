@@ -76,7 +76,13 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/search', 'UserController@search');
-Auth::routes();
+
+
+Route::group(['middleware' => ['check.status']],function(){
+	Auth::routes();
+});
+
+
 // admin routes ended
 
 /*USER ROUTES*/
@@ -88,6 +94,10 @@ Route::get('search_location','UnregisteredController@search_location_school');
 Route::get('show_school/{id}','UnregisteredController@show_school');
 
 Route::get('schools_list','UnregisteredController@schools_list');
+
+Route::get('access_denied',function(){
+	return view('temporary_blocked');
+});
 
 Route::get('details',function(){
 	return view('user.guests.view_school');
@@ -117,9 +127,11 @@ Route::group(['middleware' => ['auth','check.status']], function () {
 /*Ajax calls*/
 Route::get('map_data','AjaxCallsController@retrive_nearby_locations');
 
-Route::get('check_status','AjaxCallsController@check_status');
+Route::get('check_login','AjaxCallsController@check_login');
 
 Route::get('rate_school','AjaxCallsController@rate_school');
 
 /*Ajax calls close*/
+
+// Route::get('/','DocumentController@test');
 //forum&finder_welcome

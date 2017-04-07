@@ -132,9 +132,6 @@
 						</div>
 						@endforeach
 					</div>
-					
-					
-					
 				</div>
 			</section>
 
@@ -143,5 +140,4 @@
 	@else
 	<h1>No Records in the database</h1>
 	@endif
-	dkmnfkv dk
 	@endsection

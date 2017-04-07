@@ -27,12 +27,12 @@ class AjaxCallsController extends Controller
 
 
     /*check user status*/
-    public function check_status(Request $request){
+    public function check_login(Request $request){
 
     	if(!Auth::check()){
     		return response()->json(false);
     	}
-        
+
         $this->middleware('CheckStatus');
 
     	$id=Auth::id();

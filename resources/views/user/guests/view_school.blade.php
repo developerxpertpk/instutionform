@@ -4,78 +4,12 @@
 
 @if(isset($particular_school))
 
-<script type="text/javascript">
-	$(document).ready(function(){
-
-		$('span').click(function(){
-			var rating=$(this).attr('id');
-
-			$.ajax({
-				url:'check_status',
-				type:'GET',
-				data:'{test:null}',
-
-				success: function(response){
-
-					console.log(response);
-
-					if(response == false){
-
-						edit_user();
-
-					}else{
-
-						var id=response;
-						rating_store(id,rating);
-					}
-
-				},
-
-				error: function(response){
-					console.log(response);
-				}
-			});
-			//edit_user();
-			//alert($(this).attr('id'));
-		});
-
-		window.rating_store = function(id,rating){
-
-			$.ajax({
-
-				url:'rate_school',
-				type:'GET',
-				data:{
-					'id':id,
-					'rating':rating,
-				},
-
-				success: function(response){
-
-					console.log(response);
-
-				},
-
-				error: function(response){
-
-					console.log(response);
-				}
-
-			});
-		}
-
-		window.edit_user = function(){
-            $("#edit_user").modal();
-        }
-	});
-</script>
-	
 	@if(count($particular_school))
 
 		@foreach($particular_school as $school)
 			<div class="container-fluid">
 				<div class="container">
-					<div class="school_dp">
+					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
 						@if( isset($school->school_images->image))
 							@if(asset('upload/'.$school->school_images->image))
 								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
@@ -84,12 +18,13 @@
 							<img src="{{asset('upload/def_school.png')}}">
 						@endif
 					</div>
-				</div>
-				<div class="container school_main">
-					<div class="heading_box">
+					<div class="heading_box col-sm-6">
 						<span>
 							<h3>{{$school->school_name}}</h3>
 						</span>
+					</div>
+				</div>
+				<div class="container school_main">
 						@if(Auth::check())
 							<!-- menu profile quick info -->
                             <div class="profile">

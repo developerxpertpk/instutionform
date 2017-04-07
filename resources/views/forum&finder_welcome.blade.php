@@ -415,4 +415,14 @@
 		</div>
 	</section>
 </form>
+
+<!-- - - - Location Scripts - - - -->
+
+<!-- User location Access and retriving School results Dynamically Script -->
+<script src="{{ asset('js/location_functioning.js') }}" type="text/javascript"></script>
+
+<!-- Map Script -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARw1SIiaQjUQyJuqwJXu1YRnNUX81DXYk&callback=initMap"></script>
+
+<!-- - - - End of Scripts - - - -->
 @endsection

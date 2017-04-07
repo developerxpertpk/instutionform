@@ -257,18 +257,24 @@
 
 /*guests*/
 .school_dp{
-  height:500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border:1px solid lightgreen;
+  box-shadow: 0px 0px 10px lightgreen;
 }
+
 .school_dp img{
-  width: 100%;
-  height:100%;
+   min-height: 100%;
+  min-width: 100%;
+  /* modern browsers */
+  /*opacity: 0;*/
 }
-.school_main span h3{
-  font-size: 45px;
+
+.heading_box span h3{
+  /*font-size: 45px;*/
 }
-.heading_box{
-  text-align: center;
-}
+
 
 /*stars ratings*/
 .rating_box{

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class CheckStatus
 {
@@ -15,16 +16,43 @@ class CheckStatus
      */
     public function handle($request, Closure $next)
     {
-        if($request->ajax()){
-        }
-        if(Auth::user()->status == 1){
+        // die('a');
+        /*Getting Route method*/
+        $method=$request->method();
 
+        /*For GET method*/
+        if($method == 'GET'){
+
+            /*Check whether request is made by ajax*/
             if($request->ajax()){
-               return response('Sorry,you have been blocked by Finder & Forum') 
-            }
 
-            return back()->with('status_error','Sorry,you have been blocked by Finder & Forum');
+                /*Check whether user is blocked*/
+                if(Auth::user()->status == 1){
+                    return response('Sorry,you have been blocked by Finder & Forum');
+                }
+                return $next($request);
+            }
+            return $next($request);
         }
+
+
+        /*If request is made by login*/
+        if($request->has('email') && $request->has('password')){
+
+            if( Auth::attempt(['email' => $request->input('email'),'password' => $request->input('password')]) ){
+
+                if(Auth::user()->status == 1){
+
+                    Auth::logout();
+                    return redirect('access_denied')->with('status_error','Sorry,you have been blocked by Finder & Forum');
+                }
+                Auth::logout();
+                return $next($request);
+
+            }
+            return $next($request);
+        }
+
         return $next($request);
     }
 }
