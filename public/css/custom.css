@@ -93,7 +93,11 @@
      padding:2 %;
      margin: auto 0px;
  }
-
+.qusetion{
+    border: solid;
+    border-color: darkgray;
+    background-color: slategrey;
+}
 
 @-webkit-keyframes bounce {
   from, 20%, 53%, 80%, to {

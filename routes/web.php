@@ -14,7 +14,7 @@
 Route::get('/','PageController@home');
 /*  Route for pages */
 
-Route::get('/{slug}','PageController@page_show');
+
 
 
 Route::post('/user_register','CustomregisterController@insert')->name('user.register');
@@ -67,8 +67,16 @@ Route::group(['middleware' => ['auth']], function () {
 				  return view('admin.dashboard.cms.add_page');
 			})->name('addpages');
 
-			Route::post('page/submit' ,'PageController@store')->name('page.submit');
-			
+			Route::post('page/submit','PageController@store')->name('page.submit');
+
+			Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
+
+            Route::get('add_question',function(){
+                return view('admin.dashboard.cms.add_question');
+            })->name('add_question');
+
+            Route::post('question/submit','PageController@question_submit')->name('question_submit');
+
     	});
 });
 
@@ -120,3 +128,7 @@ Route::get('check_status','AjaxCallsController@check_status');
 Route::get('rate_school','AjaxCallsController@rate_school');
 /*Ajax calls close*/
 //forum&finder_welcome
+
+
+
+Route::get('/{slug}','PageController@page_show');

@@ -61,12 +61,8 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
 
-
-                                    @foreach($page as $slug)
-                                        <li><a href="{{ $slug->slug }}" >{{$slug->title}}</a></li>
-                                    @endforeach
-
                                 <li><a href="schools_list">List of Schools</a></li>
+
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -91,7 +87,7 @@
                     </div>
                 </nav>
             </div>
-        
+
         </header>
 
         @yield('user_content')

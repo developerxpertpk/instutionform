@@ -1,6 +1,5 @@
 
 @extends('layouts.admin.adminLayout')
- 
 @section('content')
 
        <div class="row">
