@@ -24,11 +24,15 @@ class School extends Model
     	return $this->hasMany('App\School_image','school_id');
     }
 
-    public function School_detail(){
+    public function school_details(){
         return $this->hasMany('App\School_detail','school_id');
     }
 
     public function news(){
         return $this->hasMany('App\News','school_id');
+    }
+
+    public function school_ratings(){
+        return $this->hasMany('App\School_rating','school_id');
     }
 }

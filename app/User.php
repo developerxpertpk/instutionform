@@ -34,6 +34,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role' ,'role_id');
     }
 
+    public function school_ratings(){
+        return $this->hasMany('App\School_rating','user_id');
+    }
+
     // public function findForPassport($identifier) {
     //  return User::orWhere(‘email’, $identifier)->where(‘activity’, 1)->first();
     // }

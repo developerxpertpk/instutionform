@@ -261,18 +261,24 @@
 
 /*guests*/
 .school_dp{
-  height:500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border:1px solid lightgreen;
+  box-shadow: 0px 0px 10px lightgreen;
 }
+
 .school_dp img{
-  width: 100%;
-  height:100%;
+   min-height: 100%;
+  min-width: 100%;
+  /* modern browsers */
+  /*opacity: 0;*/
 }
-.school_main span h3{
-  font-size: 45px;
+
+.heading_box span h3{
+  /*font-size: 45px;*/
 }
-.heading_box{
-  text-align: center;
-}
+
 
 /*stars ratings*/
 .rating_box{
@@ -289,6 +295,7 @@
 .rating_box > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+   color:gold;
    cursor: pointer;
 }
 
@@ -351,3 +358,36 @@
   color:red;
 }*/
 
+.faq_anchor{
+  color: inherit;
+}
+.faq_anchor:hover{
+  color:lightgreen;
+}
+/*.bookmark_img{
+  position: absolute;
+  width:10%;
+  height: 10%;
+}*/
+
+.school_main{
+  text-align: center;
+}
+.review_container{
+  margin:20px 0px ;
+}
+.review_form{
+  margin:20px 0px ;
+}
+
+.profile_circle{
+  width:100px;
+  height:100px;
+}
+.stars-rating {
+    display: inline-block;
+    vertical-align: baseline;
+}
+.stars-rating:after {
+    color: #dcd87d;
+}

@@ -1,13 +1,14 @@
 <!DOCTYPE html><!--Final Design-->
 <html>
     <head>
+        <title>School Finder</title>
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 
-        <!-- User location Access and retriving School results Dynamically Script -->
-        <script src="{{ asset('js/location_functioning.js') }}" type="text/javascript"></script>
+        <!-- Ajax Script -->
+        <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
+        <!-- /Ajax Script -->
 
-        <!-- Map Script -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARw1SIiaQjUQyJuqwJXu1YRnNUX81DXYk&callback=initMap"></script>
         
         
         
@@ -17,6 +18,9 @@
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
+        <!-- close -->
+
+        <link rel="shortcut icon" href="/css/style.css">
         <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
@@ -59,10 +63,17 @@
                             <a class="navbar-brand" href="/"><img src="{{asset('image\finallogo.png')}}"></a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
+                            <ul class="nav navbar-nav">                                   
 
                                 <li><a href="schools_list">List of Schools</a></li>
 
+                                @if(isset($page))
+                                    @foreach($page as $pages)
+                                        <li><a href="{{$pages->slug}}">{{$pages->title}}</a></li>
+                                    @endforeach
+                               @endif
+
+                               <li><a href="FAQ">FAQ</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -299,3 +310,12 @@
             </div>
                 
         </footer>
+        <script type="text/javascript">
+             CKEDITOR.replace('review_area');
+
+             $('#review_login_link').click(function(){
+                edit_user();
+             });
+        </script>
+    </body>
+</html>

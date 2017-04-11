@@ -12,17 +12,26 @@ use App\Freq_ask_question;
 class PageController extends Controller
 {
 
+    /*For FAQ page*/
+    public function faq_function(){
+        $faq_data=Freq_ask_question::orderBy('id','DESC')->get();
+        return view('user.guests.faq')->with('faq_data',$faq_data);
+    }
+
+
     // function for home page
     public function home(){
-        $page = Page::orderBy('id','DESC')->paginate(5);
-        return view('forum&finder_welcome',compact('page'));
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        return view('forum&finder_welcome')->with('page',$page);
 
     }
 
     // function for show page
     public function page_show($slug){
-        $page = DB::table('pages')->where('slug','=',$slug)->get();
-         return view('admin.dashboard.cms.page',compact('page'));
+        $page = Page::where('slug','=',$slug)->get();
+        /*echo "<pre>";
+        print_r($page);*/
+        return view('admin.dashboard.cms.page')->with('page',$page);;
 
     }
        // Index function is use by admin to show page detail
