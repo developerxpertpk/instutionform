@@ -27,4 +27,8 @@ class School extends Model
     public function School_detail(){
         return $this->hasMany('App\School_detail','school_id');
     }
+
+    public function news(){
+        return $this->hasMany('App\News','school_id');
+    }
 }

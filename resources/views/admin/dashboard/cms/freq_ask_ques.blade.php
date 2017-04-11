@@ -49,16 +49,43 @@
                         @foreach ($ques as $question)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $question->question }}</td>
-                                <td>{{ $question->answer }}</td>
+                                <td><p class="faq_question">{{ $question->question }}</p></td>
+                                <td><p class="faq_answer">{{ $question->answer }}</p></td>
                                 <td>
                                     <a href="#" type="btn btn-primery">Edit </a>
-                                    <a href="#" type="btn btn-danger">Delete </a>
 
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+            <!-- Button for  Delete-->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+                Delete
+            </button>
+                                    <!-- Modal  for delete with id=01-->
+            <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmation  </h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <h3> Do you want to delete {{$question->question}} ? </h3>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                            {!! Form::open(['method' => 'DELETE','route' => ['quest_destroy',$question->id],'style'=>'display:inline','class'=>'delete']) !!}
+                            {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </td>
+    </tr>
+    @endforeach
+    </table>
         </div>
     </div>
 

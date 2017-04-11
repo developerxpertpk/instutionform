@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 			//Route::get('school','SchoolController@list
 
+            /*  Routes for add News Reated to school  */
+            Route::resource('school_news','School_newsController');
 			// Routes for cms
 			Route::get('content','PageController@index')->name('content');
 
@@ -77,9 +79,10 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::post('question/submit','PageController@question_submit')->name('question_submit');
 
+            Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
+
     	});
 });
-
 Route::get('/search', 'UserController@search');
 Route::get('/school_search','SchoolController@search')->name('school_search');
 Auth::routes();

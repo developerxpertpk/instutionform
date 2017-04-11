@@ -29,9 +29,6 @@
 
 
     </div>
-
-
-
  <!-- end of model0 (add model) -->
 
  <!-- container to show detail of schools -->
@@ -44,7 +41,6 @@
     </div>
 
 <div class="list-school">
-
     <table class="table table-bordered">
 
         <tr><h3> School List </h3></tr>
@@ -69,8 +65,95 @@
 		        <td>{{ $school->locations->country}} </td>
             	<td>{{ $school->status }}</td>
 		        <td>
-		        <button type="button" class="btn btn-success" >Show</button>
-                <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">  Edit  </a>
+
+                    <!-- show  button  -->
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile{{$school->id}}">Show</button>
+
+                    <!-- Model show  -->
+                    <div class="modal fade profile{{$school->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                    <h4 class="modal-title" id="myModalLabel">{{$school->school_name}} Profile </h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-12 margin-tb">
+                                            <div class="pull-left">
+                                                <h2> {{$school->school_name}} Profile</h2>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row user-show">
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6" id="user-img">
+                                            <div class="form-group">
+                                                <img src="{{asset('/upload/schools')}}/{{ $school->school_name.$school->id }}" width="250px" height="250px">
+                                            </div>
+                                            <strong>{{ $school->school_name }}</strong>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>School Name:</strong>
+                                                {{$school->school_name}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>Loaction details:</strong>
+                                                <strong>Zip</strong>
+                                                {{ $school->locations->zip }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>City:</strong>
+                                                {{ $school->locations->city }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>Address:</strong>
+                                                {{ $school->locations->state }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>Country:</strong>
+                                                {{ $school->locations->country}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>Status:</strong>
+                                                {{ $school->status}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                     {{-- button for edit--}}
+                    <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">  Edit  </a>
 
                 <!-- Button for  Delete-->
                   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">

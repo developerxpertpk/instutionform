@@ -99,4 +99,12 @@ class PageController extends Controller
 
         }
     }
+    // function to destroy particuler question
+    public function delete_faq($question){
+
+        Freq_ask_question::find($question)->delete();
+        return redirect()->route('freq_ask_ques')
+                          ->with('success','Question deleted successfully !!! ' )  ;
+
+    }
 }

@@ -144,18 +144,11 @@
 				<!-- code for images -->
 				<h3 class="page-header"> Images
 				</h3>
+
 				<div class="form-group">
-
-
-					<div class="col-md-4 col-md-offset-2">
-						<input id="file_upload" type="file" name="profile_pic">optional
-						(School Profile Pic)
-						@if ($errors->has('file_up'))
-							<span class="help-block">
-							<strong>{{ $errors->first('image') }}</strong>
-						</span>
-						@endif
-					</div>
+					<label for="images" class="col-sm-6 col-md-4 col-lg-4 control-label">
+						<h4> </h4>
+					</label>
 
 					<div class="col-md-6">
 						<input id="file_upload" type="file" name="image[]" multiple accept='image/*' >optional
@@ -166,11 +159,6 @@
 						</span>
 						@endif
 					</div>
-
-
-
-
-
 				</div>
 				<!-- code for upload multiple files  -->
 				<h3 class="page-header"> Documents

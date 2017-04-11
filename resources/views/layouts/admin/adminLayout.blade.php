@@ -14,12 +14,13 @@
 
     <!-- addes juery -->  
     
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script  type="text/javascript" src="{{ asset('js/location.js')}}"></script>
 
     <!-- added google map api script and key -->
     <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns "async defer></script>
 
+    <script src="{{asset('js/jquery-ui.js')}}"></script>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -39,6 +40,8 @@
         <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
 
     <!--[endif]-->
+
+
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -202,13 +205,22 @@
                      <li>
                         <a href="{{ route('user.index')}}"><i class="fa fa-fw fa-user"></i> Users </a>
                     </li>
+
                     <li>
-                        <a href="{{route('school.index')}}"><i class="fa fa-fw fa-table"></i> School</a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#school"><i class="fa fa-fw fa-arrows-v" ></i> Manage School <class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="school" class="collapse">
+                        <li>
+                            <a href="{{route('school.index')}}">School</a>
+                        </li>
+                            <li>
+                                <a href="{{route('school_news.index')}}">News </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v" ></i> CMS <class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#cms"><i class="fa fa-fw fa-arrows-v" ></i> CMS <class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="cms" class="collapse">
 
                             <li>
                                 <a href="{{route('content')}}"> Static Content</a>

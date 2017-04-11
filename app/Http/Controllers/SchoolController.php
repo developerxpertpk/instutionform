@@ -258,6 +258,7 @@ class SchoolController extends Controller
 
     }
 
+
 }
 
      // $schools =School::find(2)->location_id;
