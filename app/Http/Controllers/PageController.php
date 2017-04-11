@@ -12,6 +12,13 @@ use App\Freq_ask_question;
 class PageController extends Controller
 {
 
+    /*For FAQ page*/
+    public function faq_function(){
+        $faq_data=Freq_ask_question::orderBy('id','DESC')->get();
+        return view('user.guests.faq')->with('faq_data',$faq_data);
+    }
+
+
     // function for home page
     public function home(){
         $page = Page::orderBy('id','DESC')->where('active','=',0)->get();

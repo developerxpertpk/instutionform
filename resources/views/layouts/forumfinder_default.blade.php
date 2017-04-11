@@ -3,9 +3,12 @@
     <head>
         <title>School Finder</title>
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 
         <!-- Ajax Script -->
         <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
+        <!-- /Ajax Script -->
+
         
         
         
@@ -66,9 +69,11 @@
 
                                 @if(isset($page))
                                     @foreach($page as $pages)
-                                        <li><a href="{{$pages->slug}}">{{$pages->title}}</a></li>                                            
+                                        <li><a href="{{$pages->slug}}">{{$pages->title}}</a></li>
                                     @endforeach
                                @endif
+
+                               <li><a href="FAQ">FAQ</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -305,3 +310,12 @@
             </div>
                 
         </footer>
+        <script type="text/javascript">
+             CKEDITOR.replace('review_area');
+
+             $('#review_login_link').click(function(){
+                edit_user();
+             });
+        </script>
+    </body>
+</html>

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Schema;
 use App\School;
 use App\Location;
+use App\School_rating;
+use Auth;
+use Session;
 use Illuminate\Support\Facades\DB;
 
 class UnregisteredController extends BaseController
@@ -71,15 +74,37 @@ class UnregisteredController extends BaseController
     /*For Showing a particular school */
     public function show_school($id){
 
-
         if(!is_numeric($id)){
             return redirect($id);
         }
         
         $particular_school=School::where('id','=',$id)->get();
+
+        foreach ($particular_school as $school) {
+            if(!$school->school_ratings->isEmpty()){
+
+                $rating=$school->school_ratings;
+                $rate= 0;
+
+                foreach($rating as $ratings){
+                    $rate+=$ratings->ratings;
+                }
+
+                $div= count($rating);
+
+                $avg_rating=round($rate/$div);
+
+                return view('user.guests.view_school')
+                                        ->with('avg_rating',$avg_rating)
+                                        ->with('particular_school',$particular_school);
+            }else{
+                return view('user.guests.view_school')->with('particular_school',$particular_school);
+            }
+        }
+        
         return view('user.guests.view_school')->with('particular_school',$particular_school);
-        //echo "under construction";
     }
+    /* /Close*/
 
 
 
@@ -95,5 +120,47 @@ class UnregisteredController extends BaseController
         return view('user.guests.list_of_schools')->with('schools',$schools)
                                                     ->with('schools_latest',$schools_latest)
                                                     ->with('schools_oldest',$schools_oldest);
+    }
+    /* /Close */
+
+
+    /*For confirming login on Review or rating */
+    public function review_confirm(Request $request){
+        if(Auth::attempt(array('email'=> $request->input('email'),'password' => $request->input('password')))){
+
+            if($request->session()->has('failed')){
+                $request->session()->forget('failed');
+            }
+            return back();
+        }else{
+            Session::flash('failed','Your credentials didn\'t match our records ');
+            return back();
+        }
+    }
+    /* /Close*/
+
+    public function post_review(Request $request){
+
+        if(!$request->input('review')){
+            Session::flash('empty_review','Please enter a review');
+            return back();
+        }
+
+        if(!Auth::check()){
+            Session::flush();
+            Session::flash('Login','You Must Login First');
+            return back();
+        }
+
+        if(School_rating::where('user_id','=',Auth::id())->exists() ){
+            
+                School_rating::where('user_id','=',Auth::id())->update(array('reviews' => $request->input('review')));
+                return back();
+        }else{
+            Session::flash('rate_error','You must rate first');
+            return back();
+        }
+
+
     }
 }

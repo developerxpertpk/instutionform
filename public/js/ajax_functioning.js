@@ -3,8 +3,25 @@
 
 $(document).ready(function(){
 
+    $.ajax({
+        url:'check_rate',
+        type:'GET',
+        data:'{test:null}',
+        success: function(response){
+            console.log("span#"+response.ratings);
+            if(response != false){
+
+               $("span").addClass("stars-rating");
+            }
+        },
+        error:function(response){
+            console.log('error: '+response);
+        }
+    });
+
     $('.rating_box span').click(function(){
         var rating=$(this).attr('id');
+        var school_id=$('input[name=hidden_input]').val();
 
         $.ajax({
             url:'check_login',
@@ -26,7 +43,7 @@ $(document).ready(function(){
                 else{
 
                     var id=response;
-                    rating_store(id,rating);
+                    rating_store(school_id,rating);
                 }
 
             },
@@ -39,14 +56,14 @@ $(document).ready(function(){
         //alert($(this).attr('id'));
     });
 
-    window.rating_store = function(id,rating){
+    window.rating_store = function(school_id,rating){
 
         $.ajax({
 
             url:'rate_school',
             type:'GET',
             data:{
-                'id':id,
+                'school_id':school_id,
                 'rating':rating,
             },
 
@@ -54,11 +71,18 @@ $(document).ready(function(){
 
                 console.log(response);
 
+                if(response == true){
+                    console.log('rating successfull');
+                    $("span#"+rating).trigger("mouseover");
+                }else{
+                    console.log('Already Rated');
+                }
+
             },
 
             error: function(response){
 
-                console.log(response);
+                console.log('error: '+response);
             }
 
         });

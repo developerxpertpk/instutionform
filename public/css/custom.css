@@ -295,6 +295,7 @@
 .rating_box > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+   color:gold;
    cursor: pointer;
 }
 
@@ -357,3 +358,36 @@
   color:red;
 }*/
 
+.faq_anchor{
+  color: inherit;
+}
+.faq_anchor:hover{
+  color:lightgreen;
+}
+/*.bookmark_img{
+  position: absolute;
+  width:10%;
+  height: 10%;
+}*/
+
+.school_main{
+  text-align: center;
+}
+.review_container{
+  margin:20px 0px ;
+}
+.review_form{
+  margin:20px 0px ;
+}
+
+.profile_circle{
+  width:100px;
+  height:100px;
+}
+.stars-rating {
+    display: inline-block;
+    vertical-align: baseline;
+}
+.stars-rating:after {
+    color: #dcd87d;
+}

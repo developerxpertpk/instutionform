@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\School_rating;
 
 
 class AjaxCallsController extends Controller
@@ -45,8 +46,37 @@ class AjaxCallsController extends Controller
 
     /*Rate School Functionality*/
     public function rate_school(Request $request){
-    	$id=$request->id;
+    	$id=$request->school_id;
     	$rate=$request->rating;
-    	return response($id);
+
+        if(School_rating::where('user_id','=',Auth::id())->exists() ){
+           /*$rating= School_rating::where('user_id','=',Auth::id())->first('ratings');
+           return response($rating);*/
+           return response('Do nothing');
+        }
+
+        $ratings= new School_rating;
+
+        $ratings->school_id = $id;
+        $ratings->user_id = Auth::id();
+        $ratings->ratings = $rate;
+        $ratings->save();
+
+        return response()->json(true);
+    }
+
+    public function check_rate(){
+
+        if(!Auth::check()){
+            return response()->json(false);
+        }
+
+        $this->middleware('CheckStatus');
+
+        if(School_rating::where('user_id','=',Auth::id())->exists() ){
+            $rating=School_rating::select('ratings')->where('user_id','=',Auth::id())->first();
+            return response($rating);
+        }
+        return response()->json('not exist');
     }
 }

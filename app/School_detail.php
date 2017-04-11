@@ -10,7 +10,7 @@ class School_detail extends Model
         'school_id','documents','description',
     ];
 
-    public function school(){
+    public function schools(){
     	return $this->belongsTo('App\School','school_id');
     }
 }
