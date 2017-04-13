@@ -6,6 +6,7 @@
 	@if(count($particular_school))
 		@foreach($particular_school as $school)
 		<br/>
+		<meta name="_token" content="{{ csrf_token() }}">
 			<div class="container-fluid">
 				<div class="container">
 					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
@@ -92,9 +93,13 @@
 						@endif				
 					<div class="rating_box">
 						<input type="hidden" name="hidden_input" value="{{$school->id}}" />
-						<span id="5">☆</span><span id="4">☆</span><span id="3">☆</span><span id="2">☆</span><span id="1">☆</span>
+						<span id="1"><i class="fa fa-star" aria-hidden="true"></i></span>
+						<span id="2"><i class="fa fa-star" aria-hidden="true"></i></span>
+						<span id="3"><i class="fa fa-star" aria-hidden="true"></i></span>
+						<span id="4"><i class="fa fa-star" aria-hidden="true"></i></span>
+						<span id="5"><i class="fa fa-star" aria-hidden="true"></i></span>
+						<!--<span id="5">☆</span><span id="4">☆</span><span id="3">☆</span><span id="2">☆</span><span id="1">☆</span> -->
 					</div>
-					<h5>Rate this school</h5>
 				</div>
 
 				@if(Session::has('failed'))
@@ -173,114 +178,60 @@
 					</div>
 
 
-
-
-					
-				<!-- <div class="col-md-8 col-sm-8 col-xs-12">
-					<div class="x_panel tile fixed_height_320">
-						<div class="x_title">
-							<h3>Reviews</h3>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content">
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-				</div> -->
+<script type="text/javascript">
+	/**
+ * Star rating class
+ * @constructor
+ */
+function StarRating() {
+  this.init();
+};
+ 
+/**
+ * Initialize
+ */
+StarRating.prototype.init = function() {
+  this.stars = document.querySelectorAll('.rating_box span');
+  for (var i = 0; i < this.stars.length; i++) {
+    this.stars[i].setAttribute('data-count', i);
+    this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
+  }
+  document.querySelector('.rating_box').addEventListener('mouseleave', this.leaveStarListener.bind(this));
+};
+ 
+/**
+ * This method is fired when a user hovers over a single star
+ * @param e
+ */
+StarRating.prototype.enterStarListener = function(e) {
+  this.fillStarsUpToElement(e.target);
+};
+ 
+/**
+ * This method is fired when the user leaves the #rating element, effectively removing all hover states.
+ */
+StarRating.prototype.leaveStarListener = function() {
+  this.fillStarsUpToElement(null);
+};
+ 
+/**
+ * Fill the star ratings up to a specific position.
+ * @param el
+ */
+StarRating.prototype.fillStarsUpToElement = function(el) {
+  // Remove all hover states:
+  for (var i = 0; i < this.stars.length; i++) {
+    if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
+      this.stars[i].classList.remove('hover');
+    } else {
+      this.stars[i].classList.add('hover');
+    }
+  }
+};
+ 
+// Run:
+new StarRating();
+</script>
 				<div class="container review_container">
 					<div class="col-sm-9">
 					<h1>Reviews</h1>

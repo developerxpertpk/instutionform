@@ -44,10 +44,15 @@
             border:2px solid #000;*/
         }
     </style>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
 
         
     </head>
-    <body>
+    <body class="nojQuery">
         <header>
             <div class="container-fluid navigation">
                 <!-- Static navbar -->

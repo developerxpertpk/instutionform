@@ -1,17 +1,52 @@
-
 /*Ajax Calls and Requests here*/
 
 $(document).ready(function(){
 
-    $.ajax({
-        url:'check_rate',
-        type:'GET',
-        data:'{test:null}',
-        success: function(response){
-            console.log("span#"+response.ratings);
-            if(response != false){
+    $("span").hover(function(){
+        $(this).addClass("hhover");
+    },function(){
+        $(this).removeClass("hhover");
+    });
 
-               $("span").addClass("stars-rating");
+
+    var school_id=$('input[name=hidden_input]').val();
+    console.log(school_id);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url:'/check_rate',
+        type:'POST',
+        //datatype:'json',
+        // processData:false,
+        data:{
+                'school_id':school_id,
+            },
+
+        success: function(response){
+            console.log(response.ratings);
+
+            if(response == false || response == 'not exist'){
+                $('.school_main').append("<h5>Rate this school</h5>");
+
+            }else{
+                var i=1;
+                var j=response.ratings;
+                for(i=1; i<=j; i++){
+                    $('#'+i).addClass('hover');
+                    // console.log('a');
+                }
+                
+                $("span").off("mouseout");
+
+                // $("span").unbind('mouseenter mouseleave');
+                // $("span").unbind('mouseenter').unbind('mouseleave')
+                //$('#BoxId').unbind("click");
+                $('.school_main').append("<h5>Thanks For your ratings</h5>");
             }
         },
         error:function(response){
@@ -26,11 +61,11 @@ $(document).ready(function(){
         $.ajax({
             url:'check_login',
             type:'GET',
-            data:'{test:null}',
+            data:{'test':'test'},
 
             success: function(response){
 
-                console.log(response);
+                //console.log(response);
 
                 if(response == false){
 
@@ -57,14 +92,16 @@ $(document).ready(function(){
     });
 
     window.rating_store = function(school_id,rating){
+        console.log(school_id);
+        console.log(rating);
 
         $.ajax({
 
-            url:'rate_school',
-            type:'GET',
+            url:'/rate_school',
+            type:'POST',
             data:{
-                'school_id':school_id,
-                'rating':rating,
+                "school_id":school_id,
+                "rating":rating,
             },
 
             success: function(response){
@@ -73,7 +110,7 @@ $(document).ready(function(){
 
                 if(response == true){
                     console.log('rating successfull');
-                    $("span#"+rating).trigger("mouseover");
+
                 }else{
                     console.log('Already Rated');
                 }

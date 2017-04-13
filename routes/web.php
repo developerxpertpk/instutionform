@@ -138,9 +138,9 @@ Route::get('map_data','AjaxCallsController@retrive_nearby_locations');
 
 Route::get('check_login','AjaxCallsController@check_login');
 
-Route::get('rate_school','AjaxCallsController@rate_school');
+Route::post('/rate_school','AjaxCallsController@rate_school');
 
-Route::get('check_rate','AjaxCallsController@check_rate');
+Route::post('/check_rate','AjaxCallsController@check_rate');
 /*Ajax calls close*/
 
 // Route::get('/','DocumentController@test');
