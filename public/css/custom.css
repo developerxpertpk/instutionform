@@ -275,64 +275,58 @@
   /*opacity: 0;*/
 }
 
-.heading_box span h3{
-  /*font-size: 45px;*/
+/*bookmark icon*/
+.bookmark_class{
+  font-size: 30px;
+  color:lightgrey;
+  cursor:pointer;
 }
-
+.bookmark_icon_glow{
+  color: gold;
+  font-size: 30px;
+  text-shadow: 2px 0px 2px silver;
+}
 
 /*stars ratings*/
-/*.rating_box{
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  font-size: 30px;
+/*fieldset, label { margin: 0; padding: 0; }*/
+.rating { 
+    border: none;
+    float: left;
 }
-.rating_box > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
+
+.rating > input { display: none; } 
+.rating > label:before { 
+    margin: 5px;
+    font-size: 2em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
 }
-.rating_box > span:hover:before,
-.rating_box > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   color:gold;
-   cursor: pointer;
-}*/
-.rating_box {
+
+.rating > .half:before { 
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label { 
+    color: #ddd; 
+    float: right; 
+}
+
+.rating > input:checked ~ label, 
+.rating:not(:checked) > label:hover,  
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  }
+
+.rating > input:checked + label:hover, 
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, 
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+.rating_box{
+  width:100%;
   text-align: center;
-  perspective: 250px;
-  /*position: absolute;*/
-  top: 40%;
-  width: 100%;
 }
- 
-.rating_box span {
-  cursor: pointer;
-  font-size: 40px;
-  padding: 0 10px;
-  color: #000;
-  opacity: .5;
-  transition: all 150ms;
-  display: inline-block;
-  transform: rotateX(45deg);
-  transform-origin: center bottom;
-}
- 
-/*.rating_box span.hover {
-  color: #ff0;
-  opacity: 1;
-  transform: rotateX(0deg);
-  text-shadow: 0 0 2px #ffc;
-  background-color: gold;
-    text-shadow: -1px 0 gold, 0 1px black, 1px 0 black, 0 -1px black;
-   /*text-shadow: 0 0 0px rgba(0,0,0,0.7);
-}*/
-.hhover{
-  color: #ff0;
-  opacity: 1;
-  transform: rotateX(0deg);
-  text-shadow: 0 0 2px #ffc;
-}
+/*rating styling close*/
 
 .non_user{
   float:left;

@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>School Finder</title>
+
+
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 
@@ -52,7 +54,7 @@
 
         
     </head>
-    <body class="nojQuery">
+    <body>
         <header>
             <div class="container-fluid navigation">
                 <!-- Static navbar -->

@@ -3,7 +3,7 @@
 @section('user_content')
 
 
-    @foreach($page as $page_data)
+    @foreach($particular_page as $page_data)
     	<section class="search_results">
 			<div class="container">
 				<h1>{{$page_data->title}}</h1>

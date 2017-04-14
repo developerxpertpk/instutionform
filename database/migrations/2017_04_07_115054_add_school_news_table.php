@@ -14,7 +14,7 @@ class AddSchoolNewsTable extends Migration
        public function  up(){
         Schema::create('school_news', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('school_id');
+            $table->integer('school_id')->unsigned();
             $table->text('news_title')->nullable();
             $table->text('news_description')->nullable();
             $table->integer('status')->default(0);

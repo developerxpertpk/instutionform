@@ -15,7 +15,9 @@ class PageController extends Controller
     /*For FAQ page*/
     public function faq_function(){
         $faq_data=Freq_ask_question::orderBy('id','DESC')->get();
-        return view('user.guests.faq')->with('faq_data',$faq_data);
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        return view('user.guests.faq')->with('faq_data',$faq_data)
+                                        ->with('page',$page);
     }
 
 
@@ -28,10 +30,12 @@ class PageController extends Controller
 
     // function for show page
     public function page_show($slug){
-        $page = Page::where('slug','=',$slug)->get();
+        $particular_page = Page::where('slug','=',$slug)->get();
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
         /*echo "<pre>";
         print_r($page);*/
-        return view('admin.dashboard.cms.page')->with('page',$page);;
+        return view('admin.dashboard.cms.page')->with('page',$page)
+                                                ->with('particular_page',$particular_page);
 
     }
        // Index function is use by admin to show page detail

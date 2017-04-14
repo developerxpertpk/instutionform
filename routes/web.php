@@ -141,6 +141,8 @@ Route::get('check_login','AjaxCallsController@check_login');
 Route::post('/rate_school','AjaxCallsController@rate_school');
 
 Route::post('/check_rate','AjaxCallsController@check_rate');
+
+Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 /*Ajax calls close*/
 
 // Route::get('/','DocumentController@test');

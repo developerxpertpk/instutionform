@@ -6,6 +6,14 @@
 	@if(count($particular_school))
 		@foreach($particular_school as $school)
 		<br/>
+		<!-- Facebook Preview Tags -->
+		<meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="{{$school->school_name}}" />
+        <!-- <meta property="og:description"   content="Your description" /> -->
+        <!-- <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
+        <!-- Facebook Preview Tags Close -->
+
 		<meta name="_token" content="{{ csrf_token() }}">
 			<div class="container-fluid">
 				<div class="container">
@@ -13,6 +21,8 @@
 						@if( isset($school->school_images->image))
 							@if(asset('upload/'.$school->school_images->image))
 								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
+
+								<meta property="og:image" content="{{asset('upload/'.$school->school_images->image)}}" />
 							@endif
 						@else
 							<img src="{{asset('upload/def_school.png')}}">
@@ -25,7 +35,7 @@
 							<h6>{{$school->locations->city}}, {{$school->locations->state}}, {{$school->locations->country}}</h6>
 
 						</span>
-						<div class="avg_rating_box col-sm-6">
+						<div class="avg_rating_box col-sm-12">
 							@if(isset($avg_rating))
 								@if($avg_rating == 1)
 									<span>
@@ -76,6 +86,12 @@
 								<p>No ratings yet</p>
 							@endif
 						</div>
+						<div >
+							<a href="https://www.facebook.com/sharer/sharer.php?u={{ Request::url() }}&display=popup" class="col-sm-4"> share this </a>
+							<span class="col-sm-12">
+								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
+							</span>
+						</div>
 						<span>
 							<img src="" alt="">
 						</span>
@@ -90,16 +106,48 @@
 	                            </div>
 	                        </div>
 	                        <!-- /menu profile quick info -->
-						@endif				
-					<div class="rating_box">
-						<input type="hidden" name="hidden_input" value="{{$school->id}}" />
-						<span id="1"><i class="fa fa-star" aria-hidden="true"></i></span>
-						<span id="2"><i class="fa fa-star" aria-hidden="true"></i></span>
-						<span id="3"><i class="fa fa-star" aria-hidden="true"></i></span>
-						<span id="4"><i class="fa fa-star" aria-hidden="true"></i></span>
-						<span id="5"><i class="fa fa-star" aria-hidden="true"></i></span>
-						<!--<span id="5">☆</span><span id="4">☆</span><span id="3">☆</span><span id="2">☆</span><span id="1">☆</span> -->
-					</div>
+						@endif
+				
+                    <div class="rating_box col-sm-12">
+                    	<fieldset id='demo3' class="rating">
+                    		<input type="hidden" name="hidden_input" value="{{$school->id}}" />
+
+	                        <input class="stars" type="radio" id="star53" name="rating" value="5" />
+	                        <label class = "full" for="star53" title="Awesome - 5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star4half3" name="rating" value="4.5" />
+	                        <label class="half" for="star4half3" title="Pretty good - 4.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star43" name="rating" value="4" />
+	                        <label class = "full" for="star43" title="Pretty good - 4 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star3half3" name="rating" value="3.5" />
+	                        <label class="half" for="star3half3" title="Meh - 3.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star33" name="rating" value="3" />
+	                        <label class = "full" for="star33" title="Meh - 3 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star2half3" name="rating" value="2.5" />
+	                        <label class="half" for="star2half3" title="Kinda bad - 2.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star23" name="rating" value="2" />
+	                        <label class = "full" for="star23" title="Kinda bad - 2 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star1half3" name="rating" value="1.5" />
+	                        <label class="half" for="star1half3" title="Meh - 1.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star13" name="rating" value="1" />
+	                        <label class = "full" for="star13" title="Sucks big time - 1 star"></label>
+	                        
+	                        <input class="stars" type="radio" id="starhalf3" name="rating" value="0.5" />
+	                        <label class="half" for="starhalf3" title="Sucks big time - 0.5 stars"></label>
+
+	                        <input class="hidden" type="radio" id="starzero3" name="rating" value="" />
+	                        <label class="hidden" style="{display: none;}" for="starzero3" ></label>
+
+	                    </fieldset>
+                    </div>
+	                    
 				</div>
 
 				@if(Session::has('failed'))
@@ -178,60 +226,6 @@
 					</div>
 
 
-<script type="text/javascript">
-	/**
- * Star rating class
- * @constructor
- */
-function StarRating() {
-  this.init();
-};
- 
-/**
- * Initialize
- */
-StarRating.prototype.init = function() {
-  this.stars = document.querySelectorAll('.rating_box span');
-  for (var i = 0; i < this.stars.length; i++) {
-    this.stars[i].setAttribute('data-count', i);
-    this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
-  }
-  document.querySelector('.rating_box').addEventListener('mouseleave', this.leaveStarListener.bind(this));
-};
- 
-/**
- * This method is fired when a user hovers over a single star
- * @param e
- */
-StarRating.prototype.enterStarListener = function(e) {
-  this.fillStarsUpToElement(e.target);
-};
- 
-/**
- * This method is fired when the user leaves the #rating element, effectively removing all hover states.
- */
-StarRating.prototype.leaveStarListener = function() {
-  this.fillStarsUpToElement(null);
-};
- 
-/**
- * Fill the star ratings up to a specific position.
- * @param el
- */
-StarRating.prototype.fillStarsUpToElement = function(el) {
-  // Remove all hover states:
-  for (var i = 0; i < this.stars.length; i++) {
-    if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
-      this.stars[i].classList.remove('hover');
-    } else {
-      this.stars[i].classList.add('hover');
-    }
-  }
-};
- 
-// Run:
-new StarRating();
-</script>
 				<div class="container review_container">
 					<div class="col-sm-9">
 					<h1>Reviews</h1>
