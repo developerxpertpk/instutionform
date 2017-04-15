@@ -42,15 +42,13 @@
                 </div>
 
                 <div class="form-group">
-
-                    <div class="ui-widget" >
-
-                        <label class="col-sm-6 col-md-2 col-lg-2 control-label" for="school_name" >School Name: </label>
-                        <div class=" col-sm-8 col-md-8 ">
-
-                        <input id="auto" name="school_name" class="form-control">
+                    <div class="ui-widget">
+                        <label for="school_name" class="col-sm-6 col-md-2 col-lg-2 control-label" > School Name </label>
+                        <div class="col-sm-8 col-md-8">
+                        <input id="school_name"  name="school_name" class="form-control" placeholder="please enter at least two characters">
+                        </div>
                     </div>
-                </div>
+
                 </div>
 
                 <div class="form-group">
@@ -73,7 +71,7 @@
                     </label>
 
                     <div class=" col-sm-8 col-md-8 ">
-                        <textarea name="news_description" class="form-control" rows="4" required></textarea>
+                        <textarea name="news_description"  class="form-control" rows="4" required></textarea>
 
                         @if ($errors->has('news_description'))
                             <span class="help-block">
@@ -90,17 +88,15 @@
                 </div>
         </form>
             {{-- autocomplete function script send post request to the source using word term in jquery string--}}
-            {{--<script>--}}
+            <script>
+                $( function() {
+                    $( "#school_name" ).autocomplete({
+                        source: "get_school_data",
+                        minLength: 2,
 
-                {{--$( "#auto" ).autocomplete({--}}
-                {{--source: "{{URL('search_school')}}",--}}
-                {{--minLength: 0,--}}
-                {{--autofocus:true,--}}
-                {{--select:function(e,ui){--}}
-                    {{--console.log('selected');--}}
-                {{--}--}}
-                {{--});--}}
-            {{--</script>--}}
+                    });
+                } );
+            </script>
         </div>
     </div>
 

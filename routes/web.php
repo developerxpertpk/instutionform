@@ -45,21 +45,24 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 			Route::resource('user','UserController');
-
+            Route::post('user/update_user/{id}','UserController@user_update')->name('user.updateuser');
 			Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
 			Route::get('admin/user/search', 'UserController@search');
 
 			/*  route for school-institue */
 			
 			Route::resource('school','SchoolController');
-            /*  route for school-institue */
+            /*  route for school-institue  status*/
             Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
-			//Route::get('school','SchoolController@list
+            Route::post('school/school_update/{id}','SchoolController@school_update')->name('school.update1');
 
             /*  Routes for add News Reated to school  */
             Route::resource('school_news','School_newsController');
+            Route::get('school_news/get_school_data','School_newsController@search_school');
+
 			// Routes for cms
+            Route::resource('content','PageController');
 			Route::get('content','PageController@index')->name('content');
 
 			Route::get('pages',function(){
@@ -77,13 +80,18 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('question/submit','PageController@question_submit')->name('question_submit');
 
             Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
+            // Routes for rating and reviews
+            Route::resource('rating_reviews','School_rating_reviewsController');
+
+            Route::post('rating_reviews/admin_rating','School_rating_reviewsController@admin_rating')->name('admin.rating');
 
     	});
 });
 Route::get('/search', 'UserController@search');
-
-
 Route::get('/school_search','SchoolController@search')->name('school_search');
+Route::get('rating_reviews/search','School_rating_reviewsController@school_search')->name('rating_search');
+
+
 
 Route::group(['middleware' => ['check.status']],function(){
 	Auth::routes();

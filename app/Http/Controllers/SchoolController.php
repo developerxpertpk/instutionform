@@ -244,7 +244,7 @@ class SchoolController extends Controller
 
     }
     // function to block/unblock school
-    public function status_update(Request $request,$id)
+    public function status_update(Request $request, $id)
     {
         $this->validate($request, [
             'status' => 'required',
@@ -258,6 +258,115 @@ class SchoolController extends Controller
 
     }
 
+    public function school_update(Request $request, $id){
+        $loc_id=School::find($id)->location_id;
+        location::find($loc_id)->update($request->all());
+        School::find($id)->update($request->all());
+        // code for upload images if any
+        if($request->hasFile('image')){
+            $files=$request->file('image');
+
+            // Making counting of uploaded images
+            $file_count = count($files);
+            // start count how many uploaded
+            $uploadcount = 0;
+
+            $school_id=School::find($id)->id;
+            $schoolfolder = str_replace (" ", "_", $school->school_name);
+            $schoolfolder_path='upload'.'/schools/'.$schoolfolder.$school_id;
+            $destinationPath = public_path().'/'.$schoolfolder_path;
+
+            File::MakeDirectory($destinationPath,0777,true);
+
+            $dataSet = [];
+            $now = Carbon::now();
+
+            foreach($files as $file) {
+                $fileName = $file->getClientOriginalName();
+                $extention = $file->getClientOriginalExtension();
+                $file->move($destinationPath,$fileName);
+
+                $timestamp = $now->getTimestamp();
+                $image_path=$schoolfolder_path.'/'.$fileName;
+
+                $dataSet[] = [
+                    'image' => $image_path,
+                    'school_id'  => $school_id,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+                $uploadcount++;
+
+            }
+
+            DB::table('school_images')->insert($dataSet);
+
+            if($uploadcount == $file_count ){
+                return redirect()->route('school.index')
+                    ->with('success','school Registerd successfully !!!!');
+            }else{
+                die('a');
+            }
+        }
+
+        // code to upload documents
+        if($request->hasFile('document')) {
+            $documents = $request->file('document');
+            // Making counting of uploaded images
+            $file_count = count($documents);
+            // start count how many uploaded
+            $uploadcount = 0;
+            $school_id = School::find($id)->id;
+            $schoolfolder = str_replace(" ", "_", $school->school_name);
+            $schoolfolder_path = 'upload' . '/documents/' . $schoolfolder . $school_id;
+            $destinationPath = public_path() . '/' . $schoolfolder_path;
+
+            File::MakeDirectory($destinationPath, 0777, true);
+
+            $dataSet = [];
+            $now = Carbon::now();
+
+            foreach ($documents as $file) {
+
+                $fileName = $file->getClientOriginalName();
+                $extention = $file->getClientOriginalExtension();
+                //$filesize=$file->getSize();
+                $file->move($destinationPath, $fileName);
+                $timestamp = $now->getTimestamp();
+
+                $file_path = $schoolfolder_path . '/' . $fileName;
+
+                $dataSet[] = [
+                    'school_id' => $school_id,
+                    'document' => $file_path,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+                $uploadcount++;
+            }
+            DB::table('documents')->insert($dataSet);
+
+            if ($uploadcount == $file_count) {
+                return redirect()->route('school.index')
+                    ->with('success', 'school Registerd successfully !!!!');
+
+            } else {
+                return redirect()->route('school.create')
+                    ->withError('Document is not uploaded');
+
+            }
+        }
+
+        return redirect()->route('school.index')
+                        ->with('success','school updated successfully');
+
+    }
+
+    public function show($id){
+
+        $schools= School::find($id);
+        return view('admin.dashboard.school.school_show',compact('schools'));
+    }
 
 }
 

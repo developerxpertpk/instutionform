@@ -10,6 +10,7 @@
       <a href="{{ route('user.index') }}">  back </a>
      </div>
 
+
 </div>
 	  @if ($message = Session::get('success'))
         <div class="alert alert-success">

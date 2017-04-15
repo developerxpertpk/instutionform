@@ -17,10 +17,13 @@
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script  type="text/javascript" src="{{ asset('js/location.js')}}"></script>
 
+
     <!-- added google map api script and key -->
     <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns "async defer></script>
 
     <script src="{{asset('js/jquery-ui.js')}}"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -230,7 +233,22 @@
                             </li>
                         </ul>
                     </li>
- 
+
+                    <li>
+
+                        <a href="javascript:;" data-toggle="collapse" data-target="#rating_review"><i class="fa fa-fw fa-arrows-v" ></i> Rating & Reviews <class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="rating_review" class="collapse">
+
+                            <li>
+                                <a href="{{route('rating_reviews.index')}}"> View Rating & Reviews </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('freq_ask_ques')}}">Search</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
                     </li>

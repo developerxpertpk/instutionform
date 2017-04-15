@@ -169,4 +169,11 @@ class UserController extends Controller
 
             }
 
+        public function user_update(Request $request,$id)
+        {
+            School::find($id)->update($request->all());
+            return redirect()->route('user.index')
+                            ->with('success','user updated successfully');
+        }
+
 }   

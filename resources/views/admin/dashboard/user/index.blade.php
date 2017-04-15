@@ -83,6 +83,96 @@
           <td>{{ $user->status }}</td>
           <td>
 
+            <!-- Edit   button  -->
+            <a href="{{ route('user.edit' ,$user->id) }}" class="btn btn-success" > Edit </a>
+            <!-- show  button  -->
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target=".profile{{$user->fname}}">Show</button>
+
+            <!-- Model show  -->
+            <div class="modal fade profile{{$user->fname}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <h4 class="modal-title" id="myModalLabel">{{$user->fname}} Profile </h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="row">
+                      <div class="col-lg-12 margin-tb">
+                        <div class="pull-left">
+                          <h2> {{ $user->fname ." ".$user->lname}} Profile</h2>
+                        </div>
+
+                        <div class="pull-right">
+                          <a class="btn btn-primary" href="{{route('user.index')}}"> Back</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row user-show">
+
+                      <div class="col-xs-6 col-sm-6 col-md-6" id="user-img">
+                        <div class="form-group">
+                          <img src="{{asset('/upload')}}/{{ $user->image }}" width="250px" height="250px">
+                        </div>
+                        <strong>{{ $user->image }}</strong>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Username:</strong>
+                          {{ $user->fname." ".$user->lname}}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Email:</strong>
+                          {{ $user->email }}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Gender:</strong>
+                          {{ $user->gender }}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Address:</strong>
+                          {{ $user->address }}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Role:</strong>
+                          {{ $user->role->role}}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <strong>Status:</strong>
+                          {{ $user->status}}
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
 
         <!-- Button for  Delete-->
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
@@ -173,5 +263,4 @@
 </div>
   {!! $users->render() !!}
   </div>
-
 @endsection

@@ -60,8 +60,41 @@
 								<td>{{ $pages->slug }}</td>
 								<td>
 									<button>view</button>
+
+				<!-- Button for  Delete-->
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+					Delete
+				</button>
+
+				<!-- Modal  for delete with id=01-->
+				<div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Confirmation  </h4>
+							</div>
+
+							<div class="modal-body">
+								<h3> Do you want to delete {{$pages->title}}  ? . </h3>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+								{!! Form::open(['method' => 'DELETE','route' => ['content.destroy',$pages->id ],'style'=>'display:inline','class'=>'delete']) !!}
+
+								{!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
+								{!! Form::close() !!}
+							</div>
+						</div>
+					</div>
+				</div>
+
 								</td>
 							</tr>
+
+
 			@endforeach
 	</table>
 	</div>

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -9,6 +8,7 @@ use App\School_news;
 use Illuminate\Validation;
 use Validator;
 use  App\School;
+use Response;
 
 
 class School_newsController extends Controller
@@ -27,6 +27,7 @@ class School_newsController extends Controller
 
     public function store(Request $request)
     {
+
    $rules = array(
             'school_name' => 'required ',
             'news_title' => 'required ',
@@ -56,9 +57,10 @@ class School_newsController extends Controller
             return redirect()->route('school_news.index')
                                  ->with('success', 'News updated successfully' );
         }else {
-            return redirect()->route('school_news . create')
+            die('a');
+            return redirect()->route('school_news.create')
                                 ->with('Input')
-                                ->withErrorBag('Sorry School DoesNot Exist');
+                                ->withError('Sorry School DoesNot Exist');
                         }
 
       }
@@ -71,17 +73,27 @@ class School_newsController extends Controller
         return redirect()->route('school_news.index')
                         ->with('success','Data Deleted successfully');
     }
-//
-//    public function search_school(){
-//       $term = str::lower(Input::get(term));
-//      $data = DB::tabel('schools')->select('school_name')->where('school_name','LIKE','%'.$term.'%')
-//                    ->take(5)
-//                    ->get();
-//      foreach($data as $school_data){
-//           $return_array[] = array('value' => $school_data->school_name);
-//        }
-//        return Response::json($return_array);
-//    }
 
+    public function search_school()
+    {
+
+        $term = Input::get('term');
+        $data = DB::table('schools')->where('school_name', 'LIKE', '%' . $term . '%')->get();
+
+                $return_array = [];
+                foreach ($data as $school_data) {
+                    $return_array['id'] = $school_data->school_name;
+                    $return_array['label'] = $school_data->school_name;
+                    $return_array['value'] = $school_data->school_name;
+
+                }
+                return Response::json($return_array);
+
+    }
+
+
+    public function show(){
+        die('a');
+    }
 
 }
