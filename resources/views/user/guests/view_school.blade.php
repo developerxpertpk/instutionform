@@ -7,12 +7,12 @@
 		@foreach($particular_school as $school)
 			<br/>
 			<!-- Facebook Preview Tags -->
-			<!-- <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+			<meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
 	        <meta property="og:type"          content="website" />
 	        <meta property="og:title"         content="{{$school->school_name}}" />
 	        <meta property="og:description"   content="Your description" />
 	        <meta property="og:description"   content="Your description" />
-	        <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
+	        <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
 	        <!-- /Facebook Preview Tags Close -->
 
 	        <!-- twitter preview tags -->
@@ -96,14 +96,32 @@
 								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@endif
 							</span>
-							<span class="col-sm-2">
-								<div class="fb-share-button" data-href="Demourl.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+							<!-- <span class="col-sm-2">
+								<div class="fb-share-button" data-href="www.google.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
 							</span>
 							<span class="col-sm-2">
 								<a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">Tweet</a>
 							</span>	
-							<span>
-								
+							<span> -->
+								<!-- <a href="https://api.addthis.com/oexchange/0.8/forward/email/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/email.png" border="0" alt="Email"/></a>
+
+								<a href="https://api.addthis.com/oexchange/0.8/forward/facebook/offer?url=http%3A%2F%2Fwww.google.com%2F&pubid=ra-42fed1e187bae420&title=GoogleHome%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/facebook.png" border="0" alt="Facebook"/></a>
+
+								<a href="https://api.addthis.com/oexchange/0.8/forward/google_plusone_share/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/google_plusone_share.png" border="0" alt="Google+"/></a>
+
+								<a href="https://api.addthis.com/oexchange/0.8/forward/twitter/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/twitter.png" border="0" alt="Twitter"/></a> -->
+
+								<!-- AddToAny BEGIN -->
+
+								<a href="https://www.addtoany.com/add_to/facebook?linkurl=www.google.com&amp;linkname=demo" target="_blank"><img src="{{asset('image/facebook.svg')}}" width="32" height="32"></a>
+
+								<a href="https://www.addtoany.com/add_to/twitter?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/twitter.svg" width="32" height="32"></a>
+
+								<a href="https://www.addtoany.com/add_to/google_plus?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/google_plus.svg" width="32" height="32"></a>
+
+								<a href="/share_via_email">Send Email</a>
+								<!-- AddToAny END -->
+
 							</span>
 						</div>
 						<span>
@@ -246,12 +264,12 @@
 						@foreach( $school->school_ratings as $ratings )
 							@if( count($ratings->reviews) )
 								<div class="media">
-								  	<div class="media-left media-middle">
+								  	<div class="media-left media-middle ">
 								    	<a href="#">
-								      		<img class="media-object" src="..." alt="...">
+								      		<img class="media-object table-bordered" src="..." alt="...">
 								    	</a>
 								  	</div>
-								  	<div class="media-body">
+								  	<div class="media-body ">
 								    	<h4 class="media-heading">{{$ratings->users->fname}} {{$ratings->users->lname}}</h4>
 								    	{!! $ratings->reviews !!}
 								  	</div>

@@ -112,6 +112,8 @@ Route::get('details',function(){
 	return view('user.guests.view_school');
 });
 
+Route::post('/share_via_email','UnregisteredController@share_via_email');
+
 
 /*USER HOME GROUP*/
 Route::group(['middleware' => ['auth','check.status']], function () {

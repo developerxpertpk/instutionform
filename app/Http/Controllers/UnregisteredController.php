@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Schema;
-use App\School;
-use App\Location;
-use App\School_rating;
-use Auth;
-use Session;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\School_rating;
+use App\Location;
+use App\School;
+use Session;
+use Auth;
+use Mail;
 
 class UnregisteredController extends BaseController
 {
@@ -139,6 +140,7 @@ class UnregisteredController extends BaseController
     }
     /* /Close*/
 
+
     public function post_review(Request $request){
 
         if(!$request->input('review')){
@@ -161,6 +163,10 @@ class UnregisteredController extends BaseController
             return back();
         }
 
+    }
+
+    
+    public function share_via_email(Request $request){
 
     }
 }
