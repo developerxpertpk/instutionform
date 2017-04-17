@@ -68,9 +68,5 @@ class School_rating_reviewsController extends Controller
         die('u r in show');
     }
 
-    public function admin_rating(){
-        die('a');
-
-    }
 
 }

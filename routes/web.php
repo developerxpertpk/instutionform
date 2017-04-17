@@ -83,13 +83,15 @@ Route::group(['middleware' => ['auth']], function () {
             // Routes for rating and reviews
             Route::resource('rating_reviews','School_rating_reviewsController');
 
-            Route::post('rating_reviews/admin_rating','School_rating_reviewsController@admin_rating')->name('admin.rating');
+            Route::post('school/check_ratings','SchoolController@check_ratings');
+            Route::post('school/admin_rating','SchoolController@school_rating');
 
     	});
 });
 Route::get('/search', 'UserController@search');
 Route::get('/school_search','SchoolController@search')->name('school_search');
 Route::get('rating_reviews/search','School_rating_reviewsController@school_search')->name('rating_search');
+//Route::post('school/rating_reviews/admin_rating','School_rating_reviewsController@admin_rating');
 
 
 
@@ -146,9 +148,11 @@ Route::get('map_data','AjaxCallsController@retrive_nearby_locations');
 
 Route::get('check_login','AjaxCallsController@check_login');
 
-Route::get('rate_school','AjaxCallsController@rate_school');
+Route::post('/rate_school','AjaxCallsController@rate_school');
 
-Route::get('check_rate','AjaxCallsController@check_rate');
+Route::post('/check_rate','AjaxCallsController@check_rate');
+
+Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 /*Ajax calls close*/
 
 // Route::get('/','DocumentController@test');

@@ -324,29 +324,58 @@
   /*opacity: 0;*/
 }
 
-.heading_box span h3{
-  /*font-size: 45px;*/
+/*bookmark icon*/
+.bookmark_class{
+  font-size: 30px;
+  color:lightgrey;
+  cursor:pointer;
 }
-
+.bookmark_icon_glow{
+  color: gold;
+  font-size: 30px;
+  text-shadow: 2px 0px 2px silver;
+}
 
 /*stars ratings*/
+/*fieldset, label { margin: 0; padding: 0; }*/
+.rating { 
+    border: none;
+    float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+    margin: 5px;
+    font-size: 2em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before { 
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label { 
+    color: #ddd; 
+    float: right; 
+}
+
+.rating > input:checked ~ label, 
+.rating:not(:checked) > label:hover,  
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  }
+
+.rating > input:checked + label:hover, 
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, 
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
 .rating_box{
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  font-size: 30px;
+  width:100%;
+  text-align: center;
 }
-.rating_box > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-}
-.rating_box > span:hover:before,
-.rating_box > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   color:gold;
-   cursor: pointer;
-}
+/*rating styling close*/
 
 .non_user{
   float:left;
@@ -433,10 +462,4 @@
   width:100px;
   height:100px;
 }
-.stars-rating {
-    display: inline-block;
-    vertical-align: baseline;
-}
-.stars-rating:after {
-    color: #dcd87d;
-}
+

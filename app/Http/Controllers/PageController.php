@@ -13,10 +13,11 @@ class PageController extends Controller
 {
 
     /*For FAQ page*/
-    public function faq_function()
-    {
-        $faq_data = Freq_ask_question::orderBy('id', 'DESC')->get();
-        return view('user.guests.faq')->with('faq_data', $faq_data);
+    public function faq_function(){
+        $faq_data=Freq_ask_question::orderBy('id','DESC')->get();
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        return view('user.guests.faq')->with('faq_data',$faq_data)
+                                        ->with('page',$page);
     }
 
 
@@ -29,10 +30,12 @@ class PageController extends Controller
     }
 
     // function for show page
-    public function page_show($slug)
-    {
-        $page = Page::where('slug', '=', $slug)->get();
-        return view('admin.dashboard.cms.page')->with('page', $page);;
+
+    public function page_show($slug){
+        $particular_page = Page::where('slug','=',$slug)->get();
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        return view('admin.dashboard.cms.page')->with('page',$page)
+                                                ->with('particular_page',$particular_page);
 
     }
 

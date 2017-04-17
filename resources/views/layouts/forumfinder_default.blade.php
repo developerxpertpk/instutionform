@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>School Finder</title>
+
+
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 
@@ -44,6 +46,11 @@
             border:2px solid #000;*/
         }
     </style>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
 
         
     </head>

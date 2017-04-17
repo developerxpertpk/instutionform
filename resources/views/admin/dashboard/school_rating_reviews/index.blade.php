@@ -54,7 +54,55 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ $rating->users->fname }}</td>
                             <td> {{ $rating->schools->school_name }}</td>
-                            <td>{{ $rating->ratings }} </td>
+                            <td>
+                                {{--@if( {{$rating->ratings}} == 1)--}}
+										{{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+
+                                {{--@endif--}}
+                                {{--@if({{$rating->ratings}} == 2)--}}
+
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+
+                                {{--@endif--}}
+
+                                {{--@if({{$rating->ratings}} == 3)--}}
+
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+
+                                {{--@endif--}}
+
+                                {{--@if({{$rating->ratings}} == 4)--}}
+                                    {{--<span>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+
+                                {{--@endif--}}
+
+                                {{--@if( {{$rating->ratings }} == 5)--}}
+
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
+                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                {{--@endif--}}
+
+                            </td>
                             <td>{{ $rating->reviews}} </td>
                             <td>
 

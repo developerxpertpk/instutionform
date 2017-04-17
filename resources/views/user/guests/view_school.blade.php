@@ -6,12 +6,23 @@
 	@if(count($particular_school))
 		@foreach($particular_school as $school)
 		<br/>
+		<!-- Facebook Preview Tags -->
+		<meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="{{$school->school_name}}" />
+        <!-- <meta property="og:description"   content="Your description" /> -->
+        <!-- <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
+        <!-- Facebook Preview Tags Close -->
+
+		<meta name="_token" content="{{ csrf_token() }}">
 			<div class="container-fluid">
 				<div class="container">
 					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
 						@if( isset($school->school_images->image))
 							@if(asset('upload/'.$school->school_images->image))
 								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
+
+								<meta property="og:image" content="{{asset('upload/'.$school->school_images->image)}}" />
 							@endif
 						@else
 							<img src="{{asset('upload/def_school.png')}}">
@@ -24,7 +35,7 @@
 							<h6>{{$school->locations->city}}, {{$school->locations->state}}, {{$school->locations->country}}</h6>
 
 						</span>
-						<div class="avg_rating_box col-sm-6">
+						<div class="avg_rating_box col-sm-12">
 							@if(isset($avg_rating))
 								@if($avg_rating == 1)
 									<span>
@@ -75,6 +86,12 @@
 								<p>No ratings yet</p>
 							@endif
 						</div>
+						<div >
+							<a href="https://www.facebook.com/sharer/sharer.php?u={{ Request::url() }}&display=popup" class="col-sm-4"> share this </a>
+							<span class="col-sm-12">
+								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
+							</span>
+						</div>
 						<span>
 							<img src="" alt="">
 						</span>
@@ -89,12 +106,48 @@
 	                            </div>
 	                        </div>
 	                        <!-- /menu profile quick info -->
-						@endif				
-					<div class="rating_box">
-						<input type="hidden" name="hidden_input" value="{{$school->id}}" />
-						<span id="5">☆</span><span id="4">☆</span><span id="3">☆</span><span id="2">☆</span><span id="1">☆</span>
-					</div>
-					<h5>Rate this school</h5>
+						@endif
+				
+                    <div class="rating_box col-sm-12">
+                    	<fieldset id='demo3' class="rating">
+                    		<input type="hidden" name="hidden_input" value="{{$school->id}}" />
+
+	                        <input class="stars" type="radio" id="star53" name="rating" value="5" />
+	                        <label class = "full" for="star53" title="Awesome - 5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star4half3" name="rating" value="4.5" />
+	                        <label class="half" for="star4half3" title="Pretty good - 4.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star43" name="rating" value="4" />
+	                        <label class = "full" for="star43" title="Pretty good - 4 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star3half3" name="rating" value="3.5" />
+	                        <label class="half" for="star3half3" title="Meh - 3.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star33" name="rating" value="3" />
+	                        <label class = "full" for="star33" title="Meh - 3 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star2half3" name="rating" value="2.5" />
+	                        <label class="half" for="star2half3" title="Kinda bad - 2.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star23" name="rating" value="2" />
+	                        <label class = "full" for="star23" title="Kinda bad - 2 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star1half3" name="rating" value="1.5" />
+	                        <label class="half" for="star1half3" title="Meh - 1.5 stars"></label>
+	                        
+	                        <input class="stars" type="radio" id="star13" name="rating" value="1" />
+	                        <label class = "full" for="star13" title="Sucks big time - 1 star"></label>
+	                        
+	                        <input class="stars" type="radio" id="starhalf3" name="rating" value="0.5" />
+	                        <label class="half" for="starhalf3" title="Sucks big time - 0.5 stars"></label>
+
+	                        <input class="hidden" type="radio" id="starzero3" name="rating" value="" />
+	                        <label class="hidden" style="{display: none;}" for="starzero3" ></label>
+
+	                    </fieldset>
+                    </div>
+	                    
 				</div>
 
 				@if(Session::has('failed'))
@@ -173,114 +226,6 @@
 					</div>
 
 
-
-
-					
-				<!-- <div class="col-md-8 col-sm-8 col-xs-12">
-					<div class="x_panel tile fixed_height_320">
-						<div class="x_title">
-							<h3>Reviews</h3>
-							<div class="clearfix"></div>
-						</div>
-						<div class="x_content">
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="widget_summary">
-								<div class="w_left w_25">
-									<span>
-										<i class="fa fa-star" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-										<i class="fa fa-star-o" aria-hidden="true"></i>
-									</span>
-								</div>
-								<div class="w_center w_55">
-									<div class="progress">
-										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-											<span class="sr-only">60% Complete</span>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-				</div> -->
 				<div class="container review_container">
 					<div class="col-sm-9">
 					<h1>Reviews</h1>

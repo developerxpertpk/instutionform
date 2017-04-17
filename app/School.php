@@ -35,4 +35,8 @@ class School extends Model
     public function school_ratings(){
         return $this->hasMany('App\School_rating','school_id');
     }
+
+    public function bookmarked_schools(){
+        return $this->hasMany('App\Bookmarked_school','school_id');
+    }
 }

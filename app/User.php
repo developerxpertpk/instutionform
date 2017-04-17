@@ -38,6 +38,9 @@ class User extends Authenticatable
         return $this->hasMany('App\School_rating','user_id');
     }
 
+    public function bookmarked_schools(){
+        return $this->hasMany('App\Bookmarked_school','user_id');
+    }
     // public function findForPassport($identifier) {
     //  return User::orWhere(‘email’, $identifier)->where(‘activity’, 1)->first();
     // }

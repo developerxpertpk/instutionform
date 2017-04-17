@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Input;
 use App\School_rating;
+use App\Bookmarked_school;
 
 
 class AjaxCallsController extends Controller
@@ -46,26 +48,43 @@ class AjaxCallsController extends Controller
 
     /*Rate School Functionality*/
     public function rate_school(Request $request){
-    	$id=$request->school_id;
+
+    	$school_id=$request->school_id;
     	$rate=$request->rating;
 
-        if(School_rating::where('user_id','=',Auth::id())->exists() ){
-           /*$rating= School_rating::where('user_id','=',Auth::id())->first('ratings');
-           return response($rating);*/
-           return response('Do nothing');
+        // return response()->json($rate);
+
+        if(School_rating::where([
+            ['user_id','=',Auth::id()],
+            ['school_id','=',$school_id],
+            ])->exists() ){
+
+           $rating= School_rating::where([
+            ['user_id','=',Auth::id()],
+            ['school_id','=',$school_id],
+            ])->select('ratings')->first();   
+
+           return response($rating);
+           // return response('Do nothing');
+        }else{
+            $ratings= new School_rating;
+
+            $ratings->school_id = $school_id;
+            $ratings->user_id = Auth::id();
+            $ratings->ratings = $rate;
+            $ratings->save();
+
+            return response()->json(true);
         }
-
-        $ratings= new School_rating;
-
-        $ratings->school_id = $id;
-        $ratings->user_id = Auth::id();
-        $ratings->ratings = $rate;
-        $ratings->save();
-
-        return response()->json(true);
+        
     }
 
-    public function check_rate(){
+
+    /*For checking user rating on a current school*/
+    public function check_rate(Request $request){
+
+        $school_id=$request->school_id;
+
 
         if(!Auth::check()){
             return response()->json(false);
@@ -73,10 +92,41 @@ class AjaxCallsController extends Controller
 
         $this->middleware('CheckStatus');
 
-        if(School_rating::where('user_id','=',Auth::id())->exists() ){
-            $rating=School_rating::select('ratings')->where('user_id','=',Auth::id())->first();
+        if ( School_rating::where([
+                ['user_id','=',Auth::id()],
+                ['school_id','=',$school_id]
+            ] )->exists() ) {
+
+            $rating=School_rating::select('ratings')->where( [
+                ['user_id','=',Auth::id()],
+                ['school_id','=',$school_id]
+            ] )->first();
+
             return response($rating);
         }
         return response()->json('not exist');
+    }
+
+
+    public function check_bookmark(Request $request){
+        $school_id=$request->school_id;
+
+        if(!Auth::check()){
+            return response()->json(false);
+        }
+
+        $this->middleware('CheckStatus');
+
+        if( Bookmarked_school::where([
+                ['user_id','=',Auth::id()],
+                ['school_id','=',$school_id]
+            ] )->exists()){
+
+            return response()->json(true);
+        }
+
+
+        return response('not exist');
+
     }
 }
