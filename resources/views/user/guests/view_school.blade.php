@@ -5,24 +5,26 @@
 @if(isset($particular_school))
 	@if(count($particular_school))
 		@foreach($particular_school as $school)
-		<br/>
-		<!-- Facebook Preview Tags -->
-		<meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
-        <meta property="og:type"          content="website" />
-        <meta property="og:title"         content="{{$school->school_name}}" />
-        <!-- <meta property="og:description"   content="Your description" /> -->
-        <!-- <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
-        <!-- Facebook Preview Tags Close -->
+			<br/>
+			<!-- Facebook Preview Tags -->
+			<!-- <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+	        <meta property="og:type"          content="website" />
+	        <meta property="og:title"         content="{{$school->school_name}}" />
+	        <meta property="og:description"   content="Your description" />
+	        <meta property="og:description"   content="Your description" />
+	        <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
+	        <!-- /Facebook Preview Tags Close -->
 
-		<meta name="_token" content="{{ csrf_token() }}">
+	        <!-- twitter preview tags -->
+	        <link rel="canonical" href="{{ Request::url() }}">
+	        <!-- /twitter preview tags -->
+
 			<div class="container-fluid">
 				<div class="container">
 					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
 						@if( isset($school->school_images->image))
 							@if(asset('upload/'.$school->school_images->image))
 								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
-
-								<meta property="og:image" content="{{asset('upload/'.$school->school_images->image)}}" />
 							@endif
 						@else
 							<img src="{{asset('upload/def_school.png')}}">
@@ -30,7 +32,7 @@
 						<!-- <img src="{{asset('image/bookmark.png')}}" class="bookmark_logo"> -->
 					</div>
 					<div class="heading_box col-sm-6">
-						<span>
+						<span class="col-sm-12">
 							<h3>{{$school->school_name}}</h3>
 							<h6>{{$school->locations->city}}, {{$school->locations->state}}, {{$school->locations->country}}</h6>
 
@@ -87,9 +89,21 @@
 							@endif
 						</div>
 						<div >
-							<a href="https://www.facebook.com/sharer/sharer.php?u={{ Request::url() }}&display=popup" class="col-sm-4"> share this </a>
 							<span class="col-sm-12">
+							@if(isset($school->bookmarked_schools) && $school->bookmarked_schools->count())
+								<i class="fa fa-bookmark bookmark_icon_glow" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
+							@else
 								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
+							@endif
+							</span>
+							<span class="col-sm-2">
+								<div class="fb-share-button" data-href="Demourl.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+							</span>
+							<span class="col-sm-2">
+								<a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">Tweet</a>
+							</span>	
+							<span>
+								
 							</span>
 						</div>
 						<span>

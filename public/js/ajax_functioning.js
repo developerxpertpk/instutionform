@@ -142,8 +142,6 @@ $(document).ready(function(){
 
 
     /*Bookmark functionality*/
-
-
     $('#bookmark_icon').click(function(){
         var school_id=$(this).attr('title');
         // alert(school_id);
@@ -164,9 +162,9 @@ $(document).ready(function(){
                     console.log('You have been blocked');
                     edit_user();
                 }else{
-                    console.log(true);
-                    $('#bookmark_icon').removeClass('bookmark_class');
-                    $('#bookmark_icon').addClass('bookmark_icon_glow');
+                    console.log(response);
+                    $('#bookmark_icon').toggleClass('bookmark_class');
+                    $('#bookmark_icon').toggleClass('bookmark_icon_glow');
                 }
             },
             error: function(response){

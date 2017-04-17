@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel </title>
+    <title>School Finder</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -27,6 +27,38 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+       .profile_picture img{
+           width:100%;
+           transition: opacity 1s;
+         }
+
+         .profile_picture img:hover{
+           opacity:0.5;
+         }
+
+         .profile_picture a{
+           text-decoration: none;
+           color:red;
+         }
+
+         .profile_picture:hover p{
+           visibility:visible;
+         }
+         .profile_picture p{
+           font-size: 25px;
+           font-weight: 900;
+           position:relative;
+           bottom:200px;
+           left:50px;
+           visibility:hidden;
+         }
+         .src_err{
+           font-size:30px;
+           color:#ffffff;
+           font-weight: 500;
+         }
+    </style>
   </head>
 
   <body class="nav-md">
@@ -35,7 +67,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index.html" class="site_title"><img class="img-responsive" src="{{asset('image\finallogo.png')}}"></a>
             </div>
 
             <div class="clearfix"></div>
@@ -280,7 +312,12 @@
         </div>
         <!-- /top navigation -->
 
-        @yield('content_user')
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+           @yield('content_user')
+        </div>
+        <!-- /page content -->
 
         <!-- footer content -->
         <footer>
@@ -294,45 +331,88 @@
     </div>
 
     <!-- jQuery -->
-    <script src="{{ asset('') }}vendors/jquery/dist/jquery.min.js"></script>
+    <script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
-    <script src="{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- FastClick -->
-    <script src="{{ asset('') }}vendors/fastclick/lib/fastclick.js"></script>
+    <script src="{{ asset('vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
-    <script src="{{ asset('') }}vendors/nprogress/nprogress.js"></script>
+    <script src="{{ asset('vendors/nprogress/nprogress.js') }}"></script>
     <!-- Chart.js -->
-    <script src="{{ asset('') }}vendors/Chart.js/dist/Chart.min.js"></script>
+    <script src="{{ asset('vendors/Chart.js/dist/Chart.min.js') }}"></script>
     <!-- gauge.js -->
-    <script src="{{ asset('') }}vendors/gauge.js/dist/gauge.min.js"></script>
+    <script src="{{ asset('vendors/gauge.js/dist/gauge.min.js') }}"></script>
     <!-- bootstrap-progressbar -->
-    <script src="{{ asset('') }}vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="{{ asset('vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
     <!-- iCheck -->
-    <script src="{{ asset('') }}vendors/iCheck/icheck.min.js"></script>
+    <script src="{{ asset('vendors/iCheck/icheck.min.js') }}"></script>
     <!-- Skycons -->
-    <script src="{{ asset('') }}vendors/skycons/skycons.js"></script>
+    <script src="{{ asset('vendors/skycons/skycons.js') }}"></script>
     <!-- Flot -->
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.time.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.resize.js"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.time.js') }}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.stack.js') }}"></script>
+    <script src="{{ asset('vendors/Flot/jquery.flot.resize.js') }}"></script>
     <!-- Flot plugins -->
-    <script src="{{ asset('') }}vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="{{ asset('') }}vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="{{ asset('') }}vendors/flot.curvedlines/curvedLines.js"></script>
+    <script src="{{ asset('vendors/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>
+    <script src="{{ asset('vendors/flot-spline/js/jquery.flot.spline.min.js') }}"></script>
+    <script src="{{ asset('vendors/flot.curvedlines/curvedLines.js') }}"></script>
     <!-- DateJS -->
-    <script src="{{ asset('') }}vendors/DateJS/build/date.js"></script>
+    <script src="{{ asset('vendors/DateJS/build/date.js') }}"></script>
     <!-- JQVMap -->
-    <script src="{{ asset('') }}vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="{{ asset('') }}vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="{{ asset('') }}vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <script src="{{ asset('vendors/jqvmap/dist/jquery.vmap.js') }}"></script>
+    <script src="{{ asset('vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+    <script src="{{ asset('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
     <!-- bootstrap-daterangepicker -->
-    <script src="{{ asset('') }}vendors/moment/min/moment.min.js"></script>
-    <script src="{{ asset('') }}vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="{{ asset('vendors/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('') }}build/js/custom.min.js"></script>
+    <script src="{{ asset('build/js/custom.min.js') }}"></script>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+      <script>
+         $(document).ready(function(){
+            $("#myBtn").click(function(){
+               change_password_user();
+            });
+            
+            $("#my_editBtn").click(function(){
+               edit_user();
+            });
+
+            $("#change_dp").click(function(){
+               change_dp_model();
+            });
+            
+
+
+
+            window.change_password_user = function(){
+               $("#change_password_user").modal();
+            }
+
+            window.edit_user = function(){
+               $("#edit_user").modal();
+            }
+
+            window.change_dp_model = function(){
+                $("#change_dp_model").modal();
+            }
+        });
+
+        function form_submit() {
+            document.getElementById("change_password").submit();
+        }
+
+        function form_edit() {
+            document.getElementById("profile_editor").submit();
+        } 
+    </script>
   
   </body>
 </html>

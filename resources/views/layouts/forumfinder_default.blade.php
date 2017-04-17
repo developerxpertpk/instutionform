@@ -22,7 +22,14 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
         <!-- close -->
 
+        <!-- twitter -->
+        <!-- <link rel="me" href="{{ Request::url() }}"> -->
+        <!-- twitter -->
         <link rel="shortcut icon" href="/css/style.css">
+
+        <!-- CSRF Tokken for ajax -->
+        <meta name="_token" content="{{ csrf_token() }}">
+        <!-- /CSRF Tokken for ajax -->
         <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
@@ -55,6 +62,49 @@
         
     </head>
     <body>
+        
+
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '201788563656236',
+                    xfbml      : true,
+                    version    : 'v2.8'
+                });
+                FB.AppEvents.logPageView();
+            };
+        </script>
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+
+        <script>
+            window.twttr = (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+                if (d.getElementById(id)) return t;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+
+                t._e = [];
+                t.ready = function(f) {
+                t._e.push(f);
+                };
+
+              return t;
+            }
+            (document, "script", "twitter-wjs"));
+        </script>
         <header>
             <div class="container-fluid navigation">
                 <!-- Static navbar -->
@@ -323,6 +373,50 @@
              $('#review_login_link').click(function(){
                 edit_user();
              });
+        </script>
+
+        <script>
+            // create social networking pop-ups
+            (function() {
+                // link selector and pop-up window size
+                var Config = {
+                    Link: "a.share",
+                    Width: 500,
+                    Height: 500
+                };
+
+                // add handler links
+                var slink = document.querySelectorAll(Config.Link);
+                for (var a = 0; a < slink.length; a++) {
+                    slink[a].onclick = PopupHandler;
+                }
+
+                // create popup
+                function PopupHandler(e) {
+
+                    e = (e ? e : window.event);
+                    var t = (e.target ? e.target : e.srcElement);
+
+                    // popup position
+                    var
+                        px = Math.floor(((screen.availWidth || 1024) - Config.Width) / 2),
+                        py = Math.floor(((screen.availHeight || 700) - Config.Height) / 2);
+
+                    // open popup
+                    var popup = window.open(t.href, "social", 
+                        "width="+Config.Width+",height="+Config.Height+
+                        ",left="+px+",top="+py+
+                        ",location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1");
+                    if (popup) {
+                        popup.focus();
+                        if (e.preventDefault) e.preventDefault();
+                        e.returnValue = false;
+                    }
+
+                    return !!popup;
+                }
+
+            }());
         </script>
     </body>
 </html>

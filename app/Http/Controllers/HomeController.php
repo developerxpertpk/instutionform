@@ -101,14 +101,7 @@ class HomeController extends Controller
                     return redirect('/home/my_profile')->withErrors(array('password_failed' => 'Old password did not matched'));
                 }
             }
-        }    
-        // $password=bcrypt($request->input('old_password'));
-        // if($password == Auth::user()->password){
-        //     echo "match";
-        // }else{
-        //     echo "not match";
-        // }
-        // print_r(Auth::user()->password);
+        }
     }
 
 
