@@ -117,16 +117,28 @@ class AjaxCallsController extends Controller
 
         $this->middleware('CheckStatus');
 
+        $bookmarked= new Bookmarked_school;
+
         if( Bookmarked_school::where([
                 ['user_id','=',Auth::id()],
                 ['school_id','=',$school_id]
             ] )->exists()){
 
-            return response()->json(true);
+            Bookmarked_school::where([
+                ['user_id','=',Auth::id()],
+                ['school_id','=',$school_id]
+            ] )->delete();
+
+            return response('deleted');
         }
 
+        
 
-        return response('not exist');
+        $bookmarked->school_id = $school_id;
+        $bookmarked->user_id = Auth::id();
+        $bookmarked->save();       
+
+        return response('saved');
 
     }
 }

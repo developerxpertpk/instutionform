@@ -331,6 +331,7 @@
   cursor:pointer;
 }
 .bookmark_icon_glow{
+  cursor:pointer;
   color: gold;
   font-size: 30px;
   text-shadow: 2px 0px 2px silver;
