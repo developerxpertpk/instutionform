@@ -1,4 +1,4 @@
-/*Ajax Calls and Requests here*/
+
 
 $(document).ready(function(){
 
