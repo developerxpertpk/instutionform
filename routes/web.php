@@ -168,6 +168,8 @@ Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 	return view('mail_template.share_school');
 });*/
 //forum&finder_welcome
+Route::get('/create_forum/{id}','FrontendForumController@create');
+
 Route::get('show_school/{id}','UnregisteredController@show_school');
 
 

@@ -328,11 +328,16 @@
 						@endforeach
 						@if(Auth::check())
 							<h3>Post a review</h3>
+							<a href="/create_forum/{{$school->id}}"><button class="btn btn-success" style="float:right;">Create Forum</button></a>
 						@else
 							<h3>Login to post your review</h3>
-							<a href="#" id="review_login_link">login..</a>
-							<a href="{{route('register')}}">Not a user?</a>
+							<!-- <span class="col-sm-10"> -->
+								<a href="#" id="review_login_link">login..</a>
+								<a href="{{route('register')}}">Not a user?</a>
+								<a href="/create_forum/{{$school->id}}"><button class="btn btn-success" style="float:right;">Create Forum</button></a>
+							<!-- </span> -->
 						@endif
+						
 						<div class="form-horizontal review_form">
 						@if(Session::has('failed'))
 		                	<span class="alert-danger" >{{Session::get('failed')}}</span>
