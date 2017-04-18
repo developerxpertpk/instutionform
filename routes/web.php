@@ -110,6 +110,8 @@ Route::get('schools_list','UnregisteredController@schools_list');
 
 Route::get('FAQ','PageController@faq_function');
 
+Route::get('/forum','ForumController@forum_index');
+
 Route::post('review_login','UnregisteredController@review_confirm')->name('review_login');
 
 Route::post('post_review','UnregisteredController@post_review')->name('post_review');
@@ -157,7 +159,9 @@ Route::post('/check_rate','AjaxCallsController@check_rate');
 Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 /*Ajax calls close*/
 
-// Route::get('/','DocumentController@test');
+/*Route::get('/',function(){
+	return view('mail_template.share_school');
+});*/
 //forum&finder_welcome
 Route::get('show_school/{id}','UnregisteredController@show_school');
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\School_rating;
@@ -11,7 +13,6 @@ use App\Location;
 use App\School;
 use Session;
 use Auth;
-use Mail;
 
 class UnregisteredController extends BaseController
 {
@@ -127,6 +128,21 @@ class UnregisteredController extends BaseController
 
     /*For confirming login on Review or rating */
     public function review_confirm(Request $request){
+
+        $rules=[
+            'email' => 'required|email|max:255|regex:/^[a-zA-Z0-9@_.]*$/',
+            'password' => 'required|min:6|regex:/^[a-zA-Z0-9@_.]*$/',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator -> fails()){
+            
+            Session::flash('failed','Enter valid credentials');
+            return back()->withErrors($validator);
+        }
+
+
         if(Auth::attempt(array('email'=> $request->input('email'),'password' => $request->input('password')))){
 
             if($request->session()->has('failed')){
@@ -165,8 +181,38 @@ class UnregisteredController extends BaseController
 
     }
 
-    
-    public function share_via_email(Request $request){
 
+    /*SHARE VIA EMAIL*/
+    public function share_via_email(Request $request){
+        $validator = Validator::make($request->all(),[
+                'email' => 'required|email|max:255|regex:/^[a-zA-Z0-9@_.]*$/',
+            ]);
+
+        if($validator -> fails()){
+            Session::flash('send_failed','Enter valid email address');
+            return back()->withErrors($validator);
+        }
+        
+        $userEmail = array();
+
+        $userEmail['email'] = $request->email;
+         $userEmail['url'] = $request->url;
+
+        Mail::send('mail_template.share_school', $userEmail, function ($message) use ($userEmail) {
+            $message->to($userEmail['email'])
+                    ->subject('School Share');
+        });
+
+        if(count(Mail::failures()) > 0 ){
+            
+            echo "failed";
+            foreach(Mail::failures() as $email_address) {
+                echo $email_address."<br />";
+            }
+        
+        }else{
+            Session::flash('sent_success','Mail has been sent successfully.');
+            return back();
+        }
     }
 }

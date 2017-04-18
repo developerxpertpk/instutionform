@@ -90,19 +90,18 @@
 						</div>
 						<div >
 							<span class="col-sm-12">
-							@if(isset($school->bookmarked_schools) && $school->bookmarked_schools->count())
+							@if(isset($school->bookmarked_schools) && $school->bookmarked_schools->count() && Auth::check())
 								<i class="fa fa-bookmark bookmark_icon_glow" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@else
 								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@endif
 							</span>
-							<!-- <span class="col-sm-2">
+							<span class="col-sm-2">
 								<div class="fb-share-button" data-href="www.google.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
 							</span>
 							<span class="col-sm-2">
 								<a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">Tweet</a>
 							</span>	
-							<span> -->
 								<!-- <a href="https://api.addthis.com/oexchange/0.8/forward/email/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/email.png" border="0" alt="Email"/></a>
 
 								<a href="https://api.addthis.com/oexchange/0.8/forward/facebook/offer?url=http%3A%2F%2Fwww.google.com%2F&pubid=ra-42fed1e187bae420&title=GoogleHome%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/facebook.png" border="0" alt="Facebook"/></a>
@@ -112,14 +111,12 @@
 								<a href="https://api.addthis.com/oexchange/0.8/forward/twitter/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/twitter.png" border="0" alt="Twitter"/></a> -->
 
 								<!-- AddToAny BEGIN -->
+							<span class="col-sm-2">
+								<!-- <a href="https://www.addtoany.com/add_to/facebook?linkurl=www.google.com&amp;linkname=demo" target="_blank"><img src="{{asset('image/facebook.svg')}}" width="32" height="32"></a>
 
-								<a href="https://www.addtoany.com/add_to/facebook?linkurl=www.google.com&amp;linkname=demo" target="_blank"><img src="{{asset('image/facebook.svg')}}" width="32" height="32"></a>
+								<a href="https://www.addtoany.com/add_to/twitter?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/twitter.svg" width="32" height="32"></a> -->
 
-								<a href="https://www.addtoany.com/add_to/twitter?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/twitter.svg" width="32" height="32"></a>
-
-								<a href="https://www.addtoany.com/add_to/google_plus?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/google_plus.svg" width="32" height="32"></a>
-
-								<a href="/share_via_email">Send Email</a>
+								<a href="#" class="share_via_email"><img src="{{asset('image/mail.png')}}" width="32" height="32"></a>
 								<!-- AddToAny END -->
 
 							</span>
@@ -182,7 +179,7 @@
 	                    
 				</div>
 
-				@if(Session::has('failed'))
+				@if(Session::has('failed') || Session::has('send_failed'))
 					<script type="text/javascript">
 						$(document).ready(function(){
 							$("#edit_user").modal();
@@ -190,7 +187,7 @@
 					</script>
 				@endif
 
-					<!-- Modal For Profile Editor -->
+					<!-- Modal For Login -->
 					<div class="modal fade" id="edit_user" role="dialog">
 						<div class="modal-dialog">
 							
@@ -198,7 +195,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Login to give reviews</h4><a class="non_user" href="{{ route('register') }}">not registered yet?</a>
+									<h4 class="modal-title">Login First</h4><a class="non_user" href="{{ route('register') }}">not registered yet?</a>
 								</div>
 								<div class="confirm_login">
 									<div class="row">
@@ -246,6 +243,59 @@
 							                                <a class="btn btn-link" href="{{ route('password.request') }}">
 							                                    Forgot Password ?
 							                                </a>
+							                            </div>
+							                        </div>
+							                    </form>
+							                </div>
+								        </div>
+								    </div>
+								</div>
+							</div>		
+						</div>
+					</div>
+
+					<!-- Modal For Mail -->
+					<div class="modal fade" id="mail_model" role="dialog">
+						<div class="modal-dialog">
+							
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Share via email</h4>
+								</div>
+								<div class="confirm_login">
+									<div class="row">
+								        <div class="col-md-10 ">
+							                <div class="panel-body">
+							                @if(Session::has('send_failed'))
+							                	<span class="alert-danger" >{{Session::get('send_failed')}}</span>
+							                @endif
+							                    <form class="form-horizontal" role="form" method="POST" action="/share_via_email">
+							                        {{ csrf_field() }}
+
+							                        <input type="hidden" name="url" value="{{Request::url()}}">
+
+							                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+							                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+							                            <div class="col-md-6">
+							                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+
+							                                @if ($errors->has('email'))
+							                                    <span class="help-block">
+							                                        <strong>{{ $errors->first('email') }}</strong>
+							                                    </span>
+							                                @endif
+							                            </div>
+							                        </div>
+
+							                        
+							                        <div class="form-group">
+							                            <div class="col-md-8 col-md-offset-4">
+							                                <button type="submit" class="btn btn-primary custom-btn">
+							                                    Send
+							                                </button>
 							                            </div>
 							                        </div>
 							                    </form>

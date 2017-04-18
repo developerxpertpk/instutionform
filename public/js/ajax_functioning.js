@@ -158,6 +158,7 @@ $(document).ready(function(){
 
                 if(response == false){
                     console.log('You are not Logged in');
+                    edit_user();
                 }else if(response == 500){
                     console.log('You have been blocked');
                     edit_user();
