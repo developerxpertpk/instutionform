@@ -1,7 +1,9 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
 
-    <div class="page-wraper">
+    <div class="page-wrapper">
+
+
         <div class="container-fluid">
             <div class="row">
                 <h3 class="page-header">{{ $schools->school_name }}School Profile</h3>
@@ -41,6 +43,18 @@
                 <span class="info">
                 </span>
                 </div>
+
+                <div class="col-md-12">
+
+                    <form action="{{ route() }}">
+                         <textarea placeholder="add your reviews">
+
+                         </textarea>
+                    </form>
+
+                </div>
+
+
             </div>
 
             <div class="col-md-6" id="school-details">

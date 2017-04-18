@@ -17,6 +17,7 @@
 
 	    <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School
         </button></a>
+
     <div class="pull-right">
 
         {!! Form::open(['method' => 'GET', 'route' => 'school_search'] ) !!}
@@ -30,11 +31,11 @@
     </div>
  <!-- container to show detail of schools -->
     <div class="message">
-  @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{  $message }}</p>
-        </div>
-    @endif
+      @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{  $message }}</p>
+            </div>
+        @endif
     </div>
 
 <div class="list-school">
@@ -75,7 +76,7 @@
                   </button>
 
                 <!-- Modal  for delete with id=01-->
-                <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
 

@@ -21,14 +21,11 @@ $(document).ready(function(){
 
                 $("input[value='"+response.ratings+"']").attr('checked', true);
                 $(".info").html('<h5> <b> You Rate </b>' + '<b>' + response.ratings + ' star </b> </h5>');
-                $('.full').unbind();
-
-
+                $(".stars").off("click");
             }else{
 
                 user_rating();
             }
-
         },
         error:function(){
             console.log('error');

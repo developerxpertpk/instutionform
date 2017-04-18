@@ -376,7 +376,6 @@ class SchoolController extends Controller
 
     public function check_ratings(Request $request){
         $school_id= $request->school_id;
-
         $school_user = School_rating::where([
             ['user_id', '=', Auth::user()->id],
             ['school_id', '=', $school_id],

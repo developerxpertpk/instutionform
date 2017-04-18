@@ -44,5 +44,18 @@ class User extends Authenticatable
     // public function findForPassport($identifier) {
     //  return User::orWhere(‘email’, $identifier)->where(‘activity’, 1)->first();
     // }
+    public function forums(){
+        return $this->hasMany('App\Forum','user_id');
+    }
+
+    public function threads(){
+        return $this->hasMany('App\Thread','user_id');
+    }
+
+    public function reporting_forum(){
+        return $this->hasMany('App\Reporting_forum','user_id');
+    }
+
+
 
 }
