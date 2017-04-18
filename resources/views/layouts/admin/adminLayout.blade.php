@@ -249,10 +249,10 @@
                         </ul>
                     </li>
 
-
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="{{ route('forum.index')}}"> <i class="fa fa-fw fa-edit"></i>Forum </a>
                     </li>
+
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
                     </li>

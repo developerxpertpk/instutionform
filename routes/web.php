@@ -86,12 +86,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('school/check_ratings','SchoolController@check_ratings');
             Route::post('school/admin_rating','SchoolController@school_rating');
 
+            Route::resource('forum','ForumController');
+            Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
+
+
+
     	});
 });
+
 Route::get('/search', 'UserController@search');
 Route::get('/school_search','SchoolController@search')->name('school_search');
 Route::get('rating_reviews/search','School_rating_reviewsController@school_search')->name('rating_search');
-//Route::post('school/rating_reviews/admin_rating','School_rating_reviewsController@admin_rating');
 
 
 
@@ -110,7 +115,7 @@ Route::get('schools_list','UnregisteredController@schools_list');
 
 Route::get('FAQ','PageController@faq_function');
 
-Route::get('/forum','ForumController@forum_index');
+Route::get('/forum','FrontendForumController@forum_index');
 
 Route::post('review_login','UnregisteredController@review_confirm')->name('review_login');
 
