@@ -4,7 +4,7 @@
 
 <div class="container">
 	<h2>Forums</h2>
-	<div class="container">
+	<div class="col-sm-12 ">
 		<span class="col-sm-4">
 			<h4>Create a new Forum</h4>
 		</span>
@@ -41,13 +41,15 @@
 		</span>
 	</div>
 	<div class="container">
-		<div class="col-sm-6 table-bordered existing_forums">
+		<div class="col-sm-6 table-bordered popular_threads">
+			<h3>Some popular threads</h3>
+			@foreach($forums as $forum)
 			
+			@endforeach
 		</div>
 		<div class="col-sm-6 forum_categories">
 			
 		</div>
-		<h1>Hello I am here...</h1>
 	</div>
 	
 </div>

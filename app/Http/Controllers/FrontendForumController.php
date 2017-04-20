@@ -11,6 +11,7 @@ class FrontendforumController extends BaseController
 {
     public function forum_index(){
         $forums=Forum::paginate(10);
+        $popular_threads=Thread::where('');
     	return view('forum.forum_index')->with('forums',$forums);
     }
 
@@ -85,7 +86,7 @@ class FrontendforumController extends BaseController
 
     public function show_forum($id){
         // die('here');
-        die('show_forum');
+        // die('show_forum');
         // echo "<pre>";
         if(!is_numeric($id)){
             return redirect($id);
