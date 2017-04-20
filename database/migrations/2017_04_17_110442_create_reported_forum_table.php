@@ -15,16 +15,16 @@ class CreateReportedForumTable extends Migration
     {
         //
         Schema::create('reportedforums', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer('forum_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('reporting_type');
             $table->string('reporting_reason');
             $table->integer('status')->default(0);
-            $table->timestamp('created_at')->nullable();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->foreign('forum_id')->references('id')->on('forums');
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

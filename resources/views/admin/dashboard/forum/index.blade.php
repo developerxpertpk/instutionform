@@ -10,12 +10,18 @@
                {{-- code for search bar--}}
              <div class="pull-right">
 
-                 {!! Form::open(['method' => 'GET', 'route' => 'search.fourm.submit'] ) !!}
-                 {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Search any reported forum']) !!}
+                 <form method="get" action="{{ route('search.fourm.submit') }}"  >
+                     <select name="search" class="form-control search-box">
 
-                 {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
+                        <option> <h3> Search Reported forum </h3></option>
+                         <option value="abuse"> Abuse</option>
+                         <option value="span"> Span </option>
+                         <option value="other"> Other </option>
 
-                 {!! Form::close() !!}
+                     </select>
+
+                     <input type="submit" class="btn btn-success" />
+                 </form>
 
              </div>
          </div>

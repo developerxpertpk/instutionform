@@ -15,7 +15,7 @@ class CreateThreadTable extends Migration
     {
         //
         Schema::create('threads', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer('forum_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('title');
@@ -24,7 +24,7 @@ class CreateThreadTable extends Migration
             $table->timestamps();
 
             $table->foreign('forum_id')->references('id')->on('forums');
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('users');
         });
 
     }

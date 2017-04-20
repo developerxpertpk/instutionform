@@ -57,7 +57,7 @@ class School_newsController extends Controller
             return redirect()->route('school_news.index')
                                  ->with('success', 'News updated successfully' );
         }else {
-            die('a');
+
             return redirect()->route('school_news.create')
                                 ->with('Input')
                                 ->withError('Sorry School DoesNot Exist');
@@ -76,7 +76,7 @@ class School_newsController extends Controller
 
     public function search_school()
     {
-
+        
         $term = Input::get('term');
         $data = DB::table('schools')->where('school_name', 'LIKE', '%' . $term . '%')->get();
 

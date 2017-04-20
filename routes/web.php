@@ -82,12 +82,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
             // Routes for rating and reviews
             Route::resource('rating_reviews','School_rating_reviewsController');
+            Route::post('rating_reviews/{id}','School_rating_reviewsController@update_review')->name('update_review');
 
             Route::post('school/check_ratings','SchoolController@check_ratings');
             Route::post('school/admin_rating','SchoolController@school_rating');
 
+
             Route::resource('forum','ForumController');
             Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
+            Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
 
 
 

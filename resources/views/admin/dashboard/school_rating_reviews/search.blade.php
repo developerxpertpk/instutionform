@@ -25,25 +25,32 @@
     <tr>
         <h3>  List Of Results </h3>
     </tr>
+
         <tr>
         <td> ID </td>
         <td> School Name </td>
-        <td> Ratings </td>
-        <td> Reviews </td>
+        <td> School Address </td>
+        <td> City </td>
+        <td> State </td>
+        <td> Country </td>
         <td> Action </td>
 
     </tr>
-        @foreach($ratings as $rating )
-            @foreach( $schools_name as $school_name)
+        @if(isset($schools_name))
+        @foreach($schools_name as $data )
             <tr>
                 <td>{{ ++$i }} </td>
-                <td>{{$school_name->school_name}}</td>
-                <td>{{$rating->ratings}}</td>
-                <td>{{$rating->reviews}}</td>
-                <td> edit Delete </td>
-            </tr>
-                @endforeach
+                <td>{{ $data->school_name }}</td>
+                <td>{{ $data->school_address }}</td>
+                <td>{{ $data->locations->city }}</td>
+                <td>{{ $data->locations->state }} </td>
+                <td>{{ $data->locations->country }} </td>
+                <td>
+                    <a href="{{ route('rating_reviews.show',$data->id) }}" class="btn btn-success" >Show List </a> </td>
+
+                </td>
             @endforeach
+            @endif
     </table>
     </div>
 </div>

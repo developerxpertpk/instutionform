@@ -21,9 +21,6 @@
                     </button></a>
             </div>
 
-            <!-- end of model0 (add model) -->
-
-            <!-- container to show detail of schools -->
             <div class="message">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">

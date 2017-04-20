@@ -24,18 +24,35 @@ class ForumController extends Controller
 
 
     }
+
+    public function show($id){
+        $show_data = Forum::find($id);
+        return view('admin.dashboard.forum.view',compact('show_data'))
+            ->with('i');
+
+    }
     public function reported_search(Request $request){
         $f =Forum::all();
         $r= Reportedforum::all();
         $search = $request->all();
-         //$a[] = Reportedforum::forums()->title;
-         //$b =Reportedforum::users()->fname;
 
-        $title = Forum::where('title','LIKE','%'.$search.'%')
-            ->orderBy('id')
-            ->get();
-
+        $search_data = Reportedforum::where('reporting_type','=',$search)->get();
+        if(!$search_data->isEmpty()) {
+            return view('admin.dashboard.forum.search', compact('search_data'))
+                ->with('i');
+        }else{
+            return view('admin.dashboard.default')
+                ->withError('oops Sorry !!! , No data Found');
+        }
     }
+
+    public function reported_delete($id){
+
+        Reportedforum::find($id)->delete();
+
+        return view('admin.dashboard.forum.search')
+                    ->with('success','Reported forum deleted  successfully');
+        }
 
 
 
