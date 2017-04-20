@@ -122,16 +122,16 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">                                   
 
-                                <li><a href="schools_list">List of Schools</a></li>
+                                <li><a href="/schools_list">List of Schools</a></li>
 
                                 @if(isset($page))
                                     @foreach($page as $pages)
-                                        <li><a href="{{$pages->slug}}">{{$pages->title}}</a></li>
+                                        <li><a href="/{{$pages->slug}}">{{$pages->title}}</a></li>
                                     @endforeach
                                @endif
 
-                               <li><a href="FAQ">FAQ</a></li>
-                               <li><a href="forum">Forum</a></li>
+                               <li><a href="/FAQ">FAQ</a></li>
+                               <li><a href="/forum">Forum</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -425,6 +425,13 @@
                 }
 
             }());
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".clickable-row").click(function() {
+                    window.location = $(this).attr("href");
+                });
+            });
         </script>
     </body>
 </html>

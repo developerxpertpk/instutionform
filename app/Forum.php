@@ -19,7 +19,11 @@ class Forum extends Model
         return  $this->belongsTo('App\User','user_id');
     }
     public function reporting_forum(){
-        return  $this->hasMany('App\Reportedforum','user_id');
+        return  $this->hasMany('App\Reportedforum','forum_id');
     }
+    
+    public function threads(){
+        return  $this->hasMany('App\Thread','forum_id');
+    }    
 
 }

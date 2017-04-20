@@ -358,8 +358,8 @@
 							
 
 					</div>
-					<div class="col-sm-3">
-						<h3>Google Adsense</h3>
+					<div class="col-sm-2 table-bordered">
+						<h4>Google Adsense</h4>
 					</div>
 						
 				</div>
