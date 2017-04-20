@@ -131,6 +131,7 @@
                                @endif
 
                                <li><a href="FAQ">FAQ</a></li>
+                               <li><a href="forum">Forum</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
@@ -373,6 +374,13 @@
              $('#review_login_link').click(function(){
                 edit_user();
              });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.share_via_email').click(function(){
+                    $("#mail_model").modal();
+                });
+            });
         </script>
 
         <script>

@@ -118,6 +118,8 @@ Route::get('schools_list','UnregisteredController@schools_list');
 
 Route::get('FAQ','PageController@faq_function');
 
+Route::get('/forum','FrontendForumController@forum_index');
+
 Route::post('review_login','UnregisteredController@review_confirm')->name('review_login');
 
 Route::post('post_review','UnregisteredController@post_review')->name('post_review');
@@ -129,6 +131,8 @@ Route::get('access_denied',function(){
 Route::get('details',function(){
 	return view('user.guests.view_school');
 });
+
+Route::post('/share_via_email','UnregisteredController@share_via_email');
 
 
 /*USER HOME GROUP*/
@@ -163,8 +167,12 @@ Route::post('/check_rate','AjaxCallsController@check_rate');
 Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 /*Ajax calls close*/
 
-// Route::get('/','DocumentController@test');
+/*Route::get('/',function(){
+	return view('mail_template.share_school');
+});*/
 //forum&finder_welcome
+Route::get('/create_forum/{id}','FrontendForumController@create');
+
 Route::get('show_school/{id}','UnregisteredController@show_school');
 
 

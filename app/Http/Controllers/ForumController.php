@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+ 
 use Illuminate\Http\Request;
 use App\Forum;
 use App\School;
@@ -53,12 +54,6 @@ class ForumController extends Controller
         return view('admin.dashboard.forum.search')
                     ->with('success','Reported forum deleted  successfully');
         }
-
-
-
-
-
-
 
 
 }

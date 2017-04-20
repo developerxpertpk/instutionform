@@ -103,7 +103,7 @@
                             <label for="address" class="col-md-4 control-label">Address</label>
 
                             <div class="col-md-6">
-                                <textarea name="address" class="form-control" placeholder="vill city " required></textarea>
+                                <textarea name="address" id="review_area" class="form-control" placeholder="vill city " required></textarea>
                             </div>
                         </div>
 
