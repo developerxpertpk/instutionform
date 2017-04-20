@@ -100,15 +100,48 @@
 }
 /* css for school show */
  #show-rounder {
-     border-radius: 25px;
+     border-bottom-left-radius: 1%;
+     border-bottom-right-radius: 1%;
      background-color: whitesmoke;
      background-position: left top;
      background-repeat: repeat;
      padding: 20px;
-     width: 100%;
+     width: auto;
      height: 100%;
  }
+ /* css for show forum*/
+ .view{
+     border-bottom-left-radius: 1%;
+     border-bottom-right-radius: 1%;
+     background-color: whitesmoke;
+     background-position: left top;
+     background-repeat: repeat;
+     padding: 20px;
+     width: auto;
+     height: 100%;
 
+
+ }
+ .modal-body-reviews{
+     margin: 5%;
+     padding: 5%;
+     color: black;
+     background-color: #66cac4;
+
+ }
+#reviews{
+    resize:none;
+}
+ .forum-title,.forum-description{
+     font-size: medium;
+     background-color: white;
+     color: red;
+     margin: 5%;
+     padding: 1%;
+ }
+ }
+
+ }
  /* css for School ratings*/
  fieldset, label { margin: 0; padding: 0; }
  body{ margin: 20px; }

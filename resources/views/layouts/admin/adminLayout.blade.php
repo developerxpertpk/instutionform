@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> Admin - dashboard Template</title>
+    <title> Admin - dashboard </title>
 
     <!-- addes juery -->  
     
@@ -243,9 +243,6 @@
                             <li>
                                 <a href="{{route('rating_reviews.index')}}"> View Rating & Reviews </a>
                             </li>
-                            <li>
-                                <a href="{{ route('freq_ask_ques')}}">Search</a>
-                            </li>
                         </ul>
                     </li>
 
@@ -253,23 +250,6 @@
                         <a href="{{ route('forum.index')}}"> <i class="fa fa-fw fa-edit"></i>Forum </a>
                     </li>
 
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

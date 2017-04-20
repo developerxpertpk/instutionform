@@ -13,6 +13,7 @@
             </div>
 
         <div class="row" id="show-rounder">
+
             <div class="col-md-6">
                 <h3>{{ $schools->school_name }}
                   </h3>
@@ -40,22 +41,50 @@
                 </fieldset>
                 </div>
                 <div class="col-md-12">
-                <span class="info">
-                </span>
+                    <span class="info">
+                    </span>
                 </div>
 
-                <div class="col-md-12">
+            <div class="col-md-12">
 
-                    <form action="{{ route() }}">
-                         <textarea placeholder="add your reviews">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+                   ADD Review
+                </button>
 
-                         </textarea>
-                    </form>
+                <!-- Modal  for reviews -->
+                <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
 
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"> Review  </h4>
+                            </div>
+
+                            <form method="post" action="{{ route('rating_reviews.store') }}">
+                                {{ csrf_field() }}
+                            <div class="modal-body-reviews">
+
+                                <input type="hidden" name="school_id" id="" value="{{$schools->id}}">
+                                <textarea  id="reviews" name="reviews" rows="5" cols="65" placeholder="Write Something here">
+                                </textarea>
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
 
             </div>
+
+        </div>
 
             <div class="col-md-6" id="school-details">
 

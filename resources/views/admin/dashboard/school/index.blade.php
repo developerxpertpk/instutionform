@@ -65,15 +65,15 @@
 		        <td>
 
                     <!-- show  button  -->
-                    <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
+                <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
 
                      {{-- button for edit--}}
                  <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">Edit</a>
 
-                <!-- Button for  Delete-->
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
-                      Delete
-                  </button>
+             <!-- Button for  Delete-->
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+              Delete
+          </button>
 
                 <!-- Modal  for delete with id=01-->
         <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

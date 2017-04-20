@@ -45,7 +45,7 @@
                     <div class="ui-widget">
                         <label for="school_name" class="col-sm-6 col-md-2 col-lg-2 control-label" > School Name </label>
                         <div class="col-sm-8 col-md-8">
-                        <input id="school_name"  name="school_name" class="form-control" placeholder="please enter at least two characters">
+                        <input id="school"  name="school_name" class="form-control" placeholder="please enter at least two characters">
                         </div>
                     </div>
 
@@ -90,7 +90,7 @@
             {{-- autocomplete function script send post request to the source using word term in jquery string--}}
             <script>
                 $( function() {
-                    $( "#school_name" ).autocomplete({
+                    $( "#school" ).autocomplete({
                         source: "get_school_data",
                         minLength: 2,
 

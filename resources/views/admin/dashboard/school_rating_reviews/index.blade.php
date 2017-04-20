@@ -1,5 +1,4 @@
 @extends('layouts.admin.adminLayout')
-
 @section('content')
     <div class="page-wraper">
         <div class="conatiner-fluid">
@@ -11,15 +10,13 @@
                     </h1>
 
                 <div class="pull-left">
-                    hello
+
                 </div>
 
                 <div class="pull-right">
                     {!! Form::open(['method' => 'GET', 'route' => 'rating_search'] ) !!}
                     {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any name or email']) !!}
-
                     {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
-
                     {!! Form::close() !!}
 
                 </div>
@@ -55,53 +52,14 @@
                             <td>{{ $rating->users->fname }}</td>
                             <td> {{ $rating->schools->school_name }}</td>
                             <td>
-                                {{--@if( {{$rating->ratings}} == 1)--}}
-										{{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-										{{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                @for( $i=1;$i <= $rating->ratings; $i++)
+                                    <i class="fa fa-star" aria-hidden="true"  style="color:blue;"></i>
+                                @endfor
+                                @for( $i=1;$i <= 5-$rating->ratings; $i++)
 
-                                {{--@endif--}}
-                                {{--@if({{$rating->ratings}} == 2)--}}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
 
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-
-                                {{--@endif--}}
-
-                                {{--@if({{$rating->ratings}} == 3)--}}
-
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-
-                                {{--@endif--}}
-
-                                {{--@if({{$rating->ratings}} == 4)--}}
-                                    {{--<span>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-
-                                {{--@endif--}}
-
-                                {{--@if( {{$rating->ratings }} == 5)--}}
-
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star" aria-hidden="true"></i>--}}
-                                    {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
-                                {{--@endif--}}
-
+                                @endfor
                             </td>
                             <td>{{ $rating->reviews}} </td>
                             <td>
@@ -123,7 +81,7 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                <h3> Do you want to delete {{$rating->schools->school_name}} ratings and reviews ? </h3>
+                                                <h3> Do you want to delete {{ $rating->schools->school_name}} ratings and reviews ? </h3>
                                             </div>
 
                                             <div class="modal-footer">
