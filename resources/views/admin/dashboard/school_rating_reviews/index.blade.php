@@ -39,32 +39,32 @@
                     </tr>
                     <tr>
                         <th>ID</th>
-                        <th>User Name</th>
                         <th>School Name</th>
+                        <th> School Address</th>
+                        <th>User Name</th>
                         <th>Ratings</th>
                         <th>Reviews</th>
                         <th width="320px">Action</th>
                     </tr>
 
-                    @foreach($schools_rating as $rating)
+                    @foreach($school_data as $data)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $rating->users->fname }}</td>
-                            <td> {{ $rating->schools->school_name }}</td>
+                            <td>{{ $data->schools->school_name }}</td>
+                            <td> {{ $data->schools->school_address }}</td>
+                            <td>{{ $data->users->fname.$data->users->lname }} </td>
+
                             <td>
-                                @for( $i=1;$i <= $rating->ratings; $i++)
+                                @for( $i=1;$i <= $data->ratings; $i++)
                                     <i class="fa fa-star" aria-hidden="true"  style="color:blue;"></i>
                                 @endfor
-                                @for( $i=1;$i <= 5-$rating->ratings; $i++)
-
+                                @for( $i=1;$i<= 5-$data->ratings; $i++)
                                     <i class="fa fa-star-o" aria-hidden="true"></i>
-
                                 @endfor
                             </td>
-                            <td>{{ $rating->reviews}} </td>
+                            <td> {{ str_limit($data->reviews, $limit = 20, $end = '{.....}') }} </td>
                             <td>
-
-                                <a href="{{ route('rating_reviews.edit',$rating->id) }}" class="btn btn-success"> Edit </a>
+                                <a href="{{ route('rating_reviews.edit',$data->id) }}" class="btn btn-success"> Edit </a>
                                 <!-- Button for  Delete-->
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
                                     Delete
@@ -81,12 +81,12 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                <h3> Do you want to delete {{ $rating->schools->school_name}} ratings and reviews ? </h3>
+                                                <h3> Do you want to delete {{ $data->schools->school_name}} ratings and reviews ? </h3>
                                             </div>
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-                                                {!! Form::open(['method' => 'DELETE','route' => ['rating_reviews.destroy', $rating->id],'style'=>'display:inline','class'=>'delete']) !!}
+                                                {!! Form::open(['method' => 'DELETE','route' => ['rating_reviews.destroy', $data->schools->id],'style'=>'display:inline','class'=>'delete']) !!}
 
                                                 {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
                                                 {!! Form::close() !!}
@@ -101,6 +101,9 @@
                     @endforeach
                 </table>
             </div>
+
+            {!! $paginate->links() !!}
+
         </div>
     </div>
 @endsection

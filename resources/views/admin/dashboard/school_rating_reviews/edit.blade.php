@@ -1,8 +1,8 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
+
             <div class="page-wraper">
                  <div class=" conatiner-fluid">
-
                      <div class="row">
 
                          <h3 class="page-header"> Edit School Ratings and Reviews </h3>
@@ -10,12 +10,16 @@
                          <div class="pull-right">
                              <a href="{{ route('rating_reviews.index') }}" class="btn btn-success"> Back</a>
                          </div>
-
                      </div>
+
 
                      <div class="school-rating">
 
                          <div class="col-md-6">
+                             <div class="col-md-6">
+                                 {{--<img src="{{ asset(App\School_image::where('school_id','=',$school_rating->schools->id)->first()->image) }}" alt="{{asset('upload/def_school.png')}}" width="250px" height="200px">--}}
+                             </div>
+
                              <h4>{{ $school_rating ->schools->school_name}}</h4>
                                  <h5>
                                  @for( $i=1;$i <= $school_rating->ratings; $i++)
@@ -31,6 +35,7 @@
              <div class="edit-rating">
 
                  <h3> Edit User ratings </h3>
+
                  <fieldset id='demo1' class="rating">
 
                      <input class="stars" class="star5" type="radio" id="star5" name="rating" value="5" />
@@ -51,6 +56,7 @@
                      <input type="hidden" name="hidden_input" value="{{$school_rating->schools->id }}" />
 
                  </fieldset>
+
 
 
              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">

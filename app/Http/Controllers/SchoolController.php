@@ -122,8 +122,8 @@ class SchoolController extends Controller
             'country' => 'required',
             'state' => 'required',
             'city' => 'required',
-            /*'image' => 'image|mimes:png,jpeg,jpg,gif',*/
-            'document' => 'mimes:pdf,docx,doc|max:500',
+            //'image' => 'image|mimes:png,jpeg,jpg,gif',
+            //'document' => 'mimes:pdf,docx,doc|max:500',
         );
         $validator = Validator::make(Input::all(), $rules);
         // server side validation

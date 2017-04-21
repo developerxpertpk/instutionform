@@ -61,7 +61,7 @@
                              <td>{{ ++$i }}</td>
                              <td>{{ $school_news->schools->school_name }}</td>
                              <td>{{ $school_news->news_title}} </td>
-                             <td>{{ $school_news->news_description}} </td>
+                             <td>  {{ str_limit($school_news->news_description, $limit = 20, $end = '{.....}') }} </td>
                              <td>{{ $school_news->status }}</td>
                              <td>
                                  <button type="button" class="btn btn-success" >Show</button>
@@ -95,15 +95,12 @@
                                          </div>
                                      </div>
                                  </div>
-
-
-
-
                              </td>
                          </tr>
                     @endforeach
                  </table>
              </div>
+
              </div>
      </div>
 
