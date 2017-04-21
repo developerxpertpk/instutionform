@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread_comment extends Model
 {
-    public $timestamps = false;
+    const UPDATED_AT = 'modified_at';
 }

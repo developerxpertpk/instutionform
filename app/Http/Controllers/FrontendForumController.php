@@ -5,32 +5,42 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\School;
 use App\Forum;
+use App\Threads_likes_dislike;
 use Auth;
 
 class FrontendforumController extends BaseController
 {
+
+    /*The Index page of Forum with forums & threads data*/
     public function forum_index(){
+
         $forums=Forum::paginate(10);
-        $popular_threads=Thread::where('');
-    	return view('forum.forum_index')->with('forums',$forums);
+        $popular_thread=Threads_likes_dislike::groupBy('thread_id')
+                                ->selectRaw('sum(is_liked_disliked) as likes, thread_id')
+                                ->orderBy('likes','desc')
+                                ->take(5)
+                                ->get();
+
+    	return view('forum.forum_index')->with('forums',$forums)
+                                        ->with('popular_threads',$popular_thread);
     }
+
+
 
     /*For Displaying create forum and existing forums*/
     public function createForumView($id){
 
     	if(is_numeric($id)){
+            
     		$school_data=School::find($id)->first();
-
-    		return view('forum.forum_create')->with('schooldata',$school_data);
+    		return view('forum.forum_create')->with('schooldata',$school_data)
+                                            ->with('school_id',$id);
     	}
-        // die('createForumView');
-
     	$schools=School::all();
-        /*echo "<pre>";
-        print_r($schools);*/
     	return view('forum.forum_create')->with('schools',$schools);
-
     }
+
+
 
     /*For submitting Forum*/
     public function createforum(Request $request){
@@ -51,7 +61,7 @@ class FrontendforumController extends BaseController
         }
 
         $rules=array(
-                'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:?]*$/',
+                'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
                 'description' => 'required|regex:/^[a-zA-Z0-9,#.-:@<>]*$/',
             );
 
@@ -68,7 +78,8 @@ class FrontendforumController extends BaseController
                 }
             }
             // print_r($errors);
-            return view('forum.forum_create')->with('errors',$errors);
+            return view('forum.forum_create')->with('error',$errors)
+                                            ->with('schooldata',$school_id);
         } else {
 
             $forum = new Forum;
@@ -82,6 +93,8 @@ class FrontendforumController extends BaseController
         }
 
     }
+
+
 
 
     public function show_forum($id){

@@ -11,7 +11,7 @@
 		<span class="col-sm-8">
 			<a href="/create_forum"><button class="btn btn-success" >Create Forum</button></a>
 		</span>
-		<span class="col-sm-12">
+		<span class="col-sm-12 table-bordered margin_bottom">
 			<h4>Some Existing Forums</h4>
 			<div class="col-sm-12">
 				<table class="table table-hover table-responsive table-striped">
@@ -43,9 +43,22 @@
 	<div class="container">
 		<div class="col-sm-6 table-bordered popular_threads">
 			<h3>Some popular threads</h3>
-			@foreach($forums as $forum)
-			
-			@endforeach
+			@if($popular_threads->first()->count() != '')
+				<table class="table table-hover table-responsive table-striped">
+					<!-- <caption>table title and/or explanatory text</caption> -->
+					<tbody>
+						@foreach($popular_threads as $threads)
+		 						<tr class='clickable-row' href="/forum/show_forum/{{$threads->threads->id}}" style="cursor: pointer;" >
+		 							<td width="30%">{{$threads->threads->title}}</td>
+		 							<td width="55%">{{$threads->threads->description}}</td>
+		 							<td width="15%">at {{$threads->threads->created_at}}</td>
+		 						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			@else
+				<p><strong>Sorry, No data found</strong></p>
+			@endif
 		</div>
 		<div class="col-sm-6 forum_categories">
 			

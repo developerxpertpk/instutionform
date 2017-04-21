@@ -20,4 +20,7 @@ class Thread extends Model
         return  $this->belongsTo('App\User','user_id');
     }
 
+    public function Thread_likes(){
+        return $this->hasMany('App\Threads_likes_dislike','thread_id');
+    }
 }

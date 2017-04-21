@@ -52,6 +52,10 @@
             margin-top: 30px;
             border:2px solid #000;*/
         }
+
+        .margin_bottom{
+            margin-bottom: 10px !important;
+        }
     </style>
     <script>
         window.Laravel = {!! json_encode([
