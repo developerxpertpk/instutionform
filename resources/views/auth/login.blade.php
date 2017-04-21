@@ -7,7 +7,7 @@
             <div class="panel panel-default animated bounce">
                 <div class="panel-heading"> User Login </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{  route('login.submit') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($redirect) && isset($_GET['title']) ? '/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id'] : ( isset($redirect) ? '/submit?redirect='.$redirect : route('login.submit')) }}" >
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

@@ -32,7 +32,20 @@ class PageController extends Controller
     // function for show page
 
     public function page_show($slug){
+        // echo $slug;
+        // die('page_show');
+
+
+
         $particular_page = Page::where('slug','=',$slug)->get();
+        if($particular_page->count() == ''){
+            //do something here
+            echo "<h1>Error: Route Not Found</h1>";
+            die();
+        }
+        // echo "<pre>";
+        // print_r($particular_page);
+        // die();
         $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
         return view('admin.dashboard.cms.page')->with('page',$page)
                                                 ->with('particular_page',$particular_page);

@@ -12,9 +12,9 @@ class Thread extends Model
         'forum_id','user_id','title','description','status',
     ];
 
-   public function forums(){
-       return  $this->belongsTo('App\Forum','forum_id');
-   }
+    public function forums(){
+        return  $this->belongsTo('App\Forum','forum_id');
+    }
 
     public function users(){
         return  $this->belongsTo('App\User','user_id');

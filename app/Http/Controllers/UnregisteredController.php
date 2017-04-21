@@ -79,6 +79,8 @@ class UnregisteredController extends BaseController
         if(!is_numeric($id)){
             return redirect($id);
         }
+
+        // die('show_school');
         
         $particular_school=School::where('id','=',$id)->get();
 

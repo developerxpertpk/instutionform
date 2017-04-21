@@ -108,31 +108,13 @@ Route::group(['middleware' => ['check.status']],function(){
 });
 // admin routes ended
 
+
+
+
+
 /*USER ROUTES*/
 
 Route::get('home', 'HomeController@index')->name('home');
-
-Route::get('search_location','UnregisteredController@search_location_school');
-
-Route::get('schools_list','UnregisteredController@schools_list');
-
-Route::get('FAQ','PageController@faq_function');
-
-Route::get('/forum','FrontendForumController@forum_index');
-
-Route::post('review_login','UnregisteredController@review_confirm')->name('review_login');
-
-Route::post('post_review','UnregisteredController@post_review')->name('post_review');
-
-Route::get('access_denied',function(){
-	return view('temporary_blocked');
-});
-
-Route::get('details',function(){
-	return view('user.guests.view_school');
-});
-
-Route::post('/share_via_email','UnregisteredController@share_via_email');
 
 
 /*USER HOME GROUP*/
@@ -150,10 +132,43 @@ Route::group(['middleware' => ['auth','check.status']], function () {
 
 		Route::post('change_dp_user','HomeController@change_dp_user');
 
-
 	});
 
 });
+
+Route::get('access_denied',function(){
+	return view('temporary_blocked');
+});
+
+Route::get('details',function(){
+	return view('user.guests.view_school');
+});
+
+Route::get('FAQ','PageController@faq_function');
+
+Route::get('search_location','UnregisteredController@search_location_school');
+
+Route::get('schools_list','UnregisteredController@schools_list');
+
+Route::post('review_login','UnregisteredController@review_confirm')->name('review_login');
+
+Route::post('post_review','UnregisteredController@post_review')->name('post_review');
+
+Route::post('/share_via_email','UnregisteredController@share_via_email');
+
+Route::post('create_forums','FrontendForumController@createforum');
+
+Route::get('create_forums','FrontendForumController@createforum')->name('create_forums');
+
+Route::get('forum','FrontendForumController@forum_index');
+
+Route::get('create_thread',function(){
+	return view('forum.thread_create');
+});
+
+
+
+
 
 /*Ajax calls*/
 Route::get('map_data','AjaxCallsController@retrive_nearby_locations');
@@ -171,10 +186,26 @@ Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
 	return view('mail_template.share_school');
 });*/
 //forum&finder_welcome
-Route::get('/create_forum/{id}','FrontendForumController@create');
+
+/*To create a forum */
+Route::get('create_forum/{id?}', function($id = null)
+{
+  	// Run controller and method
+  	if(!is_null($id)){
+  		//is not null
+  		$ids['id']=$id;
+  	}else{
+  		//is null
+  		$ids=array('nothing');
+  	}
+  	return \App::make('App\http\Controllers\FrontendforumController')->callAction('createForumView', $ids);
+});
+
+/*Showing a particular forum*/
+Route::group(['prefix' => 'forum'],function(){
+	Route::get('show_forum/{id}','FrontendForumController@show_forum');
+});
 
 Route::get('show_school/{id}','UnregisteredController@show_school');
-
-
 
 Route::get('/{slug}','PageController@page_show');

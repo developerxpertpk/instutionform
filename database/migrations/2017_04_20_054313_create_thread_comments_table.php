@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportedForumTable extends Migration
+class CreateThreadCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateReportedForumTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('reportedforums', function (Blueprint $table) {
+        Schema::create('thread_comments', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('forum_id')->unsigned();
+            $table->integer('thread_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('reporting_type');
-            $table->string('reporting_reason');
-            $table->integer('status')->default(0);
+            $table->longText('comment');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-
-            $table->foreign('forum_id')->references('id')->on('forums');
+            $table->timestamp('modified_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->foreign('thread_id')->references('id')->on('threads');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -35,7 +32,11 @@ class CreateReportedForumTable extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('reportedforums');
+        Schema::table('thread_comments', function (Blueprint $table) {
+            $table->dropForeign(['thread_id']);
+            $table->dropForeign(['user_id']);
+        });
+        
+        Schema::dropIfExists('thread_comments');
     }
 }
