@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\School_rating;
 use App\School;
 use App\User;
@@ -14,9 +14,23 @@ class School_rating_reviewsController extends Controller
 
     public function index(Request $request){
 
-        $schools_rating = School_rating::orderBy('id', 'desc')->get();
-        return view('admin.dashboard.school_rating_reviews.index',compact('schools_rating'))
-                         ->with('i', ($request->input('page', 1) - 1) * 5);
+    //        $school = DB::table('schools')
+    //                    ->leftJoin('school_ratings', 'schools.id', '=', 'school_ratings.school_id')
+    //                    ->addSelect(DB::raw('AVG(school_ratings.ratings) as average_rating'))
+    //                    ->groupBy('schools.id')
+    //                    ->orderBy('average_rating', 'desc')
+    //                    ->get();
+    //
+    //        print_r($school);
+    //        die('a');
+
+        $paginate=School_rating::paginate(5);
+        $school_data = School_rating::orderby('id','desc')->get();
+
+        return view('admin.dashboard.school_rating_reviews.index',compact('school_data'
+            ,'paginate'))
+                          ->with('i');
+
 
     }
 
@@ -58,9 +72,39 @@ class School_rating_reviewsController extends Controller
     {
       // Show function is used to show the list of ratings and reviews given a particuler user
 
+
         $school_data = School_rating::where( 'school_id','=',$id)->get();
-            return view('admin.dashboard.school_rating_reviews.user_search', compact('school_data'))
-                ->with('i');
+
+//        foreach ($school_data as $school) {
+//
+//            if($school->school_ratings){
+//                die('v');
+//                $sum= 0;
+//                $rating=$school->school_ratings;
+//
+//                foreach($rating as $ratings){
+//                    $sum+=$ratings->ratings;
+//                }
+//
+//                $div= count($rating);
+//
+//                $avg_rating=round($rate/$div);
+//
+//                return view('admin.dashboard.school_rating_reviews.user_search')
+//                    ->with('avg_rating',$avg_rating)
+//                    ->with('school_data',$school_data)
+//                    ->with('i');
+//            }else{
+//                die('a');
+//                return view('admin.dashboard.school_rating_reviews.user_search')
+//                            ->with('school_data',$school_data)
+//                            ->with('i');
+//            }
+//        }
+
+
+        return view('admin.dashboard.school_rating_reviews.user_search', compact('school_data'))
+               ->with('i');
 
     }
 

@@ -7,7 +7,7 @@
 
     <!-- Page Heading -->
     <div class="row">
-      <div class="col-lg-12">
+
         <h1 class="page-header">
         Manage users
         </h1>
@@ -23,7 +23,7 @@
             </li>
         
         </ol>
-      </div>
+
     </div>
 
 
@@ -45,7 +45,7 @@
                 {!! Form::close() !!}
         </div>
   </div>
-</>
+
 
  <!--  check if any error -->
     @if ($message = Session::get('success'))
@@ -54,9 +54,11 @@
       </div>
     @endif
 
-  <div class="user-list">
+  <div class="row user-list ">
+
     <table class="table table-bordered">
       <tr>
+
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -261,6 +263,8 @@
 
   </table>
 </div>
-  {!! $users->render() !!}
+
   </div>
+  {!! $users->render() !!}
+</div>
 @endsection

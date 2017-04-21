@@ -71,12 +71,12 @@
                  <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">Edit</a>
 
              <!-- Button for  Delete-->
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+          <button type="button" class="btn btn-danger"  id="{{$school->school_name}}" data-toggle="modal" data-target="#myModal01">
               Delete
           </button>
 
                 <!-- Modal  for delete with id=01-->
-        <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="myModal01" id={{ $school->school_name }}tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -90,11 +90,13 @@
             </div>
 
             <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+
+
                   {!! Form::open(['method' => 'DELETE','route' => ['school.destroy', $school->id],'style'=>'display:inline','class'=>'delete']) !!}
 
                   {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
                   {!! Form::close() !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
             </div>
           </div>
         </div>
@@ -141,11 +143,10 @@
                                     {!! Form::radio('status', '1', true, ['class' => 'hidden name','value' => 1]) !!}<!--  block -->
                                     @endif
 
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
                                     {!! Form::submit('yes', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
-
-                                </div>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -155,10 +156,8 @@
     </tr>
 	@endforeach
 
-			</table>
+    </table>
         </div>
  	</div>
  </div>
-
-
 @endsection

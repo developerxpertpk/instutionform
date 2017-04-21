@@ -1,22 +1,24 @@
 @extends('layouts.admin.adminLayout')
 
 @section('content')
+    <div class="page-wrapper">
+        <div class="container-fluid">
+
 	<div class="row">
-	<div class="pull-left">
-                <h2> Search Result Found </h2>
-     </div>	
+            <div class="pull-left">
+                        <h2> Search Result Found </h2>
+             </div>
 
-     <div class="pull-right">
-      <a href="{{ route('user.index') }}">  back </a>
-     </div>
+             <div class="pull-right">
+              <a href="{{ route('user.index') }}">  back </a>
+             </div>
+   </div>
 
-
-</div>
 	  @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
-    @endif
+     @endif
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -236,4 +238,7 @@
 
   </table>
 
+        </div>
+    {!! $users->render() !!}
+    </div>
 @endsection

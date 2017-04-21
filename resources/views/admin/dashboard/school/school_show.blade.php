@@ -15,8 +15,17 @@
         <div class="row" id="show-rounder">
 
             <div class="col-md-6">
+
+                <div class="col-md-12" id="school-image">
+                    {{--asset($schools['school_images'][0]->image)--}}
+                    {{--<img src="{{ asset($schools['school_images'][0]->image) }}" alt=" {{  asset('uplaod/def_school.png')}}" width="100%" height="250px">--}}
+                </div>
+                <div class="col-md-12">
+
                 <h3>{{ $schools->school_name }}
                   </h3>
+                </div>
+
                 <div class="col-md-12">
 
                 <fieldset id='demo1' class="rating">
