@@ -7,22 +7,24 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-					
                         <h2 class="page-header">
                           Manage User	
                         </h2>
+
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('user.index') }} ">Manage User </a></li>
+                            <li class="breadcrumb-item active">Add User</li>
+                        </ol>
+
 					</div>
 				</div>
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h4 >Register Uesr </h4>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('user.index') }}"> Back</a>
-            </div>
+
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{  $message }}</p>
         </div>
-    </div>
+    @endif
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -38,7 +40,9 @@
     <div class="col-md-8 col-md-offset-2">
          
                 <div class="panel-heading"> </div>
+
                 <div class="panel-body">
+
                     <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{ route('user.store') }}">
                         {{ csrf_field() }}
 
@@ -109,9 +113,13 @@
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="gender" class="col-md-4 control-label">Gender</label>
 
-                            <div class="col-md-6"> <strong> Male </strong>
-                              <input name="gender" type="radio" value="M"> 
+                            <div class="col-md-6">
+                                 <strong> Male </strong>
+
+                              <input name="gender" type="radio" value="M">
+
                                 <strong> Female </strong>
+
                                 <input name="gender" type="radio" value="F">
 
                                 @if ($errors->has('gender'))
@@ -122,7 +130,6 @@
                             </div>
                         </div>
 
-                     
                         <div class="form-group">
                             <label for="image" class="col-md-4 control-label">Image</label>
 

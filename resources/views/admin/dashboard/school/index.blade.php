@@ -10,13 +10,18 @@
 				Manage Schools & Institutes
 				</h1>
 
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Manage schools </li>
+                    </ol>
+
 			</div>
         </div>
 		<!--/.row -->
 
 
-	    <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School
-        </button></a>
+    <a href="{{ route('school.create')}}"> <button class="btn btn-primery"> Add School
+    </button></a>
 
     <div class="pull-right">
 
@@ -38,11 +43,22 @@
         @endif
     </div>
 
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 <div class="list-school">
+
     <table class="table table-bordered">
 
         <tr><h3> School List </h3></tr>
-
         <tr><h2>
             <th>ID</th>
             <th>NAME </th>
@@ -53,6 +69,7 @@
             <th>STATUS</th>
             <th width="320px">Action</th></h2>
         </tr>
+
     @foreach ($schools as $key => $school)
     		<tr>
 		        <td>{{ ++$i }}</td>
@@ -64,19 +81,19 @@
             	<td>{{ $school->status }}</td>
 		        <td>
 
-                    <!-- show  button  -->
-                <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
+        <!-- show  button  -->
+        <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
 
-                     {{-- button for edit--}}
-                 <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">Edit</a>
+             {{-- button for edit--}}
+         <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">Edit</a>
 
              <!-- Button for  Delete-->
-          <button type="button" class="btn btn-danger"  id="{{$school->school_name}}" data-toggle="modal" data-target="#myModal01">
-              Delete
-          </button>
+      <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#delete{{ $school->id }}">
+          Delete
+      </button>
 
                 <!-- Modal  for delete with id=01-->
-        <div class="modal fade" id="myModal01" id={{ $school->school_name }}tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="delete{{ $school->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -86,17 +103,17 @@
               </div>
 
             <div class="modal-body">
-             <h3> Do you want to delete {{$school->school_name}}  ? . </h3>
+             <h4> Do you want to delete {{$school->school_name}}  ? . </h4>
             </div>
 
             <div class="modal-footer">
 
-
+                <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
                   {!! Form::open(['method' => 'DELETE','route' => ['school.destroy', $school->id],'style'=>'display:inline','class'=>'delete']) !!}
 
                   {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
                   {!! Form::close() !!}
-                <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+
             </div>
           </div>
         </div>
@@ -105,18 +122,18 @@
                 <!-- block/unblock button -->
                     <!-- check for unblock -->
                 @if($school->status=='0')
-                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
                         Block
                     </button>
                 @endif
                 <!-- check for block -->
                 @if($school->status=='1')
-                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
                         UnBlock
                     </button>
                 @endif
                 <!-- Modal for block/unblock school -->
-                <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="blc_ublc{{$school->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
 
@@ -127,13 +144,16 @@
 
                                 <div class="modal-body">
                                     @if($school->status=="0")
-                                        <h3> Do you want to block{{$school->school_name}} ? </h3>
+                                        <h4> Do you want to block  {{$school->school_name}} ? </h4>
                                     @else
-                                        <h3> Do you want to Unblock {{ $school->school_name}} ? </h3>
+                                        <h4> Do you want to unblock {{ $school->school_name}} ? </h4>
                                     @endif
                                 </div>
 
                                 <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
+
                                 {!! Form::open(['route' =>['school.status',$school->id],'method'=>'POST','class'=>'',]) !!}
                                 <!--   { !! Form::label('status') !! } -->
                                 @if($school->status == 1)
@@ -142,11 +162,11 @@
                                 @else($school->status == 0)
                                     {!! Form::radio('status', '1', true, ['class' => 'hidden name','value' => 1]) !!}<!--  block -->
                                     @endif
-
                                     {!! Form::submit('yes', ['class' => 'btn btn-success']) !!}
+
                                     {!! Form::close() !!}
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"> cancel </button>
-                                        </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>

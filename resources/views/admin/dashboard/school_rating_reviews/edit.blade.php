@@ -15,28 +15,28 @@
 
                      <div class="school-rating">
 
-                         <div class="col-md-6">
-                             <div class="col-md-6">
+                         <div class="col-md-12">
+                             {{--<div class="col-md-6">--}}
                                  {{--<img src="{{ asset(App\School_image::where('school_id','=',$school_rating->schools->id)->first()->image) }}" alt="{{asset('upload/def_school.png')}}" width="250px" height="200px">--}}
-                             </div>
+                             {{--</div>--}}
 
-                             <h4>{{ $school_rating ->schools->school_name}}</h4>
-                                 <h5>
-                                 @for( $i=1;$i <= $school_rating->ratings; $i++)
-                                     <i class="fa fa-star" aria-hidden="true"  style="color:blue;"></i>
-                                 @endfor
-                                 @for( $i=1;$i <= 5-$school_rating->ratings; $i++)
+                             {{--<h4>{{ $school_rating ->schools->school_name}}</h4>--}}
+                                 {{--<h5>--}}
+                                 {{--@for( $i=1;$i <= $school_rating->ratings; $i++)--}}
+                                     {{--<i class="fa fa-star" aria-hidden="true"  style="color:blue;"></i>--}}
+                                 {{--@endfor--}}
+                                 {{--@for( $i=1;$i <= 5-$school_rating->ratings; $i++)--}}
 
-                                     <i class="fa fa-star-o" aria-hidden="true"></i>
-                                 @endfor
-                                 </h5>
-                         </div>
+                                     {{--<i class="fa fa-star-o" aria-hidden="true"></i>--}}
+                                 {{--@endfor--}}
+                                 {{--</h5>--}}
+                         {{--</div>--}}
 
              <div class="edit-rating">
 
-                 <h3> Edit User ratings </h3>
+                 <h3>{{ $school_rating ->schools->school_name }} </h3>
 
-                 <fieldset id='demo1' class="rating">
+                 <fieldset id='demo1' class="rating" class="edit-ratings">
 
                      <input class="stars" class="star5" type="radio" id="star5" name="rating" value="5" />
                      <label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -53,15 +53,28 @@
                      <input class="stars" class="star1" type="radio" id="star1" name="rating" value="1" />
                      <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 
-                     <input type="hidden" name="hidden_input" value="{{$school_rating->schools->id }}" />
+                     <input type="hidden" name="hidden_input"  value="{{$school_rating->schools->id }}" />
+                     <input type="hidden" name="hidden_input-user"  value="{{$school_rating->users->id }}" />
 
                  </fieldset>
 
+             </div>
+             <span class="info">
 
+             </span>
+             <span class="info_edit"></span>
 
-             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+            <div class="col-md-12">
+
+                <button type="button" id="reset" class="btn btn-danger"> Reset </button>
+
+            </div>
+
+                 <div class="col-md-12">
+             <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal01">
                  ADD Review
              </button>
+                 </div>
 
              <!-- Modal  for reviews -->
              <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -93,7 +106,7 @@
              </div>
          </div>
      </div>
- </div>
+ </>
  </div>
 
      </div>

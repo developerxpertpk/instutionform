@@ -1,35 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
+
+namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\School_rating;
 use App\School;
 use App\User;
 use Auth;
+use Response;
 
 
-class School_rating_reviewsController extends Controller
+
+class SchoolRatingReviewsController extends Controller
 {
-
     public function index(Request $request){
 
-    //        $school = DB::table('schools')
-    //                    ->leftJoin('school_ratings', 'schools.id', '=', 'school_ratings.school_id')
-    //                    ->addSelect(DB::raw('AVG(school_ratings.ratings) as average_rating'))
-    //                    ->groupBy('schools.id')
-    //                    ->orderBy('average_rating', 'desc')
-    //                    ->get();
-    //
-    //        print_r($school);
-    //        die('a');
+        //        $school = DB::table('schools')
+        //                    ->leftJoin('school_ratings', 'schools.id', '=', 'school_ratings.school_id')
+        //                    ->addSelect(DB::raw('AVG(school_ratings.ratings) as average_rating'))
+        //                    ->groupBy('schools.id')
+        //                    ->orderBy('average_rating', 'desc')
+        //                    ->get();
+        //
+        //        print_r($school);
+        //        die('a');
 
         $paginate=School_rating::paginate(5);
         $school_data = School_rating::orderby('id','desc')->get();
 
         return view('admin.dashboard.school_rating_reviews.index',compact('school_data'
             ,'paginate'))
-                          ->with('i');
+            ->with('i');
 
 
     }
@@ -38,9 +41,9 @@ class School_rating_reviewsController extends Controller
 
         School_rating::find($id)->delete();
         return redirect()->route('school_rating.index')
-                            ->with('success','Rating and reviews deleted successfully');
+            ->with('success','Rating and reviews deleted successfully');
 
-        }
+    }
 
     public function school_search(Request $request){
 
@@ -52,7 +55,7 @@ class School_rating_reviewsController extends Controller
             $schools_name = School::where([  ['school_name','LIKE','%'.$search.'%'] ])->get();
 
             return view('admin.dashboard.school_rating_reviews.search',compact('schools_name'))
-                        ->with('i');
+                ->with('i');
         }else{
             return view('admin.dashboard.default')
                 ->with('success','Sorry data not found');
@@ -70,7 +73,7 @@ class School_rating_reviewsController extends Controller
 
     public function show(Request $request,$id)
     {
-      // Show function is used to show the list of ratings and reviews given a particuler user
+        // Show function is used to show the list of ratings and reviews given a particuler user
 
 
         $school_data = School_rating::where( 'school_id','=',$id)->get();
@@ -104,18 +107,18 @@ class School_rating_reviewsController extends Controller
 
 
         return view('admin.dashboard.school_rating_reviews.user_search', compact('school_data'))
-               ->with('i');
+            ->with('i');
 
     }
 
     public function store(Request $request){
-         $s = $request->all();
-         // Make object of ReportedForum
+        $s = $request->all();
+        // Make object of ReportedForum
         $rating = new School_rating;
 
         $review_id = School_rating::where('school_id','=',$request->school_id)
-                            ->where('user_id' ,'=',Auth::user()->id)
-                            ->first();
+            ->where('user_id' ,'=',Auth::user()->id)
+            ->first();
         if($review_id == true) {
             $update = School_rating::where('id', '=', $review_id->id)
                 ->update(['reviews' => $request->reviews]);
@@ -138,11 +141,64 @@ class School_rating_reviewsController extends Controller
     public function  update_review(Request $request,$id){
 
         $update = School_rating::where('id', '=',$request->id)
-                  ->update(['reviews' => $request->reviews]);
+            ->update(['reviews' => $request->reviews]);
         $school_rating = School_rating::find($request->id);
         return view('admin.dashboard.school_rating_reviews.edit',compact('school_rating'))
-                        ->with('success','Update Reviews Successfully');
+            ->with('success','Update Reviews Successfully');
 
     }
 
+    // public funtion for show the ratings
+
+    public function edit_ratings(Request $request){
+
+        $school_id= $request->school_id;
+        $user_id =$request->user_id;
+
+        //return response($school_id);
+
+        $school_user = School_rating::where([
+            ['user_id', '=',  $user_id],
+            ['school_id', '=', $school_id],
+        ])->exists();
+
+        if($school_user == true){
+
+            $ratings = School_rating::select('ratings')->where([
+                ['school_id','=',$school_id],
+                ['user_id','=',$user_id]
+            ])->first();
+            return response($ratings);
+
+        }else{
+            return response()->json(false);
+        }
+
+
+    }
+
+    // function to store the edit rating by admin
+
+    public function submit_rating(Request $request){
+
+        $ratings = $request->ratings;
+        $school_id = $request->school_id;
+        $user_id=$request->user_id;
+
+        $school_user = School_rating::where([
+            ['user_id', '=',  $user_id],
+            ['school_id', '=', $school_id],
+        ])->select('id')->first();
+
+        $update = School_rating::where('id','=',$school_user->id)->update(['ratings' => $ratings]);
+
+        if($update == true){
+            $ratings = School_rating::where('id','=',$school_user->id)->select('ratings')->first();
+            return  response($ratings);
+        }else{
+            $error ="Not Updated";
+            return  response($error);
+        }
+
+    }
 }

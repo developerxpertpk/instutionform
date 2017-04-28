@@ -19,10 +19,14 @@
 
 
     <!-- added google map api script and key -->
-    <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns "async defer></script>
+    <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns"async defer></script>
+
+    {{--<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>    --}}
 
     <script src="{{asset('js/jquery-ui.js')}}"></script>
     <script src="{{asset('js/ajax_rating.js') }}"></script>
+    <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
+    {{--<script src="{{ asset('js/jquery-validation.js') }}"></script>--}}
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 

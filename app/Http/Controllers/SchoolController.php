@@ -23,7 +23,7 @@ class SchoolController extends Controller
     {
         $schools = School::orderBy('id', 'desc')->get();
         return view('admin.dashboard.school.index', compact('schools'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+                        ->with('i', ($request->input('page', 1) - 1) * 5);
 
     }
 
@@ -61,22 +61,25 @@ class SchoolController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'school_name' => 'required',
-            'school_address' => 'required',
-            'zip' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            //'image' => 'image|mimes:png,jpeg,jpg,gif',
-            //'document' => 'mimes:pdf,docx,doc|max:500',
+            'school_name' => 'required|alpha_num',
+            'school_address' => 'required|alpha_num',
+            'zip' => 'required|alpha_num|min:4|max:10',
+            'country' => 'required|alpha',
+            'state' => 'required|alpha',
+            'city' => 'required|alpha',
+            'image' =>'image|mimes:png,jpeg,jpg,gif',
+            'document' => 'mimes:pdf,docx,doc|max:500',
         );
+
         $validator = Validator::make(Input::all(), $rules);
+
         // server side validation
         if ($validator->fails()) {
             return redirect()->route('school.create')
-                ->withErrors($validator)
-                ->withInput();
+                                ->withErrors($validator)
+                                ->withInput();
         } else {
+
             /*  make model objects */
             $location = new Location();     /*location object*/
             $school = new School();         /* School object */

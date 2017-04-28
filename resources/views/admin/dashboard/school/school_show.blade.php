@@ -2,26 +2,28 @@
 @section('content')
 
     <div class="page-wrapper">
-
-
         <div class="container-fluid">
             <div class="row">
-                <h3 class="page-header">{{ $schools->school_name }}School Profile</h3>
-                <div class="pull-right">
-                    <a href="{{ route('school.index') }}" class="btn btn-primary"> BACK </a>
-                </div>
-            </div>
+
+                <h2 class="page-header">{{ $schools->school_name }}School Profile</h2>
+
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href=" {{ route('school.index')}} ">Manage schools </a> </li>
+                        <li class="breadcrumb-item active"> School Profile </li>
+                    </ol>
+
+        </div>
 
         <div class="row" id="show-rounder">
 
-            <div class="col-md-6">
+                <div class="col-md-6 col-lg-6 col-sm-12" id="school-profile">
 
-                <div class="col-md-12" id="school-image">
-                    {{--asset($schools['school_images'][0]->image)--}}
-                    {{--<img src="{{ asset($schools['school_images'][0]->image) }}" alt=" {{  asset('uplaod/def_school.png')}}" width="100%" height="250px">--}}
-                </div>
+                    <img src="#" onerror="this.src='{{  asset('/upload/default_school1.jpg') }} '">
+
+                    {{--asset(App\School_image::where('school_id','=',$schools->id)->first()->image)--}}
+
                 <div class="col-md-12">
-
                 <h3>{{ $schools->school_name }}
                   </h3>
                 </div>
@@ -76,6 +78,8 @@
 
                                 <input type="hidden" name="school_id" id="" value="{{$schools->id}}">
                                 <textarea  id="reviews" name="reviews" rows="5" cols="65" placeholder="Write Something here">
+
+                                    Write Something here
                                 </textarea>
                             </div>
 

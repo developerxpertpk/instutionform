@@ -22,7 +22,7 @@ Route::get('/login', 'Auth\loginController@showLoginform')->name('login');
 
 Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 
-	
+
 
 	/*   Admin Routes */
 Route::group(['middleware' => ['auth']], function () {
@@ -32,22 +32,31 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
 			Route::get('profile',function(){
+
 					return view('admin.dashboard.profile');
+
 			})->name('admin.profile');
 
 			Route::get('changepwd',function(){
+
 				return view('admin.dashboard.changepwd');
+
 			})->name('admin.changepwd');
 
 			Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
 
 			Route::get('charts','DashboardController@chart')->name('charts');
 
+            // Route for Users
 
 			Route::resource('user','UserController');
+
             Route::post('user/update_user/{id}','UserController@user_update')->name('user.updateuser');
+
 			Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
+
 			Route::get('admin/user/search', 'UserController@search');
+
 
 			/*  route for school-institue */
 			
@@ -58,11 +67,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('school/school_update/{id}','SchoolController@school_update')->name('school.update1');
 
             /*  Routes for add News Reated to school  */
-            Route::resource('school_news','School_newsController');
-            Route::get('school_news/get_school_data','School_newsController@search_school');
+            Route::resource('school_news','SchoolNewsController');
+
+            Route::get('school_news/get_school_data','SchoolNewsController@search_school');
 
 			// Routes for cms
             Route::resource('content','PageController');
+
 			Route::get('content','PageController@index')->name('content');
 
 			Route::get('pages',function(){
@@ -74,22 +85,38 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
 
             Route::get('add_question',function(){
+
                 return view('admin.dashboard.cms.add_question');
+
             })->name('add_question');
+
 
             Route::post('question/submit','PageController@question_submit')->name('question_submit');
 
             Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
+
             // Routes for rating and reviews
-            Route::resource('rating_reviews','School_rating_reviewsController');
-            Route::post('rating_reviews/{id}','School_rating_reviewsController@update_review')->name('update_review');
+            Route::resource('rating_reviews','SchoolRatingReviewsController');
+
+            Route::post('edit_ratings','SchoolRatingReviewsController@edit_ratings');
+
+            Route::post('submit_rating','SchoolRatingReviewsController@submit_rating');
+
+
+            Route::post('rating_reviews/{id}','SchoolRatingReviewsController@update_review')->name('update_review');
+
 
             Route::post('school/check_ratings','SchoolController@check_ratings');
+
             Route::post('school/admin_rating','SchoolController@school_rating');
 
 
+
+            // Forum Controller
             Route::resource('forum','ForumController');
+
             Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
+
             Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
 
 
@@ -99,7 +126,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/search', 'UserController@search');
 Route::get('/school_search','SchoolController@search')->name('school_search');
-Route::get('rating_reviews/search','School_rating_reviewsController@school_search')->name('rating_search');
+Route::get('rating_reviews/search','SchoolRatingReviewsController@school_search')->name('rating_search');
 
 
 
