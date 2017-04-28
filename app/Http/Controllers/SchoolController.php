@@ -40,10 +40,10 @@ class SchoolController extends Controller
         $school = School::find($id);
         // $location_id = School::find($id)->location_id;
 
-        $school->locations()->delete();
         $school->school_images()->delete();
-       // $school->documents()->delete();
         $school->delete();
+        $school->locations()->delete();
+        // $school->documents()->delete();
 
         return redirect()->route('school.index')
             ->with('success', 'Deleted successfully');
@@ -60,6 +60,61 @@ class SchoolController extends Controller
     // function to store data
     public function store(Request $request)
     {
+
+
+        /*echo "<pre>";
+        // print_r($request->file('image'));
+
+        $rules=array(
+                // 'image' => 'image|mimes:png,jpeg,jpg,gif',
+                'image' => 'required',
+            );
+
+        // $validator=new \stdClass();
+        // $i=0;
+        $count=count($request->file('image'));
+
+        // print_r($request->file('image'));
+        // print_r($request->all()['image']);
+        $temp=array(
+            'image' => array(),
+            );
+
+        // die();
+        // $temp['image'];
+
+        for($i=0;$i<$count;$i++){
+
+            $temp['image'][]=$request->file('image')[$i];
+
+            $validator = Validator::make($temp, $rules);
+            if ($validator->fails()) {
+                //echo "error <br/>";
+
+                print_r($validator->messages()->getMessages());
+
+            }else{
+                reset($temp['image']);
+                echo "success <br>";
+            }
+        }
+
+        // print_r($temp);
+        die();
+
+        for($i=0;$i<$count;$i++){
+            $validator->$i = Validator::make($request->file('image')[$i], $rules);
+        }
+        die();
+        foreach($request->file('image') as $file){
+            $validator->$i = Validator::make($file, $rules);
+            $i++;
+        }
+            
+
+
+        die();*/
+
         $rules = array(
             'school_name' => 'required|alpha_num',
             'school_address' => 'required|alpha_num',

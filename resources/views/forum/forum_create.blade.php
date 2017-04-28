@@ -10,33 +10,33 @@
                     <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="/create_forums">
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="school_id" value="{{ isset($schooldata) ? $schooldata->id : '' }}">
+                        <input type="hidden" name="school_id" value="{{ isset($school_id) ? $school_id : '' }}">
 
-                        <div class="form-group{{ isset($errors['title']) ? ' has-error' : '' }}">
+                        <div class="form-group{{ isset($error['title']) ? ' has-error' : '' }}">
                             <label for="title" class="col-md-2 control-label">Title</label>
 
                             <div class="col-md-7">
                                 <input id="title" type="text" class="form-control" name="title" value="{{ isset($schooldata) ? $schooldata->school_name : '' }}" required autofocus>
 
-                                @if (isset($errors['title']))
+                                @if (isset($error['title']))
                                     <span class="help-block">
-                                        <strong>{{ $errors['title'] }}</strong>
+                                        <strong>{{ $error['title'] }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group {{ isset($errors['description']) ? ' has-error' : '' }}">
+                        <div class="form-group {{ isset($error['description']) ? ' has-error' : '' }}">
                             <label for="description" class="col-md-2 control-label">Description</label>
 
                             <div class="col-md-9">
                                 <textarea name="description" id="review_area" class="form-control" placeholder="" required></textarea>
                             </div>
-                            @if (isset($errors['description']))
+                            @if (isset($error['description']))
                                     <span class="help-block">
-                                        <strong>{{ $errors['description'] }}</strong>
+                                        <strong>{{ $error['description'] }}</strong>
                                     </span>
-                                @endif
+                            @endif
                         </div>
 
                         @if(isset($schools))
@@ -72,9 +72,9 @@
 @if(isset($schooldata) && $schooldata->forums->count())
 	<div class="container">
 		<div class="col-sm-10">
-			<h2>Existing Forums</h2>
+			<h2>Related Forums</h2>
 				@foreach($schooldata->forums as $data)
-					{{$data->id}}
+					{{$data->title}}
 				@endforeach
 		</div>
 	</div>

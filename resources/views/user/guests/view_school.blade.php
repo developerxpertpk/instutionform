@@ -21,13 +21,15 @@
 
 			<div class="container-fluid">
 				<div class="container">
+				{{asset('upload/'.$school->school_images)}}
 					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
+
 						@if( isset($school->school_images->image))
 							@if(asset('upload/'.$school->school_images->image))
 								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
 							@endif
 						@else
-							<img src="{{asset('upload/def_school.png')}}">
+							<img src="{{asset('upload/'.$school->school_images->image)}}">
 						@endif
 						<!-- <img src="{{asset('image/bookmark.png')}}" class="bookmark_logo"> -->
 					</div>
