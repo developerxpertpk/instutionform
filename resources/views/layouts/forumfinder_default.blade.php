@@ -140,20 +140,33 @@
                                <li><a href="/FAQ">FAQ</a></li>
                                <li><a href="/forum">Forum</a></li>
                             </ul>
+
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
                                     @if (Auth::check())
-                                        <li><a href="{{ url('/home') }}" class="col-sm-10 margin_zero padding_zero">
-                                                <!-- menu profile quick info -->
-                                                <div class="profile">
-                                                    <div class="pro_pic">
-                                                        <img src="{{asset('upload/'.Auth::user()->image )}}" alt="..." class="user_profile">
-
-                                                    </div>
-                                                    <p>My Account</p>
-                                                </div>
-                                                <!-- /menu profile quick info -->
+                                        
+                                        <li class="">
+                                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <img src="{{ asset('upload/'.Auth::user()->image) }}" alt="">{{Auth::user()->fname." ".Auth::user()->lname}}
+                                                <span class=" fa fa-angle-down"></span>
                                             </a>
+                                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                                <li><a href="/home/my_profile"> Profile</a></li>
+                                                <li>
+                                                    <a href="/bookmarks">
+                                                        <!-- <span class="badge bg-red pull-right">50%</span> -->
+                                                        <span><i class="fa fa-star pull-right" aria-hidden="true"></i>Bookmarks</span>
+                                                    </a>
+                                                </li>
+                                                <li><a href="javascript:;">Help</a></li>
+                                                <li>
+                                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        {{ csrf_field() }}
+                                                    </form>
+                                                </li>
+                                            </ul>
                                         </li>
                                     @else
                                         <li><a href="{{ url('/login') }}">Login</a></li>
@@ -388,6 +401,14 @@
             $(document).ready(function(){
                 $('.share_via_email').click(function(){
                     $("#mail_model").modal();
+                });
+
+                $('#myBtn').click(function(){
+                    $('#change_password_user').modal();
+                });
+
+                $('#my_editBtn').click(function(){
+                    $('#edit_user').modal();
                 });
             });
         </script>

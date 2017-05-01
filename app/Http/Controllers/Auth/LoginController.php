@@ -65,7 +65,6 @@ class LoginController extends Controller
          /*For Forum Query String Redirections*/
          if(Input::has('redirect')){
 
-
             if( Input::has('redirect') && isset( $_GET['title'] ) ){
                // die('a');
 
@@ -90,8 +89,8 @@ class LoginController extends Controller
          }
 
          //check  user role id 2 
-         if(Auth::user()->role_id == '2' || Auth::user()->status =='0') {  
-            return redirect()->to('home');
+         if(Auth::user()->role_id == '2' && Auth::user()->status =='0') {  
+            return redirect('/');
          }  
 
          // check admin role id == 1
@@ -117,7 +116,7 @@ class LoginController extends Controller
 
    public function logout(){
                  Auth::logout();
-                 return redirect()->to('login');
+                 return redirect('/');
    }
 
 }

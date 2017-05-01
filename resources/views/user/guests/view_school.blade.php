@@ -91,7 +91,8 @@
 						</div>
 						<div >
 							<span class="col-sm-12">
-							@if(isset($school->bookmarked_schools) && $school->bookmarked_schools->count() && Auth::check())
+							
+							@if(Auth::check() && isset($school->bookmarked_schools) && count($school->bookmarked_schools->where('user_id',Auth::id())))
 								<i class="fa fa-bookmark bookmark_icon_glow" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@else
 								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>

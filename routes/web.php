@@ -114,7 +114,7 @@ Route::group(['middleware' => ['check.status']],function(){
 
 /*USER ROUTES*/
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('bookmarks', 'HomeController@index')->name('home');
 
 
 /*USER HOME GROUP*/

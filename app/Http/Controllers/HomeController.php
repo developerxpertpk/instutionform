@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -36,7 +36,7 @@ class HomeController extends Controller
             return redirect()->to('admin/dashboard');
         }else{
             $bookmarked_schools=Bookmarked_school::where('user_id','=',Auth::id())->paginate(15);
-            return view('user.user_dashboard')->with('bookmarked_schools',$bookmarked_schools);
+            return view('user.user_bookmarks')->with('bookmarked_schools',$bookmarked_schools);
         }
     }    
 

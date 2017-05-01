@@ -1,6 +1,6 @@
-@extends('layouts.user_default')
+@extends('layouts.forumfinder_default')
 
-@section('content_user')
+@section('user_content')
 <div class="container">
 	<div class="row">
 		@if(Session::has('success'))
@@ -16,13 +16,13 @@
 			@if($errors->has('confirm_password') || $errors->has('cnf_pwd') || $errors->has('password_failed') || $errors->has('old_password') || $errors->has('new_password'))
 				<script>
 					$(document).ready(function(){
-						change_password_user();
+                    	$('#change_password_user').modal();
 					})
 				</script>		
 			@else
 				<script>
 					$(document).ready(function(){
-						edit_user();
+						$('#edit_user').modal();
 					})
 				</script>
 			@endif

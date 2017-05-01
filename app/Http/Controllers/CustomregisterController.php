@@ -15,12 +15,12 @@ class CustomregisterController extends Controller
 		return view('auth.login');	
 		}
  	
- 	protected function validator(array $data)
+ /*	protected function validator(array $data)
     	{
         return Validator::make($data, [
             
         	]);
-    	}
+    	}*/
 
    	public function insert(Request $request){
 
@@ -60,10 +60,10 @@ class CustomregisterController extends Controller
             $destinationPath = public_path($path);
 
             /*Check for folder existance*/
-            if (!File::exists(public_path($path))){
+            if ( !File::exists($destinationPath) ){
                 //Folder doesn't exists
                 //creating new folder 
-                File::MakeDirectory(public_path($path));
+                File::MakeDirectory( $destinationPath );
             }
             
 

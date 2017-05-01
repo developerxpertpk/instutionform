@@ -331,6 +331,13 @@
   margin-bottom: 7px;
 }
 
+.user-profile img{
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .user_image{
   width:100px;
   height:100px;

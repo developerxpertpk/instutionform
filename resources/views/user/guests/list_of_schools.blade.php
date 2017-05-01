@@ -42,6 +42,7 @@
 				<div class="tab-content">
 
 					<div role="tabpanel" class="tab-pane fade in active" id="Latest">
+						@if(count($schools_latest))
 						@foreach($schools_latest->take(10) as $school)
 							
 						<div class="container border_con">
@@ -67,6 +68,17 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="container border_con">
+							<div class="col-xs-12 col-sm-3 pull-left">
+								
+							</div>
+							<div class="heading col-xs-12 col-sm-9 pull-right">
+								<h3>{{'No Record Found'}}</h3>
+								
+							</div>
+						</div>
+						@endif
 					</div>
 
 					<!-- <div role="tabpanel" class="tab-pane fade in" id="Highest_Rated">
@@ -87,24 +99,25 @@
 					</div> -->
 					
 					<div role="tabpanel" class="tab-pane fade in" id="Popular">
+						@if(count($popular_schools))
 						@foreach($popular_schools->take(10) as $school)
 							
 						<div class="container border_con">
 							<div class="col-xs-12 col-sm-3 pull-left">
-								@if(count($school->school_images))
-									<img  src="{{asset('upload/'.$school->school_images->image)}}">
+								@if(count($school->schools['school_images']))
+									<img  src="{{asset('upload/'.$school->schools['school_images']->image)}}">
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
 								@endif
 							</div>
 							<div class="heading col-xs-12 col-sm-9 pull-right">
-								<h3>{{$school->school_name}}</h3>
+								<h3>{{$school->schools->school_name}}</h3>
 								<p>
 									Commerce stream is still a very popular choice among Indian
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->id }}">
+								<a href="show_school/{{ $school->school_id }}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>
@@ -112,28 +125,41 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="container border_con">
+							<div class="col-xs-12 col-sm-3 pull-left">
+								
+							</div>
+							<div class="heading col-xs-12 col-sm-9 pull-right">
+								<h3>{{'No Record Found'}}</h3>
+								
+							</div>
+						</div>
+						@endif
 					</div>
 					
 					
 					<div role="tabpanel" class="tab-pane fade in" id="lowest_Rated">
+						
+						@if(count($lowest_rated_schools))
 						@foreach($lowest_rated_schools->take(10) as $school)
 							
 						<div class="container border_con">
 							<div class="col-xs-12 col-sm-3 pull-left">
-								@if(count($school->school_images))
+								@if(count($school->schools['school_images']))
 									<img  src="{{asset('upload/'.$school->school_images->image)}}">
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
 								@endif
 							</div>
 							<div class="heading col-xs-12 col-sm-9 pull-right">
-								<h3>{{$school->school_name}}</h3>
+								<h3>{{$school->schools->school_name}}</h3>
 								<p>
 									Commerce stream is still a very popular choice among Indian
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->id }}">
+								<a href="show_school/{{ $school->school_id }}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>
@@ -141,9 +167,21 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="container border_con">
+							<div class="col-xs-12 col-sm-3 pull-left">
+								
+							</div>
+							<div class="heading col-xs-12 col-sm-9 pull-right">
+								<h3>{{'No Record Found'}}</h3>
+								
+							</div>
+						</div>
+						@endif
 					</div>
 
 					<div role="tabpanel" class="tab-pane fade in" id="Oldest">
+						@if(count($schools_oldest))
 						@foreach($schools_oldest->take(10) as $school)
 							
 						<div class="container border_con">
@@ -169,6 +207,17 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="container border_con">
+							<div class="col-xs-12 col-sm-3 pull-left">
+								
+							</div>
+							<div class="heading col-xs-12 col-sm-9 pull-right">
+								<h3>{{'No Record Found'}}</h3>
+								
+							</div>
+						</div>
+						@endif
 					</div>
 				</div>
 			</section>

@@ -122,9 +122,10 @@ class UnregisteredController extends BaseController
                         ->sortBy('created_at');
 
         $popular_schools=School_rating::having(DB::raw('avg(ratings)'),'>',4.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
-        echo "<pre>";
-        print_r($popular_schools);
-        die();
+        // echo "<pre>";
+        // print_r($popular_schools);
+        
+        // die();
 
         $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',2.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
 
