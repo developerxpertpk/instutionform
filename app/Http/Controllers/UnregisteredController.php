@@ -121,9 +121,18 @@ class UnregisteredController extends BaseController
         $schools_oldest=School::all()
                         ->sortBy('created_at');
 
+        $popular_schools=School_rating::having(DB::raw('avg(ratings)'),'>',4.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
+        echo "<pre>";
+        print_r($popular_schools);
+        die();
+
+        $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',2.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
+
         return view('user.guests.list_of_schools')->with('schools',$schools)
                                                     ->with('schools_latest',$schools_latest)
-                                                    ->with('schools_oldest',$schools_oldest);
+                                                    ->with('schools_oldest',$schools_oldest)
+                                                    ->with('popular_schools',$popular_schools)
+                                                    ->with('lowest_rated_schools',$lowest_rated_schools);
     }
     /* /Close */
 
@@ -137,6 +146,7 @@ class UnregisteredController extends BaseController
         ];
 
         $validator = Validator::make($request->all(), $rules);
+        
 
         if($validator -> fails()){
             
@@ -150,10 +160,10 @@ class UnregisteredController extends BaseController
             if($request->session()->has('failed')){
                 $request->session()->forget('failed');
             }
-            return back();
+            return redirect(url()->previous());
         }else{
             Session::flash('failed','Your credentials didn\'t match our records ');
-            return back();
+            return redirect(url()->previous());
         }
     }
     /* /Close*/

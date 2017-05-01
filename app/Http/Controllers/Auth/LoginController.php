@@ -9,6 +9,8 @@ use Auth;
 use App\User;
 use Redirect;
 use Illuminate\Support\Facades\Input;
+use App\Page;
+use Illuminate\Support\Facades\View;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,9 @@ class LoginController extends Controller
    {
       $this->middleware('check.status', ['except' => 'logout']);
       $this->middleware('guest', ['except' => 'logout']);
+
+      $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+      View::share('page', $page);
    }
 
 
@@ -60,6 +65,7 @@ class LoginController extends Controller
          /*For Forum Query String Redirections*/
          if(Input::has('redirect')){
 
+
             if( Input::has('redirect') && isset( $_GET['title'] ) ){
                // die('a');
 
@@ -70,6 +76,16 @@ class LoginController extends Controller
                   ));
             }
 
+            if( Input::has('redirect') && isset( $_GET['t_title'] ) ){
+               // die('b');
+
+               return Redirect::route('create_thread', array(
+                  'title' => $_GET['t_title'],
+                  'description' => $_GET['t_description'],
+                  'id' => $_GET['id'],
+                  ));
+            }
+            
             return redirect( Input::get('redirect') );
          }
 

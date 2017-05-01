@@ -8,11 +8,11 @@
             
             initialize();
 
-            var map = new google.maps.Map(document.getElementById('map'), {
+            /*var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 6
             });
-            var infoWindow = new google.maps.InfoWindow({map: map});
+            var infoWindow = new google.maps.InfoWindow({map: map});*/
 
             // Try HTML5 geolocation.
             if(navigator.geolocation){
@@ -30,15 +30,15 @@
                     };
 
                     //console.log(position.address.postalCode);
-                    infoWindow.setPosition(pos);
+                    /*infoWindow.setPosition(pos);
                     infoWindow.setContent('You are here');
-                    map.setCenter(pos);
+                    map.setCenter(pos);*/
                 }, function() {
-                    handleLocationError(true, infoWindow, map.getCenter());
+                    // handleLocationError(true, infoWindow, map.getCenter());
                 });
             }else{
                 // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
+                // handleLocationError(false, infoWindow, map.getCenter());
             }
         }
 
@@ -152,7 +152,7 @@
                         //console.log(JSON.stringify(response));
                         // console.log(JSON.parse(JSON.stringify(response)));
 
-                        $('.nearBy_container').append("<h2>Nearby Schools</h2><h5>Explore schools next to you</h5>");
+                        $('.nearBy_container').append("<h2>Nearby Schools</h2><h5>Explore the schools next to you</h5>");
 
                         var data=JSON.parse(JSON.stringify(response));
                         data.forEach(function(item,index){
@@ -161,7 +161,7 @@
                             // console.log('index'+index);
                             
                             console.log(item);
-                            $('.nearBy_container').append("<a class='nearBy_school' href='show_school/"+item.id+"'><div class='col-xs-12 col-sm-3 t_school'><img src='{{path('public/"+item.image+"')}}'><h5>"+item.school_name+"</h5></div>");
+                            $('.nearBy_container').append("<a class='nearBy_school' href='show_school/"+item.id+"'><div class='col-xs-12 col-sm-3 t_school'><img src="+(!item.image ? 'upload/def_school.png' : 'upload/'+item.image)+"><h5>"+item.school_name+"</h5></div>");
                             //console.log(item.id);
 
 

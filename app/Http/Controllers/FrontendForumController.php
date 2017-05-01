@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\School;
-use App\Forum;
-use App\Threads_likes_dislike;
 use Auth;
+use App\Forum;
+use App\Thread;
+use App\School;
+use App\Threads_likes_dislike;
+use Illuminate\Http\Request;
 
 class FrontendforumController extends BaseController
 {
@@ -15,14 +16,20 @@ class FrontendforumController extends BaseController
     public function forum_index(){
 
         $forums=Forum::paginate(10);
+
+        $recent_threads=Thread::orderBy('id','asc ')
+                                ->take(10)
+                                ->get();
+
         $popular_thread=Threads_likes_dislike::groupBy('thread_id')
                                 ->selectRaw('sum(is_liked_disliked) as likes, thread_id')
                                 ->orderBy('likes','desc')
-                                ->take(5)
+                                ->take(10)
                                 ->get();
 
     	return view('forum.forum_index')->with('forums',$forums)
-                                        ->with('popular_threads',$popular_thread);
+                                        ->with('popular_threads',$popular_thread)
+                                        ->with('recent_threads',$recent_threads);
     }
 
 
@@ -59,11 +66,17 @@ class FrontendforumController extends BaseController
 
             return redirect('/login?redirect=/forum&id='.$school_id.'&title='.$title.'&description='.$description);
         }
-
-        $rules=array(
-                'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
-                'description' => 'required|regex:/^[a-zA-Z0-9,#.-:@<>]*$/',
-            );
+        if(empty($request->description)){
+            $rules=array(
+                    'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
+                );
+        }else{
+            $rules=array(
+                    'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
+                    'description' => 'regex:/^[a-zA-Z0-9,#.-:\' "<>]*$/',
+                );
+        }
+            
 
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -79,7 +92,7 @@ class FrontendforumController extends BaseController
             }
             // print_r($errors);
             return view('forum.forum_create')->with('error',$errors)
-                                            ->with('schooldata',$school_id);
+                                            ->with('school_id',$school_id);
         } else {
 
             $forum = new Forum;
@@ -98,15 +111,11 @@ class FrontendforumController extends BaseController
 
 
     public function show_forum($id){
-        // die('here');
-        // die('show_forum');
-        // echo "<pre>";
         if(!is_numeric($id)){
             return redirect($id);
         }
 
-        $forum=Forum::find($id)->first();
-        // print_r($forum);
+        $forum=Forum::where('id','=',$id)->first();
         return view('forum.view_forum')->with('forum',$forum);
     }
 

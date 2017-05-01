@@ -28,7 +28,7 @@ class CheckStatus
 
                 /*Check whether user is blocked*/
                 if(Auth::user()->status == 1){
-                    return response(500);
+                    return 500;
                 }
                 return $next($request);
             }

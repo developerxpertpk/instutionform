@@ -71,12 +71,12 @@
                  <a class="btn btn-primary" href="{{ route('school.edit',$school->id)}}">Edit</a>
 
              <!-- Button for  Delete-->
-          <button type="button" class="btn btn-danger"  id="{{$school->school_name}}" data-toggle="modal" data-target="#myModal01">
+          <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#{{$school->id}}">
               Delete
           </button>
 
                 <!-- Modal  for delete with id=01-->
-        <div class="modal fade" id="myModal01" id={{ $school->school_name }}tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="{{$school->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -105,18 +105,18 @@
                 <!-- block/unblock button -->
                     <!-- check for unblock -->
                 @if($school->status=='0')
-                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blk_unblk_{{$school->id}}">
                         Block
                     </button>
                 @endif
                 <!-- check for block -->
                 @if($school->status=='1')
-                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal001">
+                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blk_unblk_{{$school->id}}">
                         UnBlock
                     </button>
                 @endif
                 <!-- Modal for block/unblock school -->
-                <div class="modal fade" id="myModal001" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="blk_unblk_{{$school->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
 
@@ -127,7 +127,7 @@
 
                                 <div class="modal-body">
                                     @if($school->status=="0")
-                                        <h3> Do you want to block{{$school->school_name}} ? </h3>
+                                        <h3> Do you want to block {{$school->school_name}} ? </h3>
                                     @else
                                         <h3> Do you want to Unblock {{ $school->school_name}} ? </h3>
                                     @endif

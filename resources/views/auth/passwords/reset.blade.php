@@ -1,6 +1,6 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.forumfinder_default')
+@section('user_content')
+<br/>
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-4">

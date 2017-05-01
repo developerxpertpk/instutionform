@@ -32,9 +32,11 @@ class AjaxCallsController extends Controller
     /*check user status*/
     public function check_login(Request $request){
 
-    	if(!Auth::check()){
-    		return response()->json(false);
-    	}
+    	$auth=$this->auth_check();
+
+        if($auth == false){
+            return response()->json(false);
+        }
 
         $this->middleware('CheckStatus');
 
@@ -86,11 +88,14 @@ class AjaxCallsController extends Controller
         $school_id=$request->school_id;
 
 
-        if(!Auth::check()){
+        $auth=$this->auth_check();
+
+        if($auth == false){
             return response()->json(false);
         }
 
         $this->middleware('CheckStatus');
+
 
         if ( School_rating::where([
                 ['user_id','=',Auth::id()],
@@ -111,7 +116,10 @@ class AjaxCallsController extends Controller
     public function check_bookmark(Request $request){
         $school_id=$request->school_id;
 
-        if(!Auth::check()){
+        // return response('abc');
+        $auth=$this->auth_check();
+
+        if($auth == false){
             return response()->json(false);
         }
 
@@ -140,5 +148,25 @@ class AjaxCallsController extends Controller
 
         return response('saved');
 
+    }
+
+    public function bookmark_school_delete(Request $request){
+        $bookmark_id=$request->bookmark_id;
+
+        if( Bookmarked_school::where('id','=',$bookmark_id)->exists()){
+
+            Bookmarked_school::where('id','=',$bookmark_id)->delete();
+
+            return response('deleted');
+        }
+        return response(404);
+    }
+
+    public function auth_check(){
+        
+        if(!Auth::check()){
+            return false;
+        }
+        return true;
     }
 }

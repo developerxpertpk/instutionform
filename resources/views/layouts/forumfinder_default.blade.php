@@ -9,6 +9,8 @@
 
         <!-- Ajax Script -->
         <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/forum_like_dislike.js')}}" type="text/javascript" charset="utf-8" ></script>
+        <script src="{{asset('js/thread_like_dislike.js')}}" type="text/javascript" charset="utf-8"></script>
         <!-- /Ajax Script -->
 
         
@@ -17,6 +19,7 @@
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/forum.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
@@ -33,25 +36,25 @@
         <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
-        #map {
+        /*#map {*/
             /*height: 100%;*/
-            display: none;
+            /*display: none;*/
 
-        }
+        /*}*/
         /* Optional: Makes the sample page fill the window. */
         /*html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }*/
-        .map_div{
-            display: none;
+        /*.map_div{*/
+            /*display: none;*/
             /*width:500px;
             height:600px;
             margin-left: 100px;
             margin-top: 30px;
             border:2px solid #000;*/
-        }
+        /*}*/
 
         .margin_bottom{
             margin-bottom: 10px !important;
@@ -140,12 +143,14 @@
                             <ul class="nav navbar-nav navbar-right">
                                 @if(Route::has('login'))
                                     @if (Auth::check())
-                                        <li><a href="{{ url('/home') }}">
+                                        <li><a href="{{ url('/home') }}" class="col-sm-10 margin_zero padding_zero">
                                                 <!-- menu profile quick info -->
                                                 <div class="profile">
                                                     <div class="pro_pic">
-                                                        <img src="upload/{{Auth::user()->image}}" alt="..." class="img-circle profile_img">
+                                                        <img src="{{asset('upload/'.Auth::user()->image )}}" alt="..." class="user_profile">
+
                                                     </div>
+                                                    <p>My Account</p>
                                                 </div>
                                                 <!-- /menu profile quick info -->
                                             </a>

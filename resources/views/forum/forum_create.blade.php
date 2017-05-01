@@ -16,7 +16,7 @@
                             <label for="title" class="col-md-2 control-label">Title</label>
 
                             <div class="col-md-7">
-                                <input id="title" type="text" class="form-control" name="title" value="{{ isset($schooldata) ? $schooldata->school_name : '' }}" required autofocus>
+                                <input id="title" type="text" class="form-control" name="title" value="{{ isset($schooldata) ? $schooldata->school_name : old('title') }}" required autofocus>
 
                                 @if (isset($error['title']))
                                     <span class="help-block">
@@ -30,7 +30,7 @@
                             <label for="description" class="col-md-2 control-label">Description</label>
 
                             <div class="col-md-9">
-                                <textarea name="description" id="review_area" class="form-control" placeholder="" required></textarea>
+                                <textarea name="description" id="review_area" class="form-control" >{{ old('description') }}</textarea>
                             </div>
                             @if (isset($error['description']))
                                     <span class="help-block">

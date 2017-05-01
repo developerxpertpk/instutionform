@@ -28,7 +28,7 @@
 						@foreach($forums as $forum)
 		 						<tr class='clickable-row' href="/forum/show_forum/{{$forum->id}}" style="cursor: pointer;" >
 		 							<td width="20%">{{$forum->title}}</td>
-		 							<td width="50%">{{$forum->description}}</td>
+		 							<td width="50%">{!! $forum->description !!}</td>
 		 							<td width="15%"></td>
 		 							<td width="15%">{{$forum->created_at}}</td>
 		 						</tr>
@@ -40,15 +40,15 @@
 			</div>
 		</span>
 	</div>
-	<div class="container">
-		<div class="col-sm-6 table-bordered popular_threads">
+	<div class="col-sm-12">
+		<div class="col-sm-5 table-bordered popular_threads">
 			<h3>Some popular threads</h3>
 			@if($popular_threads->first()->count() != '')
 				<table class="table table-hover table-responsive table-striped">
 					<!-- <caption>table title and/or explanatory text</caption> -->
 					<tbody>
 						@foreach($popular_threads as $threads)
-		 						<tr class='clickable-row' href="/forum/show_forum/{{$threads->threads->id}}" style="cursor: pointer;" >
+		 						<tr class='clickable-row' href="/threads/show_thread/{{$threads->threads->id}}" style="cursor: pointer;" >
 		 							<td width="30%">{{$threads->threads->title}}</td>
 		 							<td width="55%">{{$threads->threads->description}}</td>
 		 							<td width="15%">at {{$threads->threads->created_at}}</td>
@@ -60,8 +60,24 @@
 				<p><strong>Sorry, No data found</strong></p>
 			@endif
 		</div>
-		<div class="col-sm-6 forum_categories">
-			
+		<div class="col-sm-5 pull-right table-bordered recent_threads">
+			<h3>Recent threads</h3>
+			@if($recent_threads->first()->count() != '')
+				<table class="table table-hover table-responsive table-striped">
+					<!-- <caption>table title and/or explanatory text</caption> -->
+					<tbody>
+						@foreach($recent_threads as $threads)
+		 						<tr class='clickable-row' href="/threads/show_thread/{{$threads->id}}" style="cursor: pointer;" >
+		 							<td width="30%">{{$threads->title}}</td>
+		 							<td width="55%">{!! $threads->description !!}</td>
+		 							<td width="15%">at {{$threads->created_at}}</td>
+		 						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			@else
+				<p><strong>Sorry, No data found</strong></p>
+			@endif
 		</div>
 	</div>
 	

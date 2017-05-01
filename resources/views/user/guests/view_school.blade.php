@@ -21,16 +21,15 @@
 
 			<div class="container-fluid">
 				<div class="container">
-				{{asset('upload/'.$school->school_images)}}
+				@if( count($school->school_images) != 0 )
+					@if(asset('upload/'.$school->school_images))
+					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/'.$school->school_images->image)}}');">
+					<img src="{{asset('upload/'.$school->school_images->image)}}">
+					@endif
+				@else
 					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
-
-						@if( isset($school->school_images->image))
-							@if(asset('upload/'.$school->school_images->image))
-								<img src="{{asset('upload/'.$school->school_images->image)}}" alt="{{asset('upload/def_school.png')}}">
-							@endif
-						@else
-							<img src="{{asset('upload/'.$school->school_images->image)}}">
-						@endif
+						<img src="{{asset('upload/def_school.png')}}">
+				@endif
 						<!-- <img src="{{asset('image/bookmark.png')}}" class="bookmark_logo"> -->
 					</div>
 					<div class="heading_box col-sm-6">
@@ -133,14 +132,18 @@
 							<!-- menu profile quick info -->
 	                        <div class="profile_circle center-block">
 	                            <div class="profile_dp">
-	                                <img src="upload/{{Auth::user()->image}}" alt="..." class="img-circle profile_img">
+	                            	@if( count(Auth::user()->image) != 0 )
+	                                <img src="{{asset('upload/'.Auth::user()->image)}}" alt="..." class="user_image">
+	                                @else
+	                                <img src="{{asset('upload/user.png')}}" class="user_image">
+	                                @endif
 	                            </div>
 	                        </div>
 	                        <!-- /menu profile quick info -->
 						@endif
 				
                     <div class="rating_box col-sm-12">
-                    	<fieldset id='demo3' class="rating">
+                    	<div id='demo3' class="col-sm-offset-3 col-sm-4 rating">
                     		<input type="hidden" name="hidden_input" value="{{$school->id}}" />
 
 	                        <input class="stars" type="radio" id="star53" name="rating" value="5" />
@@ -176,7 +179,7 @@
 	                        <input class="hidden" type="radio" id="starzero3" name="rating" value="" />
 	                        <label class="hidden" style="{display: none;}" for="starzero3" ></label>
 
-	                    </fieldset>
+	                    </div>
                     </div>
 	                    
 				</div>
@@ -318,7 +321,7 @@
 								<div class="media">
 								  	<div class="media-left media-middle ">
 								    	<a href="#">
-								      		<img class="media-object table-bordered" src="..." alt="...">
+								      		<img class="media-object table-bordered" src="{{asset('upload/'.$ratings->users->image)}}" alt="...">
 								    	</a>
 								  	</div>
 								  	<div class="media-body ">

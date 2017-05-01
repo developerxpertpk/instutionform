@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Tokken for ajax -->
+    <meta name="_token" content="{{ csrf_token() }}">
+    <!-- /CSRF Tokken for ajax -->
 
     <title>School Finder</title>
 
@@ -58,6 +61,9 @@
            color:#ffffff;
            font-weight: 500;
          }
+         .delete_user_bookmark{
+          font-size: 20px;
+         }
     </style>
   </head>
 
@@ -67,7 +73,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img class="img-responsive" src="{{asset('image\finallogo.png')}}"></a>
+              <a href="/" class="site_title"><img class="img-responsive" src="{{asset('image\finallogo.png')}}"></a>
             </div>
 
             <div class="clearfix"></div>
@@ -322,7 +328,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            School Finder & Forum - by <a href="https:www.facebook.com/aksrocz">Akshay Sharma</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -412,6 +418,65 @@
         function form_edit() {
             document.getElementById("profile_editor").submit();
         } 
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $(".clickable-row").click(function() {
+              window.location = $(this).attr("href");
+          });
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+            }
+        });
+
+        /*for Styling*/
+        $('.delete_user_bookmark').hover(function(){
+          $(this).attr('class','fa fa-trash delete_user_bookmark');
+          $(this).css('font-size','25px');
+        },function(){
+          $(this).attr('class','fa fa-trash-o delete_user_bookmark');
+          $(this).css('font-size','20px');
+        });
+
+        /*for deletion*/
+        $('.delete_user_bookmark').click(function(){
+          var bookmark_id=$(this).attr('id');
+          var school_name=$(this).parent().prev().prev().prev().prev().html();
+          var row_id=$(this).parent().parent().attr('id');
+
+          var confrm = confirm('Do you really want to delete this bookmark? ('+school_name+')');
+          
+          if(confrm == true){
+            console.log('here');
+            $.ajax({
+              url:'/bookmark_school_delete',
+              method:'POST',
+              data:{
+                'bookmark_id':bookmark_id,
+              },
+
+              success:function(response){
+                if(response == 404){
+                  console.log('doesnot exists');
+                }else{
+                  console.log(true);
+                  $('#'+row_id).hide();
+                }
+              },
+              error:function(response){
+                console.log('error: '+response);
+              }
+            })
+          }
+        });
+      });
+
     </script>
   
   </body>

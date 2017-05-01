@@ -161,7 +161,6 @@ $(document).ready(function(){
                     edit_user();
                 }else if(response == 500){
                     console.log('You have been blocked');
-                    edit_user();
                 }else{
                     console.log(response);
                     $('#bookmark_icon').toggleClass('bookmark_class');
