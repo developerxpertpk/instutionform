@@ -9,12 +9,10 @@
 				<h1 class="page-header">
 				Manage Schools & Institutes
 				</h1>
-
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item active">Manage schools </li>
                     </ol>
-
 			</div>
         </div>
 		<!--/.row -->

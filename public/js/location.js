@@ -33,6 +33,7 @@ $(document).ready(function() {
         //console.log(zip.length); return false;
 
         if (zip.length >= 5 && typeof google != 'undefined') {
+
             var addr = {};
             var lat = '';
             var lng = '';
@@ -57,6 +58,7 @@ $(document).ready(function() {
                             }
                             if (types == "sublocality,political" || types == "locality,political" || types == "neighborhood,political" || types == "administrative_area_level_3,political" || types == "administrative_area_level_2,political") {
                                 addr.city = (city == '' || types == "locality,political") ? results[0].address_components[ii].long_name : city;
+
                             }
                             if (types == "administrative_area_level_1,political"|| types == "administrative_area_level_2,political") {
                                 addr.state = results[0].address_components[ii].short_name;
@@ -67,16 +69,7 @@ $(document).ready(function() {
                             if (types == "country,political") {
                                 addr.country = results[0].address_components[ii].long_name;
                             }
-
-                            if (addr.country == "") {
-                                $("#countryId").hide();
-                            }
-                            if (addr.state == "") {
-                                $("#stateId").hide();
-                            }
-                            if (addr.city == "") {
-                                $("#cityId").hide();
-                            }
+                                console.log(results[0].address_components[ii]);
                             userlat = results[0].geometry.location.lat();
 
                             userlng = results[0].geometry.location.lng();
@@ -92,12 +85,6 @@ $(document).ready(function() {
                             $('#cityId').val(addr.city);
                             $('#lat').val(userlat);
                             $('#long').val(userlng);
-                            $("#countryId").attr('disabled','disabled');
-                            $("#cityId").attr('disabled','disabled');
-                            $("#stateId").attr('disabled','disabled');
-
-
-
                         }
 
                         addr.success = true;

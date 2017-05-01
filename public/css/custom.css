@@ -128,6 +128,9 @@
     font-weight: bold;
 
 }
+.school_document_img{
+    margin:auto 0;
+}
 
 
 /* css for school show */
@@ -148,7 +151,10 @@
      height:300px;
 
  }
+ .error{
+     color:red;
 
+ }
 
  /* css for school regiser */
 .google-map{

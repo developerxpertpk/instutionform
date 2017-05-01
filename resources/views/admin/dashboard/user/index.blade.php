@@ -29,13 +29,12 @@
         </div>
 
         <div class="pull-right user-search">
-                  
+
                 {!! Form::open(['method' => 'GET', 'url' => '/search'] ) !!}
                 {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any name or email']) !!}
-
                 {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
-
                 {!! Form::close() !!}
+
         </div>
   </div>
 
@@ -105,7 +104,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-              <h4 class="modal-title" id="myModalLabel"> {{$user->fname .$user->lname}}  Profile </h4>
+              <h4 class="modal-title" id="myModalLabel"> {{$user->fname .$user->lname}} Profile </h4>
             </div>
             <div class="modal-body">
 
