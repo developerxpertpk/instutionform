@@ -1,9 +1,6 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 <!-- banner and search portion  -->
-<div class="map_div">
-	<div id="map"></div> 
-</div>
 <section class="search_banner">
 	<div id="slidermy" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner" role="listbox">

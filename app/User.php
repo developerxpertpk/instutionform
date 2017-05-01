@@ -56,6 +56,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Reporting_forum','user_id');
     }
 
+    public function reported_threads(){
+        return $this->hasMany('App\Reported_thread','user_id');
+    }
 
 
 }

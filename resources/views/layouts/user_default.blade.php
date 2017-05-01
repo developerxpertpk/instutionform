@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Tokken for ajax -->
+    <meta name="_token" content="{{ csrf_token() }}">
+    <!-- /CSRF Tokken for ajax -->
 
     <title>School Finder</title>
 
@@ -58,6 +61,9 @@
            color:#ffffff;
            font-weight: 500;
          }
+         .delete_user_bookmark{
+          font-size: 20px;
+         }
     </style>
   </head>
 
@@ -67,7 +73,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img class="img-responsive" src="{{asset('image\finallogo.png')}}"></a>
+              <a href="/" class="site_title"><img class="img-responsive" src="{{asset('image\finallogo.png')}}"></a>
             </div>
 
             <div class="clearfix"></div>
@@ -322,7 +328,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            School Finder & Forum - by <a href="https:www.facebook.com/aksrocz">Akshay Sharma</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -412,6 +418,15 @@
         function form_edit() {
             document.getElementById("profile_editor").submit();
         } 
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $(".clickable-row").click(function() {
+              window.location = $(this).attr("href");
+          });
+      });
+    </script>
+    <script type="text/javascript">
     </script>
   
   </body>

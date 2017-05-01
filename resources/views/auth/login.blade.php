@@ -1,13 +1,22 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.forumfinder_default')
+@section('user_content')
+<br/>
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-4">
             <div class="panel panel-default animated bounce">
                 <div class="panel-heading"> User Login </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($redirect) && isset($_GET['title']) ? '/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id'] : ( isset($redirect) ? '/submit?redirect='.$redirect : route('login.submit')) }}" >
+                @if(isset($redirect) && isset($_GET['title']))
+                    
+                    <form class="form-horizontal" role="form" method="POST" action="{{'/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id'] }}" >
+                @elseif(isset($redirect) && isset($_GET['t_title']))
+                    
+                    <form class="form-horizontal" role="form" method="POST" action="{{ '/submit?redirect='.$redirect.'&t_title='.$_GET['t_title'].'&t_description='.$_GET['t_description'].'&id='.$_GET['id']  }}" >
+                @else
+                    
+                    <form class="form-horizontal" role="form" method="POST" action="{{route('login.submit') }}" >
+                @endif
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

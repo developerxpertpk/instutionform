@@ -53,7 +53,7 @@
 						</label>
 
 						<div class=" col-sm-6 col-md-6 ">
-							<textarea name="school_address" class="form-control" rows="4" value="{{$school->school_address}}" required></textarea>
+							<textarea name="school_address" class="form-control" rows="4" required>{{$school->school_address}}</textarea>
 
 							@if ($errors->has('address'))
 								<span class="help-block">

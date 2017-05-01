@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 use Auth;
 use File;
 use App\User;
+use App\Bookmarked_school;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -34,7 +35,8 @@ class HomeController extends Controller
         if(Auth::user()->role->role == 'admin'){
             return redirect()->to('admin/dashboard');
         }else{
-            return view('user.user_dashboard');
+            $bookmarked_schools=Bookmarked_school::where('user_id','=',Auth::id())->paginate(15);
+            return view('user.user_bookmarks')->with('bookmarked_schools',$bookmarked_schools);
         }
     }    
 

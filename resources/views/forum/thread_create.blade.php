@@ -10,13 +10,13 @@
                     <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="/create_thread">
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="school_id" value="{{ isset($schooldata) ? $schooldata->id : '' }}">
+                        <input type="hidden" name="id" value="{{isset($forum_id) ? $forum_id : ''}}">
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-2 control-label">Title</label>
 
                             <div class="col-md-7">
-                                <input id="title" type="text" class="form-control" name="title" value="{{ isset($schooldata) ? $schooldata->school_name : '' }}" required autofocus>
+                                <input id="title" type="text" class="form-control" name="title" value="" required autofocus>
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -26,30 +26,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label for="description" class="col-md-2 control-label">Description</label>
 
                             <div class="col-md-9">
-                                <textarea name="description" id="review_area" class="form-control" placeholder="" required></textarea>
+                                <textarea name="description" id="review_area" class="form-control" placeholder=""></textarea>
+                                @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
-
-                        @if(isset($schools))
-
-	                        <div class="form-group">
-							  	<label for="sel1" class="col-md-2 control-label">Select School:</label>
-
-							  	<div class="col-md-4">
-							  		<select class="form-control" name="school_select_id" id="sel1">
-							    		@foreach($schools as $school)
-							    			<option value="{{$school->id}}">{{ $school->school_name }}</option>
-							    		@endforeach
-							  		</select>
-							  	</div>
-							</div>
-						@endif
-
-
                         <div class="form-group">
                             <div class="col-md-4 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary" name="submit">

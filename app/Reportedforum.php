@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reportedforum extends Model
 {
-    //
+    public $timestamps = false;
+
+    public static function boot(){
+        // boot
+        parent::boot();
+
+        static::creating( function ($model) {
+            $model->setCreatedAt($model->freshTimestamp());
+        });
+    }
 
 
     protected $fillable = [

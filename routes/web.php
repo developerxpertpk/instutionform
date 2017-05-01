@@ -141,7 +141,7 @@ Route::group(['middleware' => ['check.status']],function(){
 
 /*USER ROUTES*/
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('bookmarks', 'HomeController@index')->name('home');
 
 
 /*USER HOME GROUP*/
@@ -189,9 +189,13 @@ Route::get('create_forums','FrontendForumController@createforum')->name('create_
 
 Route::get('forum','FrontendForumController@forum_index');
 
-Route::get('create_thread',function(){
-	return view('forum.thread_create');
+Route::get('create_thread/{id}',function($id){
+	return view('forum.thread_create')->with('forum_id',$id);
 });
+Route::get('create_thread','FrontendthreadController@create_thread')->name('create_thread');
+
+Route::post('create_thread','FrontendthreadController@create_thread');
+
 
 
 
@@ -207,6 +211,29 @@ Route::post('/rate_school','AjaxCallsController@rate_school');
 Route::post('/check_rate','AjaxCallsController@check_rate');
 
 Route::post('/check_bookmark','AjaxCallsController@check_bookmark');
+
+Route::post('/bookmark_school_delete','AjaxCallsController@bookmark_school_delete');
+
+Route::group(['middleware' => ['CheckAuthAjax']], function () {
+	
+	Route::post('thread_like_dislike','ForumajaxController@thread_like_dislike');
+
+	Route::post('thread_report','ForumajaxController@thread_report');
+
+	Route::post('check_auth','ForumajaxController@check_auth');
+
+	Route::post('del_report','ForumajaxController@del_report');
+
+	Route::post('comment_like_dislike','ForumajaxController@comment_like_dislike');
+
+
+	Route::post('forum_like_dislike','ForumajaxController@forum_like_dislike');
+
+	Route::post('forum_report','ForumajaxController@forum_report');
+
+	Route::post('forum_del_report','ForumajaxController@forum_del_report');
+});
+	
 /*Ajax calls close*/
 
 /*Route::get('/',function(){
@@ -231,6 +258,10 @@ Route::get('create_forum/{id?}', function($id = null)
 /*Showing a particular forum*/
 Route::group(['prefix' => 'forum'],function(){
 	Route::get('show_forum/{id}','FrontendForumController@show_forum');
+});
+Route::group(['prefix' => 'threads'],function(){
+	Route::post('{id}/reply_submit','FrontendthreadController@thread_reply');
+	Route::get('show_thread/{id}','FrontendthreadController@show_thread');
 });
 
 Route::get('show_school/{id}','UnregisteredController@show_school');

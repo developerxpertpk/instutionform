@@ -9,6 +9,8 @@ use Auth;
 use App\User;
 use Redirect;
 use Illuminate\Support\Facades\Input;
+use App\Page;
+use Illuminate\Support\Facades\View;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,9 @@ class LoginController extends Controller
    {
       $this->middleware('check.status', ['except' => 'logout']);
       $this->middleware('guest', ['except' => 'logout']);
+
+      $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+      View::share('page', $page);
    }
 
 
@@ -70,12 +75,22 @@ class LoginController extends Controller
                   ));
             }
 
+            if( Input::has('redirect') && isset( $_GET['t_title'] ) ){
+               // die('b');
+
+               return Redirect::route('create_thread', array(
+                  'title' => $_GET['t_title'],
+                  'description' => $_GET['t_description'],
+                  'id' => $_GET['id'],
+                  ));
+            }
+            
             return redirect( Input::get('redirect') );
          }
 
          //check  user role id 2 
-         if(Auth::user()->role_id == '2' || Auth::user()->status =='0') {  
-            return redirect()->to('home');
+         if(Auth::user()->role_id == '2' && Auth::user()->status =='0') {  
+            return redirect('/');
          }  
 
          // check admin role id == 1
@@ -101,7 +116,7 @@ class LoginController extends Controller
 
    public function logout(){
                  Auth::logout();
-                 return redirect()->to('login');
+                 return redirect('/');
    }
 
 }

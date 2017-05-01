@@ -196,7 +196,7 @@ class SchoolController extends Controller
                     $fileName = $file->getClientOriginalName();
                     $extention = $file->getClientOriginalExtension();
                     $file->move($destinationPath, $fileName);
-
+                    
                     $timestamp = $now->getTimestamp();
                     $image_path = $schoolfolder_path . '/' . $fileName;
 

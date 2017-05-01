@@ -161,7 +161,6 @@ $(document).ready(function(){
                     edit_user();
                 }else if(response == 500){
                     console.log('You have been blocked');
-                    edit_user();
                 }else{
                     console.log(response);
                     $('#bookmark_icon').toggleClass('bookmark_class');
@@ -172,5 +171,47 @@ $(document).ready(function(){
                 console.log('error check_bookmark: '+response);
             }
         });
+    });
+
+    /*for user bookmarks*/
+    /*for Styling*/
+    $('.delete_user_bookmark').hover(function(){
+      $(this).attr('class','fa fa-trash delete_user_bookmark');
+      $(this).css('font-size','25px');
+    },function(){
+      $(this).attr('class','fa fa-trash-o delete_user_bookmark');
+      $(this).css('font-size','20px');
+    });
+
+    /*for deletion*/
+    $('.delete_user_bookmark').click(function(){
+      var bookmark_id=$(this).attr('id');
+      var school_name=$(this).parent().prev().prev().prev().prev().html();
+      var row_id=$(this).parent().parent().attr('id');
+
+      var confrm = confirm('Do you really want to delete this bookmark? ('+school_name+')');
+      
+      if(confrm == true){
+        console.log('here');
+        $.ajax({
+          url:'/bookmark_school_delete',
+          method:'POST',
+          data:{
+            'bookmark_id':bookmark_id,
+          },
+
+          success:function(response){
+            if(response == 404){
+              console.log('doesnot exists');
+            }else{
+              console.log(true);
+              $('#'+row_id).hide();
+            }
+          },
+          error:function(response){
+            console.log('error: '+response);
+          }
+        })
+      }
     });
 });
