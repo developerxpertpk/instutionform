@@ -51,13 +51,14 @@
                                 <td>{{ $data->reviews }} </td>
                                 <td>
 
+                                    <a href="{{ route('rating_reviews.edit',$data->schools->id) }}" class="btn btn-success"> Edit </a>
                                     <!-- Button for  Delete-->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#my{{ $data->id }}">
                                         Delete
                                     </button>
 
                                     <!-- Modal  for delete with id=01-->
-                                    <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal fade" id="my{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
 

@@ -7,23 +7,26 @@
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
-
                     <h2 class="page-header">
                         Manage User
                     </h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h4 >Edit Uesr </h4>
-                    </div>
-                    <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('user.index') }}"> Back</a>
-                    </div>
+
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Manage User</a></li>
+                        <li class="breadcrumb-item active"> Edit User </li>
+                    </ol>
                 </div>
             </div>
 
+            <!--  check if any error -->
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{  $message }}</p>
+                </div>
+            @endif
+
+            {{-- dIV FOR ERRORS--}}
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -35,9 +38,10 @@
                 </div>
             @endif
 
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-lg-8 col-md-offset-2" id="edit-user">
 
                 <div class="panel-heading"> </div>
+
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{ route('user.updateuser' ,$user->id) }}">
                         {{ csrf_field() }}
@@ -57,7 +61,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="lname" class="col-md-4 control-label">Last Name</label>
+                            <label for="lname" class="col-md-4 control-label"> Last Name </label>
 
                             <div class="col-md-6">
                                 <input id="lname" type="text" class="form-control" name="lname" value="{{ $user->lname }}" required autofocus>
@@ -84,35 +88,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password"  required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="gender" class="col-md-4 control-label">Gender</label>
 
-                            <div class="col-md-6"> <strong> Male </strong>
-                                <input name="gender" type="radio" value="M">
+
+                            <div class="col-md-6" >
+
+                                <strong> Male </strong>
+
+                                <input name="gender" type="radio" value="M"  {{ $user->gender == 'M' ? 'checked' : '' }}/>
+
                                 <strong> Female </strong>
-                                <input name="gender" type="radio" value="F">
+                                <input name="gender" type="radio" value="F" {{ $user->gender == 'F' ? 'checked' : '' }} />
 
                                 @if ($errors->has('gender'))
                                     <span class="help-block">
@@ -120,22 +107,25 @@
                                     </span>
                                 @endif
                             </div>
+
                         </div>
 
 
                         <div class="form-group">
+
                             <label for="image" class="col-md-4 control-label">Image</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file"  name="image"  required>
+                                <input id="image" type="file"  name="image">
                             </div>
+
                         </div>
 
                         <div class="form-group">
                             <label for="address" class="col-md-4 control-label">Address</label>
 
                             <div class="col-md-6">
-                                <textarea name="address" class="form-control" value="{{ $user->address }}" required></textarea>
+                                <textarea name="address" class="form-control" value="" required> {{ $user->address }}</textarea>
                             </div>
                         </div>
 
@@ -149,7 +139,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

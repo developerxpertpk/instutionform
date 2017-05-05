@@ -23,7 +23,7 @@ class SchoolController extends Controller
     {
         $schools = School::orderBy('id', 'desc')->get();
         return view('admin.dashboard.school.index', compact('schools'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+                        ->with('i', ($request->input('page', 1) - 1) * 5);
 
     }
 
@@ -38,13 +38,10 @@ class SchoolController extends Controller
     {
         //function to destroy datd
         $school = School::find($id);
-        // $location_id = School::find($id)->location_id;
-
         $school->school_images()->delete();
         $school->delete();
         $school->locations()->delete();
-        // $school->documents()->delete();
-
+        $school->school_details()->delete();
         return redirect()->route('school.index')
             ->with('success', 'Deleted successfully');
     }
@@ -60,8 +57,6 @@ class SchoolController extends Controller
     // function to store data
     public function store(Request $request)
     {
-
-
         /*echo "<pre>";
         // print_r($request->file('image'));
 
@@ -110,33 +105,30 @@ class SchoolController extends Controller
             $validator->$i = Validator::make($file, $rules);
             $i++;
         }
-            
-
-
         die();*/
 
         $rules = array(
             'school_name' => 'required',
             'school_address' => 'required',
-            'zip' => 'required',
+            'zip' => 'required|alpha_num|min:4|max:10',
             'country' => 'required',
             'state' => 'required',
             'city' => 'required',
-            //'image' => 'image|mimes:png,jpeg,jpg,gif',
-            //'document' => 'mimes:pdf,docx,doc|max:500',
+            'profile' => 'image',
         );
+
         $validator = Validator::make(Input::all(), $rules);
         // server side validation
         if ($validator->fails()) {
             return redirect()->route('school.create')
-                ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->withErrors($validator);
         } else {
             /*  make model objects */
             $location = new Location();     /*location object*/
             $school = new School();         /* School object */
             $image = new School_image();    /* image object */
-            $document = new Document();     /*document object */
+            // $document = new School_detail();/*document object */
 
             /*store data into locations table */
             $location->country = $request['country'];
@@ -147,29 +139,54 @@ class SchoolController extends Controller
             $location->longitude = $request['longitude'];
             $location->save();
 
-
             $school->location_id = $location->id;
             $school->school_name = $request['school_name'];
             $school->school_address = $request['school_address'];
             $school->save();
 
+            // code for  profile image
+            if ($request->hasFile('profile')) {
+
+                $files = $request->file('profile');
+                $school_id = $school->id;
+                $schoolfolder = str_replace(" ", "_", $school->school_name);
+                $schoolfolder_path = 'upload/schools/'.$schoolfolder.'_'.$school_id.'/images/profile_pic/current_dp';
+                $schoolfolder_path_1 = 'upload/schools/'.$schoolfolder .'_'.$school_id.'/images/profile_pic';
+                $destinationPath = public_path().'/'.$schoolfolder_path;
+                
+                $destinationPath_1 = public_path().'/'.$schoolfolder_path_1;
+
+                if (!File::exists($destinationPath)){
+                    File::makeDirectory($destinationPath, 0777, true);
+                }
+
+              $fileName = $files->getClientOriginalName();
+              $extention = $files->getClientOriginalExtension();
+              $files->move($destinationPath,$fileName);
+              $image_path = $destinationPath.'/'.$fileName;
+              $image_path = $destinationPath.'/'.$fileName;
+
+              //  copy image in profile pic folder
+              $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+
+                $image->school_id = $school_id;
+                $image->image = $image_path;
+                $image->save();
+            }
 
             // code for upload images if any
-            if ($request->hasFile('image')) {
-
-
+            if ($request->hasFile('image')){
                 $files = $request->file('image');
-
                 // Making counting of uploaded images
                 $file_count = count($files);
                 // start count how many uploaded
                 $uploadcount = 0;
-
                 $school_id = $school->id;
                 $schoolfolder = str_replace(" ", "_", $school->school_name);
-                $schoolfolder_path = 'upload' . '/schools/' . $schoolfolder . $school_id;
-                $destinationPath = public_path() . '/' . $schoolfolder_path;
+                $schoolfolder_path = 'upload/schools/'.$schoolfolder.$school_id;
 
+
+                $destinationPath = public_path().'/'.$schoolfolder_path;
                 File::MakeDirectory($destinationPath, 0777, true);
 
                 $dataSet = [];
@@ -248,11 +265,13 @@ class SchoolController extends Controller
                     return redirect()->route('school.create')
                         ->withError('Document is not uploaded');
 
+
                 }
             }
 
             return redirect()->route('school.index')
                 ->with('success', 'school Registerd successfully !!!!');
+
         }
     }
 
@@ -481,7 +500,6 @@ class SchoolController extends Controller
     }
 
     }
-
 
 }
      // $schools =School::find(2)->location_id;

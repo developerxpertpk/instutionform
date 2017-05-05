@@ -68,13 +68,14 @@
             border-top-right-radius: 3px;
             border-top-left-radius: 3px;
             }
+
             .btn-primary {
-    color: #fff!important;
-    background-color: #000!important;
-    border-color: #000!important;
-    -webkit-transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
-   transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
-}
+            color: #fff!important;
+            background-color: #000!important;
+            border-color: #000!important;
+            -webkit-transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
+           transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
+        }
 .btn-primary:hover,.btn-primary:focus {
     color: #000!important;
     background-color: #FFF!important;
@@ -90,14 +91,48 @@
  #map {
      height: 300px;
      width: 100%;
-     padding:2 %;
-     margin: auto 0px;
+     padding-bottom: 2%;
+     margin-top: 3%;
+     border: 2px solid red;
+     border-radius: 10px;
+     margin-bottom: 3%;
  }
+
 .qusetion{
     border: solid;
     border-color: darkgray;
     background-color: slategrey;
 }
+/* css for the school register blade */
+
+#school_box{
+
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 20px;
+    width: 100%;
+    font: italic bold 12px/30px Georgia, serif;
+    font-weight: bold;
+}
+
+ .school-header{
+     text-align: center;
+     font: italic bold 20px Georgia, serif;
+     font-weight: bold;
+     text-shadow: 2px 2px 5px red;
+ }
+#school_box h3{
+
+    text-align: center;
+    font: italic bold 12px/30px Georgia, serif;
+    font-weight: bold;
+
+}
+.school_document_img{
+    margin:auto 0;
+}
+
+
 /* css for school show */
  #show-rounder {
      border-bottom-left-radius: 1%;
@@ -109,7 +144,31 @@
      width: auto;
      height: 100%;
  }
- /* css for show forum*/
+
+ #school-profile img{
+     float:left;
+     width:100%;
+     height:300px;
+
+ }
+ .error{
+     color:red;
+
+ }
+
+ /* css for school regiser */
+.google-map{
+    border: 1px solid;
+    border-radius: 10px;
+}
+ #location{
+     float:right;
+
+ }
+
+
+
+    /* css for show forum*/
  .view{
      border-bottom-left-radius: 1%;
      border-bottom-right-radius: 1%;
@@ -139,9 +198,8 @@
      margin: 5%;
      padding: 1%;
  }
- }
 
- }
+
  /* css for School ratings*/
  fieldset, label { margin: 0; padding: 0; }
  body{ margin: 20px; }
@@ -180,6 +238,7 @@
  .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 /* Ende of school ratings*/
+
  @-webkit-keyframes bounce {
   from, 20%, 53%, 80%, to {
     -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
@@ -278,7 +337,25 @@
 /*.profile_picture{
   position: relative;
 }*/
+#user-img img {
+    float:left;
+    border-radius: 50%;
+    width:300px;
+    height:300px;
+}
+ #user-edit{
+     border-radius: 25px;
+     border: 2px solid #73AD21;
+     margin: 21px;
 
+ }
+
+#user-edit img{
+    float:left;
+    width:200px;
+    height:200px;
+    padding:2%;
+}
 .profile_picture img{
   width:100%;
   transition: opacity 1s;
@@ -401,13 +478,13 @@
 
 /*stars ratings*/
 /*fieldset, label { margin: 0; padding: 0; }*/
-.rating { 
+.rating {
     border: none;
     float: left;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
+.rating > input { display: none; }
+.rating > label:before {
     margin: 5px;
     font-size: 2em;
     font-family: FontAwesome;
@@ -415,23 +492,23 @@
     content: "\f005";
 }
 
-.rating > .half:before { 
+.rating > .half:before {
     content: "\f089";
     position: absolute;
 }
 
-.rating > label { 
-    color: #ddd; 
-    float: right; 
+.rating > label {
+    color: #ddd;
+    float: right;
 }
 
-.rating > input:checked ~ label, 
-.rating:not(:checked) > label:hover,  
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
 .rating:not(:checked) > label:hover ~ label { color: #FFD700;  }
 
-.rating > input:checked + label:hover, 
+.rating > input:checked + label:hover,
 .rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, 
+.rating > label:hover ~ input:checked ~ label,
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 .rating_box{

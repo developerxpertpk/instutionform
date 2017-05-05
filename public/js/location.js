@@ -1,20 +1,42 @@
 
-function getLocation(){
-    var zip = $('.zip').val();
-    getAddressInfoByZip(zip);
-    return false;
-}
+$(document).ready(function() {
 
-    function response(obj){
+    initMap();
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 21.170240,lng: 72.831061},
+            zoom: 4,
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // var marker = new google.maps.Marker({
+        //     position:{lat: 21.170240,lng: 72.831061},
+        //     map: map
+        // });
+    }
+
+});
+
+    function getLocation() {
+
+        var zip = $('.zip').val();
+        getAddressInfoByZip(zip);
+        return false;
+    }
+
+    function response(obj) {
         console.log(obj);
     }
-    function getAddressInfoByZip(zip){
+
+    function getAddressInfoByZip(zip) {
         //console.log(zip.length); return false;
 
-        if(zip.length >= 5 && typeof google != 'undefined') {
+        if (zip.length >= 5 && typeof google != 'undefined') {
+
             var addr = {};
-            var lat ='';
-            var lng ='';
+            var lat = '';
+            var lng = '';
 
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address': zip}, function (results, status) {
@@ -36,8 +58,9 @@ function getLocation(){
                             }
                             if (types == "sublocality,political" || types == "locality,political" || types == "neighborhood,political" || types == "administrative_area_level_3,political" || types == "administrative_area_level_2,political") {
                                 addr.city = (city == '' || types == "locality,political") ? results[0].address_components[ii].long_name : city;
+
                             }
-                            if (types == "administrative_area_level_1,political") {
+                            if (types == "administrative_area_level_1,political"|| types == "administrative_area_level_2,political") {
                                 addr.state = results[0].address_components[ii].short_name;
                             }
                             if (types == "postal_code" || types == "postal_code_prefix,postal_code") {
@@ -46,34 +69,22 @@ function getLocation(){
                             if (types == "country,political") {
                                 addr.country = results[0].address_components[ii].long_name;
                             }
-
-                            if(addr.country == ""){
-                                $("#countryId").hide();
-                            }
-                            if(addr.state == ""){
-                                $("#stateId").hide();
-                            }
-                            if(addr.city== ""){
-                                $("#cityId").hide();
-                            }
+                                console.log(results[0].address_components[ii]);
                             userlat = results[0].geometry.location.lat();
 
                             userlng = results[0].geometry.location.lng();
 
 
-                                $('#countryId').removeAttr('value');
-                                $('#stateId').removeAttr('value');
-                                $('#cityId').removeAttr('value');
-                                $('#lat').removeAttr('value');
-                                $('#long').removeAttr('value');
-                                $('#countryId').val(addr.country);
-                                $('#stateId').val(addr.state);
-                                $('#cityId').val(addr.city);
-                                $('#lat').val(userlat);
-                                $('#long').val(userlng);
-
-
-
+                            $('#countryId').removeAttr('value');
+                            $('#stateId').removeAttr('value');
+                            $('#cityId').removeAttr('value');
+                            $('#lat').removeAttr('value');
+                            $('#long').removeAttr('value');
+                            $('#countryId').val(addr.country);
+                            $('#stateId').val(addr.state);
+                            $('#cityId').val(addr.city);
+                            $('#lat').val(userlat);
+                            $('#long').val(userlng);
                         }
 
                         addr.success = true;
@@ -84,7 +95,7 @@ function getLocation(){
                         response(addr);
 
 
-                        initMap(userlat,userlng);
+                        initMapper(userlat, userlng);
                     } else {
                         alert("Geocode was not successful for the following reason: " + status);
                     }
@@ -92,24 +103,24 @@ function getLocation(){
                     response({success: false});
                 }
             });
-        }else {
-                alert("yes");
+        } else {
+
             response({success: false});
         }
         return false;
-        }
+    }
 
-function initMap(userlat,userlng) {
-    var latlng = {lat: userlat, lng: userlng}
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center:latlng ,
-        zoom: 12
-    });
+    function initMapper(userlat, userlng) {
+        var latlng = {lat: userlat, lng: userlng}
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: latlng,
+            zoom: 12
+        });
 
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map
-    });
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
 
- return false;
-}
+        return false;
+    }
