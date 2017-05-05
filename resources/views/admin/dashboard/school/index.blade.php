@@ -176,6 +176,7 @@
 
     </table>
         </div>
+        {{ $schools->render()}}
  	</div>
  </div>
 @endsection

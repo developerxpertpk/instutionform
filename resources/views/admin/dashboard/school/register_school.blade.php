@@ -1,6 +1,7 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
 <div id="page-wrapper">
+
 	<div class="container-fluid">
 		
 		<div class="row">
@@ -9,11 +10,9 @@
 				</h1>
 
 			<ol class="breadcrumb">
-
 				<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
 				<li class="breadcrumb-item "> <a href="{{ route('school.index') }}">Manage School</a></li>
 				<li class="breadcrumb-item active">Add School/Insitutes</li>
-
 			</ol>
 
 
@@ -160,15 +159,12 @@
 
 			<div class="col-md-6 col-lg-6  google-map">
 				<div id="map">
-
 				</div>
 			</div>
                 </div>
 
 			</div>
 				<!-- code for images -->
-
-
 				<div class="school_document_img">
 					<h3>  <u> School Documnets and Images </u> </h3>
 
@@ -218,7 +214,6 @@
 						@endif
 					</div>
 				</div>
-
 				</div>
 
 				<div class="form-group">
@@ -231,8 +226,6 @@
 			</form>
 		</div>
 	</div>
+
 	</div>
-
-
-
 @endsection

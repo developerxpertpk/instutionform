@@ -71,21 +71,24 @@ $(document).ready(function() {
                             }
                                 console.log(results[0].address_components[ii]);
                             userlat = results[0].geometry.location.lat();
-
                             userlng = results[0].geometry.location.lng();
-
-
-                            $('#countryId').removeAttr('value');
-                            $('#stateId').removeAttr('value');
-                            $('#cityId').removeAttr('value');
-                            $('#lat').removeAttr('value');
-                            $('#long').removeAttr('value');
-                            $('#countryId').val(addr.country);
-                            $('#stateId').val(addr.state);
-                            $('#cityId').val(addr.city);
-                            $('#lat').val(userlat);
-                            $('#long').val(userlng);
                         }
+
+                        if(addr.city == null){
+                            addr.city = addr.state;
+                        }
+
+
+                        $('#countryId').removeAttr('value');
+                        $('#stateId').removeAttr('value');
+                        $('#cityId').removeAttr('value');
+                        $('#lat').removeAttr('value');
+                        $('#long').removeAttr('value');
+                        $('#countryId').val(addr.country);
+                        $('#stateId').val(addr.state);
+                        $('#cityId').val(addr.city);
+                        $('#lat').val(userlat);
+                        $('#long').val(userlng);
 
                         addr.success = true;
                         for (name in addr) {

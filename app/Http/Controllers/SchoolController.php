@@ -6,25 +6,23 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\School;
-use App\School_image;
 use App\location;
 use App\Document;
 use Carbon\Carbon;
 use App\School_rating;
+use App\School_image;
+use App\School_detail;
 use File;
 use Response;
 use Auth;
-
-
 class SchoolController extends Controller
 {
     // Index Function
     public function index(Request $request)
     {
-        $schools = School::orderBy('id', 'desc')->get();
+        $schools = School::orderBy('id', 'desc')->paginate(10);
         return view('admin.dashboard.school.index', compact('schools'))
-                        ->with('i', ($request->input('page', 1) - 1) * 5);
-
+                             ->with('i');
     }
 
     // function to create school
@@ -33,81 +31,11 @@ class SchoolController extends Controller
         return view('admin.dashboard.school.register_school');
     }
 
-    // function to delete data
-    public function destroy($id)
-    {
-        //function to destroy datd
-        $school = School::find($id);
-        $school->school_images()->delete();
-        $school->delete();
-        $school->locations()->delete();
-        $school->school_details()->delete();
-        return redirect()->route('school.index')
-            ->with('success', 'Deleted successfully');
-    }
-
-    // function to edit data
-    public function edit($id)
-    {
-        // get data from databse
-        $school = School::find($id);
-        return view('admin.dashboard.school.edit', compact('school'));
-    }
-
     // function to store data
     public function store(Request $request)
     {
-        /*echo "<pre>";
-        // print_r($request->file('image'));
-
-        $rules=array(
-                // 'image' => 'image|mimes:png,jpeg,jpg,gif',
-                'image' => 'required',
-            );
-
-        // $validator=new \stdClass();
-        // $i=0;
-        $count=count($request->file('image'));
-
-        // print_r($request->file('image'));
-        // print_r($request->all()['image']);
-        $temp=array(
-            'image' => array(),
-            );
-
-        // die();
-        // $temp['image'];
-
-        for($i=0;$i<$count;$i++){
-
-            $temp['image'][]=$request->file('image')[$i];
-
-            $validator = Validator::make($temp, $rules);
-            if ($validator->fails()) {
-                //echo "error <br/>";
-
-                print_r($validator->messages()->getMessages());
-
-            }else{
-                reset($temp['image']);
-                echo "success <br>";
-            }
-        }
-
-        // print_r($temp);
-        die();
-
-        for($i=0;$i<$count;$i++){
-            $validator->$i = Validator::make($request->file('image')[$i], $rules);
-        }
-        die();
-        foreach($request->file('image') as $file){
-            $validator->$i = Validator::make($file, $rules);
-            $i++;
-        }
-        die();*/
-
         $rules = array(
+
             'school_name' => 'required',
             'school_address' => 'required',
             'zip' => 'required|alpha_num|min:4|max:10',
@@ -115,6 +43,8 @@ class SchoolController extends Controller
             'state' => 'required',
             'city' => 'required',
             'profile' => 'image',
+            'image[]' =>'image',
+            'document[]' =>'mime|docx,doc,pdf,txt',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -123,12 +53,13 @@ class SchoolController extends Controller
             return redirect()->route('school.create')
                 ->withInput()
                 ->withErrors($validator);
+
         } else {
             /*  make model objects */
             $location = new Location();     /*location object*/
             $school = new School();         /* School object */
             $image = new School_image();    /* image object */
-            // $document = new School_detail();/*document object */
+            $document = new School_detail();/*document object */
 
             /*store data into locations table */
             $location->country = $request['country'];
@@ -149,178 +80,253 @@ class SchoolController extends Controller
 
                 $files = $request->file('profile');
                 $school_id = $school->id;
-                $schoolfolder = str_replace(" ", "_", $school->school_name);
-                $schoolfolder_path = 'upload/schools/'.$schoolfolder.'_'.$school_id.'/images/profile_pic/current_dp';
-                $schoolfolder_path_1 = 'upload/schools/'.$schoolfolder .'_'.$school_id.'/images/profile_pic';
+                $schoolfolder_path = 'upload/schools/school'.'_'.$school_id.'/images/profile_pic/current_dp';
+                $schoolfolder_path_1 = 'upload/schools/school'.'_'.$school_id.'/images/profile_pic';
                 $destinationPath = public_path().'/'.$schoolfolder_path;
-                
                 $destinationPath_1 = public_path().'/'.$schoolfolder_path_1;
 
                 if (!File::exists($destinationPath)){
                     File::makeDirectory($destinationPath, 0777, true);
                 }
 
-              $fileName = $files->getClientOriginalName();
-              $extention = $files->getClientOriginalExtension();
-              $files->move($destinationPath,$fileName);
-              $image_path = $destinationPath.'/'.$fileName;
-              $image_path = $destinationPath.'/'.$fileName;
+                $fileName = $files->getClientOriginalName();
+                $extention = $files->getClientOriginalExtension();
+                $files->move($destinationPath,$fileName);
+                $image_path = $destinationPath.'/'.$fileName;
+                $image_path = $destinationPath.'/'.$fileName;
 
-              //  copy image in profile pic folder
-              $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+                //  copy image in profile pic folder
+                $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
 
                 $image->school_id = $school_id;
-                $image->image = $image_path;
+                $image->image = $fileName;
+                $image->image_type=1;
                 $image->save();
             }
 
             // code for upload images if any
-            if ($request->hasFile('image')){
+            if ($request->hasFile('image')) {
+
                 $files = $request->file('image');
                 // Making counting of uploaded images
                 $file_count = count($files);
                 // start count how many uploaded
                 $uploadcount = 0;
                 $school_id = $school->id;
-                $schoolfolder = str_replace(" ", "_", $school->school_name);
-                $schoolfolder_path = 'upload/schools/'.$schoolfolder.$school_id;
-
-
+                $schoolfolder_path = 'upload/schools/school'.'_'. $school_id;
                 $destinationPath = public_path().'/'.$schoolfolder_path;
-                File::MakeDirectory($destinationPath, 0777, true);
 
-                $dataSet = [];
-                $now = Carbon::now();
-
-                foreach ($files as $file) {
-                    $fileName = $file->getClientOriginalName();
-                    $extention = $file->getClientOriginalExtension();
-                    $file->move($destinationPath, $fileName);
-                    
-                    $timestamp = $now->getTimestamp();
-                    $image_path = $schoolfolder_path . '/' . $fileName;
-
-                    $dataSet[] = [
-                        'image' => $image_path,
-                        'school_id' => $school_id,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
-                    $uploadcount++;
-
-                }
-
-                DB::table('school_images')->insert($dataSet);
-
-                if ($uploadcount == $file_count) {
-                    return redirect()->route('school.index')
-                        ->with('success', 'school Registerd successfully !!!!');
+                if (File::exists($destinationPath)) {
+                    $dataSet = [];
+                    $now = Carbon::now();
+                    foreach ($files as $file) {
+                        $fileName = $file->getClientOriginalName();
+                        $extention = $file->getClientOriginalExtension();
+                        $file->move($destinationPath.'/images/gallery/',$fileName);
+                        $timestamp = $now->getTimestamp();
+                        $image_path = $destinationPath.'/images/gallery' . '/' . $fileName;
+                        $dataSet[] = [
+                            'image' => $fileName,
+                            'image_type'=>0,
+                            'school_id' => $school_id,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
+                        $uploadcount++;
+                    }
+                    DB::table('school_images')->insert($dataSet);
                 } else {
-                    die('a');
+                    File::MakeDirectory($destinationPath, 0777, true);
+                    $dataSet = [];
+                    $now = Carbon::now();
+                    foreach ($files as $file) {
+                        $fileName = $file->getClientOriginalName();
+                        $extention = $file->getClientOriginalExtension();
+                        $file->move($destinationPath . '/images/gallery/', $fileName);
+                        $timestamp = $now->getTimestamp();
+                        $image_path = $destinationPath . '/images/gallery' . '/' . $fileName;
+
+                        $dataSet[] = [
+                            'image' => $fileName,
+                            'image_type'=>0,
+                            'school_id' => $school_id,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
+                        $uploadcount++;
+                    }
+                    DB::table('school_images')->insert($dataSet);
                 }
             }
 
-            // code to upload documents
-            if ($request->hasFile('document')) {
+            //code for documents
+            if($request->hasFile('document')){
                 $documents = $request->file('document');
                 // Making counting of uploaded images
                 $file_count = count($documents);
                 // start count how many uploaded
                 $uploadcount = 0;
                 $school_id = $school->id;
-                $schoolfolder = str_replace(" ", "_", $school->school_name);
-                $schoolfolder_path = 'upload' . '/documents/' . $schoolfolder . $school_id;
-                $destinationPath = public_path() . '/' . $schoolfolder_path;
+                $schoolfolder_path = 'upload/schools/school'.'_'. $school_id;
+                $destinationPath = public_path() .'/'. $schoolfolder_path;
 
-                File::MakeDirectory($destinationPath, 0777, true);
+                if (File::exists($destinationPath)){
+                    $dataSet = [];
+                    $now = Carbon::now();
+                    foreach ($documents as $file) {
+                        $fileName = $file->getClientOriginalName();
+                        $extention = $file->getClientOriginalExtension();
+                        $file->move($destinationPath .'/documents/', $fileName);
+                        $timestamp = $now->getTimestamp();
+                        $file_path = $schoolfolder_path .'/documents/'.$fileName;
 
-                $dataSet = [];
-                $now = Carbon::now();
+                        $dataSet[] = [
+                            'school_id' => $school_id,
+                            'documents' => $fileName,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
 
-                foreach ($documents as $file) {
+                        $uploadcount++;
+                    }
+                    DB::table('school_details')->insert($dataSet);
+                }else{
+                    File::MakeDirectory($destinationPath, 0777, true);
+                    $dataSet = [];
+                    $now = Carbon::now();
+                    foreach ($documents as $file) {
+                        $fileName = $file->getClientOriginalName();
+                        $extention = $file->getClientOriginalExtension();
+                        $file->move($destinationPath . '/documents/', $fileName);
+                        $timestamp = $now->getTimestamp();
+                        $file_path = $schoolfolder_path . '/documents/' . $fileName;
+                        $dataSet[] = [
+                            'school_id' => $school_id,
+                            'documents' => $fileName,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
 
-                    $fileName = $file->getClientOriginalName();
-                    $extention = $file->getClientOriginalExtension();
-                    //$filesize=$file->getSize();
-                    $file->move($destinationPath, $fileName);
-                    $timestamp = $now->getTimestamp();
-
-                    $file_path = $schoolfolder_path . '/' . $fileName;
-
-                    $dataSet[] = [
-                        'school_id' => $school_id,
-                        'document' => $file_path,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
-                    $uploadcount++;
-                }
-                DB::table('documents')->insert($dataSet);
-
-                if ($uploadcount == $file_count) {
-                    return redirect()->route('school.index')
-                        ->with('success', 'school Registerd successfully !!!!');
-
-                } else {
-                    return redirect()->route('school.create')
-                        ->withError('Document is not uploaded');
-
-
-                }
-            }
+                        $uploadcount++;
+                    }
+                    DB::table('school_details')->insert($dataSet);
+                } // end of else condition
+            } //end of document if
 
             return redirect()->route('school.index')
                 ->with('success', 'school Registerd successfully !!!!');
 
         }
+    } //end of  store method
+
+    // function to delete data
+    public function destroy($id)
+    {
+        //function to destroy datd
+        $school = School::find($id);
+        $school->school_images()->delete();
+        $school->delete();
+        $school->locations()->delete();
+        $school->school_details()->delete();
+        return redirect()->route('school.index')
+            ->with('success', 'Deleted successfully');
     }
 
-    // function to add search functionality
-    static function search(Request $request)
+    // function to edit data
+    public function edit($id)
     {
-        $search = $request->input('search');
-        // if serach bar is not empty
-        if (!empty($search)) {
+        // get data from databse
+        $school = School::find($id);
+        $gallery_images = School_image::where([
+        ['school_id','=',$school->id],
+        ['image_type','=',0],
+        ])->get();
+        $gallery_profile = School_image::where([
+            ['school_id','=',$school->id],
+            ['image_type','=',1],
+        ])->get();
+        $documents = School_detail::where([
+           [ 'school_id','=',$school->id],
+        ])->get();
 
-            if (!empty($search)) {
+        return view('admin.dashboard.school.edit', compact('school','gallery_profile','gallery_images','documents'));
+    }
 
-                $schools = School::where('school_name', 'LIKE', '%' . $search . '%')
-                    ->orderBy('school_name')
-                    ->get();
+    public function school_update1(Request $request, $id)
+    {
+        $rules = array(
+            'school_name' => 'required',
+            'school_address' => 'required',
+            'zip' => 'required|alpha_num|min:4|max:10',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'profile' => 'image|max:20000',
+            'image[]' =>'image|max:20000',
+            'document[]' =>'mime|docx,doc,pdf,txt,jpg,png',
+        );
 
-                if (!$schools->isEmpty()) {
+        $validator = Validator::make(Input::all(), $rules);
+        // server side validation
+        if ($validator->fails()) {
+            return redirect()->route('school.edit',$id)
+                                ->withInput()
+                                ->withErrors($validator);
 
-                    return view('admin.dashboard.school.search')
-                        ->with('schools', $schools)
-                        ->with('i', ($request->input('page', 1) - 1) * 5);
-                } else {
+        } else {
+            $loc_id = School::find($id)->location_id;
+            location::find($loc_id)->update($request->all());
+            School::find($id)->update($request->all());
 
-                    $locations = Location::where('city', 'LIKE', '%' . $search . '%')
-                        ->orWhere('state', 'LIKE', '%' . $search . '%')
-                        ->orWhere('country', 'LIKE', '%' . $search . '%')
-                        ->orderBy('country')
-                        ->get();
+            // code to update the Profile pic
+
+            if($request->hasfile('profile')){
+                $files = $request->file('profile');
+                $image_profile  = School_image::where([
+                    ['school_id','=',$id],
+                    ['image_type','=',1]
+                ])->first();
+
+                // if not image is uploaded
+                $schoolfolder_path = 'upload/schools/school'.'_'.$id.'/images/profile_pic/current_dp';
+                $schoolfolder_path_1 = 'upload/schools/school'.'_'.$id.'/images/profile_pic';
+                $destinationPath = public_path().'/'.$schoolfolder_path;
+                $destinationPath_1 = public_path().'/'.$schoolfolder_path_1;
+                // code get image data
+                $fileName = $files->getClientOriginalName();
+                $image_path = $destinationPath.'/'.$fileName;
+
+                //if there is an data from database
+                if(count($image_profile)){
+
+                    File::delete('upload/schools/school_'.$id.'/images/profile_pic/current_dp/'.$image_profile->image);
+                    $files->move($destinationPath,$fileName);
+                    $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+                    $result = School_image::where('id','=',$image_profile->id )
+                                        ->update(['image' => $fileName]);
+                    }else{
+
+                    if(!File::exists($destinationPath)){
+                        File::makeDirectory($destinationPath, 0777, true);
+                    }
+
+                    $files->move($destinationPath,$fileName);
+                    $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+
+                    //query to insert imgae in table
+                    $image = new School_image();
+                    $image->image = $fileName;
+                    $image->image_type = 1;
+                    $image->school_id = $id;
+                    $image->save();
                 }
-
-                if (!$locations->isEmpty()) {
-
-                    return view('admin.dashboard.school.search')
-                        ->with('locations', $locations)
-                        ->with('i', ($request->input('page', 1) - 1) * 5);
-
-
-                } else {
-
-                    return view('admin.dashboard.default')
-                        ->withError('404 ERROR ');
-                }
-            } else {
-                return redirect()->route('school.index')
-                    ->withError('Please Enter Name/state/country to find School');
             }
+            return redirect()->route('school.index')
+                ->with('success', 'school updated successfully');
         }
 
     }
+
 
     // function to block/unblock school
     public function status_update(Request $request, $id)
@@ -337,115 +343,20 @@ class SchoolController extends Controller
 
     }
 
-    public function school_update(Request $request, $id)
-    {
-        $loc_id = School::find($id)->location_id;
-        location::find($loc_id)->update($request->all());
-        School::find($id)->update($request->all());
-        // code for upload images if any
-        if ($request->hasFile('image')) {
-            $files = $request->file('image');
-
-            // Making counting of uploaded images
-            $file_count = count($files);
-            // start count how many uploaded
-            $uploadcount = 0;
-
-            $school_id = School::find($id)->id;
-            $schoolfolder = str_replace(" ", "_", $school->school_name);
-            $schoolfolder_path = 'upload' . '/schools/' . $schoolfolder . $school_id;
-            $destinationPath = public_path() . '/' . $schoolfolder_path;
-
-            File::MakeDirectory($destinationPath, 0777, true);
-
-            $dataSet = [];
-            $now = Carbon::now();
-
-            foreach ($files as $file) {
-                $fileName = $file->getClientOriginalName();
-                $extention = $file->getClientOriginalExtension();
-                $file->move($destinationPath, $fileName);
-
-                $timestamp = $now->getTimestamp();
-                $image_path = $schoolfolder_path . '/' . $fileName;
-
-                $dataSet[] = [
-                    'image' => $image_path,
-                    'school_id' => $school_id,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ];
-                $uploadcount++;
-
-            }
-
-            DB::table('school_images')->insert($dataSet);
-
-            if ($uploadcount == $file_count) {
-                return redirect()->route('school.index')
-                    ->with('success', 'school Registerd successfully !!!!');
-            } else {
-                die('a');
-            }
-        }
-
-        // code to upload documents
-        if ($request->hasFile('document')) {
-            $documents = $request->file('document');
-            // Making counting of uploaded images
-            $file_count = count($documents);
-            // start count how many uploaded
-            $uploadcount = 0;
-            $school_id = School::find($id)->id;
-            $schoolfolder = str_replace(" ", "_", $school->school_name);
-            $schoolfolder_path = 'upload' . '/documents/' . $schoolfolder . $school_id;
-            $destinationPath = public_path() . '/' . $schoolfolder_path;
-
-            File::MakeDirectory($destinationPath, 0777, true);
-
-            $dataSet = [];
-            $now = Carbon::now();
-
-            foreach ($documents as $file) {
-
-                $fileName = $file->getClientOriginalName();
-                $extention = $file->getClientOriginalExtension();
-                //$filesize=$file->getSize();
-                $file->move($destinationPath, $fileName);
-                $timestamp = $now->getTimestamp();
-
-                $file_path = $schoolfolder_path . '/' . $fileName;
-
-                $dataSet[] = [
-                    'school_id' => $school_id,
-                    'document' => $file_path,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ];
-                $uploadcount++;
-            }
-            DB::table('documents')->insert($dataSet);
-
-            if ($uploadcount == $file_count) {
-                return redirect()->route('school.index')
-                    ->with('success', 'school Registerd successfully !!!!');
-
-            } else {
-                return redirect()->route('school.create')
-                    ->withError('Document is not uploaded');
-
-            }
-        }
-
-        return redirect()->route('school.index')
-            ->with('success', 'school updated successfully');
-
-    }
 
     public function show($id)
     {
         $schools = School::find($id);
-        return view('admin.dashboard.school.school_show', compact('schools'));
+        $profile_image = School_image::where( [
+            ['school_id','=',$schools->id],
+            ['image_type','=',1]
+        ] )->orderby('id')->get();
+        $gallery_images = School_image::where( [
+            ['school_id','=',$schools->id],
+            ['image_type','=',0]
+        ] )->orderby('id')->get();
+        $documents = School_detail::where('school_id','=',$schools->id)->orderby('id')->get();
+        return view('admin.dashboard.school.school_show', compact('schools' ,'profile_image','gallery_images', 'documents'));
     }
 
     public function check_ratings(Request $request){
@@ -500,20 +411,55 @@ class SchoolController extends Controller
     }
 
     }
+    // function to add search functionality
+    static function search(Request $request)
+    {
+        $search = $request->input('search');
+        // if serach bar is not empty
+        if (!empty($search)) {
 
+            if (!empty($search)) {
+
+                $schools = School::where('school_name', 'LIKE', '%' . $search . '%')
+                    ->orderBy('school_name')
+                    ->get();
+
+                if (!$schools->isEmpty()) {
+
+                    return view('admin.dashboard.school.search')
+                        ->with('schools', $schools)
+                        ->with('i', ($request->input('page', 1) - 1) * 5);
+                } else {
+
+                    $locations = Location::where('city', 'LIKE', '%' . $search . '%')
+                        ->orWhere('state', 'LIKE', '%' . $search . '%')
+                        ->orWhere('country', 'LIKE', '%' . $search . '%')
+                        ->orderBy('country')
+                        ->get();
+                }
+
+                if (!$locations->isEmpty()) {
+
+                    return view('admin.dashboard.school.search')
+                        ->with('locations', $locations)
+                        ->with('i', ($request->input('page', 1) - 1) * 5);
+
+
+                } else {
+
+                    return view('admin.dashboard.default')
+                        ->withError('404 ERROR ');
+                }
+            } else {
+                return redirect()->route('school.index')
+                    ->withError('Please Enter Name/state/country to find School');
+            }
+        }
+
+    }
 }
-     // $schools =School::find(2)->location_id;
 
-      //$schools=schools()->locations->id;
 
-      //$location=Location::find(2)->country;
 
-      // $schools =School::orderby('id','asc')->get();
-      //     foreach($schools as $key => $school){
-      //       print_r($school->locations) ;
-      //     }
 
-    
-  
 
-   
