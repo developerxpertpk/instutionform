@@ -127,7 +127,7 @@ class UnregisteredController extends BaseController
         
         // die();
 
-        $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',2.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
+        $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',4.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
 
         return view('user.guests.list_of_schools')->with('schools',$schools)
                                                     ->with('schools_latest',$schools_latest)

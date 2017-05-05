@@ -37,7 +37,11 @@
 			
 		<div class="profile_view">
 			<div class="profile_picture col-md-4">
-				<img src="{{ asset('upload/'.Auth::user()->image) }}">		
+				@if( !empty(Auth::user()->image) && asset('upload/'.Auth::user()->image) )
+					<img src="{{ asset('upload/'.Auth::user()->image) }}">		
+				@else
+					<img src="{{ asset('images/user.png') }}">	
+				@endif
 				<a href="javascript:;" id="change_dp"><p>Change Profile picture</p></a>
 			</div>
 			<div class="profile_details col-md-8">

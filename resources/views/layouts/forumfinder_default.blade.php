@@ -32,12 +32,8 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-
-        
     </head>
     <body>
-        
-
         <script>
             window.fbAsyncInit = function() {
                 FB.init({
@@ -58,8 +54,6 @@
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-
-
         <script>
             window.twttr = (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0],
@@ -147,7 +141,6 @@
                     </div>
                 </nav>
             </div>
-
         </header>
 
         @yield('user_content')

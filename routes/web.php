@@ -149,9 +149,7 @@ Route::group(['middleware' => ['auth','check.status']], function () {
 
     Route::group(['prefix' => 'home'],function(){
 
-		Route::get('my_profile',function(){
-			return view('user.my_profile');
-		});
+		Route::get('my_profile','HomeController@my_profile');
 
 		Route::post('profile_edit','HomeController@profile_edit');
 

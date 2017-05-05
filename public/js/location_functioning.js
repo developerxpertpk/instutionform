@@ -50,7 +50,7 @@
         }
 
         function errorFunction(){
-            alert("Geocoder failed");
+            console.log("Geocoder failed");
         }
 
         function initialize() {

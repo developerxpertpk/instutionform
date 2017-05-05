@@ -44,6 +44,10 @@ class HomeController extends Controller
         }
     }    
 
+    public function my_profile(){
+        return view('user.my_profile');
+    }
+
 
    /*To Edit profile details of the current logged in  user*/
     public function profile_edit(Request $request){
