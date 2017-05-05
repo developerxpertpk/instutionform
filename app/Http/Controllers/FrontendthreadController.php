@@ -72,12 +72,20 @@ class FrontendthreadController extends BaseController
     	/*echo $request->reply;
     	echo $id;
     	die();*/
+        $validator= \Validator::make($request->all(),array(
+            'comment' => 'required|max:150',
+            ));
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
     	$thread_reply= new Thread_comment;
 
 
     	$thread_reply->thread_id=$id;
     	$thread_reply->user_id=Auth::id();
-    	$thread_reply->comment=$request->reply;
+    	$thread_reply->comment=$request->comment;
     	$thread_reply->save();
     	return back();
     }

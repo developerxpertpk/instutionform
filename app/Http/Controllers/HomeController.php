@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Auth;
 use File;
 use App\User;
+use App\Page;
+use Illuminate\Support\Facades\View;
 use App\Bookmarked_school;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,6 +23,8 @@ class HomeController extends BaseController
     public function __construct()
     {
         $this->middleware('auth');
+        $page = Page::orderBy('id','DESC')->where('active','=',0)->get();
+        View::share('page', $page);
     }
 
     /**
@@ -47,13 +51,13 @@ class HomeController extends BaseController
                 'fname' => 'required|max:100|regex:/^[\pL\s]+$/u',
                 'lname' => 'required|max:100|regex:/^[\pL\s]+$/u',
                 'email' => 'required|email|max:100|regex:/^[a-zA-Z0-9@_.]*$/',
-                'address' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:]*$/',
+                'address' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-: ]*$/',
             );
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
 
-            return redirect('/home/my_profile')->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         } else {
             $result=User::find(Auth::id());
 
@@ -63,7 +67,7 @@ class HomeController extends BaseController
             $result->address=$request->input('address');
             $result->save();
 
-            return redirect('/home/my_profile')->with('success','Updations Successful');
+            return back()->with('success','Updations Successful');
         }
     }
 
@@ -81,13 +85,14 @@ class HomeController extends BaseController
 
         if ($validator->fails()) {
 
-            return redirect('/home/my_profile')->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
 
         } else {
 
             if($request->input('new_password') != $request->input('confirm_password')){
 
-                return redirect('/home/my_profile')->withErrors(array('cnf_pwd' => 'Confirmation password do not match'));
+                return redirect()->back()->withErrors(array('cnf_pwd' => 'Confirmation password do not match'));
+                /*return view('user.my_profile')->withErrors(array('cnf_pwd' => 'Confirmation password do not match'));*/
 
             }else{
 
@@ -98,9 +103,11 @@ class HomeController extends BaseController
                     $result->password=$new_password;
                     $result->save();
 
-                    return redirect('/home/my_profile')->with('password_success','Password Updated Successful');
+                    return back()->with('password_success','Password Updated Successful');
+                    // return view('user.my_profile')->with('password_success','Password Updated Successful');
                 }else{
-                    return redirect('/home/my_profile')->withErrors(array('password_failed' => 'Old password did not matched'));
+                    return redirect()->back()->withErrors(array('password_failed' => 'Old password did not matched'));
+                    // return view('user.my_profile')->withErrors(array('password_failed' => 'Old password did not matched'));
                 }
             }
         }
@@ -118,7 +125,7 @@ class HomeController extends BaseController
 
         if ($validator->fails()) {
 
-            return redirect('/home/my_profile')->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
 
         }else{
 
@@ -152,10 +159,11 @@ class HomeController extends BaseController
                     $result->image=$image_path;
                     $result->save();
         
-                return redirect('/home/my_profile');
+                return back();
             }else{
-                return redirect('/home/my_profile')
-                ->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
+                
+                return redirect()->back()->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
+                /*return view('user.my_profile')->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));*/
             }
         }
     }
