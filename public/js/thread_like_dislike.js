@@ -6,7 +6,10 @@ $(document).ready(function(){
         }
     });
 
-
+    $('#post_reply_form').submit(function(){
+        console.log('here');
+        return false;
+    });
 
     $('#report_form').submit(function(){
         var report_type=$('input[name=report]:checked').val();
@@ -81,11 +84,12 @@ $(document).ready(function(){
                                 var num=$("#thread_1_"+id).next().html();
                                 num--;
                                 $("#thread_1_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
+                                
                                 // console.log(num);
                             }
+                            num=$("#"+selector_id).next().html();
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }else{
                         //for dislike
@@ -100,11 +104,12 @@ $(document).ready(function(){
                                 var num=$("#thread_0_"+id).next().html();
                                 num--;
                                 $("#thread_0_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                // console.log(num);
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
+                            
                             }
+                            num=$("#"+selector_id).next().html();
+                            // console.log(num);
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }
                     
@@ -173,11 +178,12 @@ $(document).ready(function(){
                                 var num=$("#comment_1_"+id).next().html();
                                 num--;
                                 $("#comment_1_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
+                            
                                 // console.log(num);
                             }
+                            num=$("#"+selector_id).next().html();
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }else{
                         //for dislike
@@ -192,11 +198,12 @@ $(document).ready(function(){
                                 var num=$("#comment_0_"+id).next().html();
                                 num--;
                                 $("#comment_0_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                // console.log(num);
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
+                            
                             }
+                            num=$("#"+selector_id).next().html();
+                            // console.log(num);
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }
                     
@@ -215,21 +222,6 @@ $(document).ready(function(){
         });
         
     }
-
-    /*function comment_report(id){
-        $.ajax({
-            method:'POST',
-            url:'/comment_report',
-            
-            success:function (response) {
-                console.log(response);
-
-            },
-            error: function(response){
-                console.log('error '+response);
-            }
-        });
-    }*/
 
     function del_report(id_selector,id){
         $.ajax({

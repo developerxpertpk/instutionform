@@ -2,6 +2,7 @@
 
 @section('user_content')
 <div class="container">
+	<br/>
 	<div class="row">
 		@if(Session::has('success'))
 		<span>{{ Session::get('success') }}</span>
@@ -17,13 +18,19 @@
 				<script>
 					$(document).ready(function(){
                     	$('#change_password_user').modal();
-					})
+					});
 				</script>		
-			@else
+			@elseif($errors->has('image'))
 				<script>
 					$(document).ready(function(){
+						$('#change_dp_model').modal();
+					});
+				</script>
+			@else
+				<script type="text/javascript">
+					$(document).ready(function(){
 						$('#edit_user').modal();
-					})
+					});
 				</script>
 			@endif
 		@endif
@@ -31,7 +38,7 @@
 		<div class="profile_view">
 			<div class="profile_picture col-md-4">
 				<img src="{{ asset('upload/'.Auth::user()->image) }}">		
-				<a href="#" id="change_dp"><p>Change Profile picture</p></a>
+				<a href="javascript:;" id="change_dp"><p>Change Profile picture</p></a>
 			</div>
 			<div class="profile_details col-md-8">
 				<h1>{{ Auth::user()->fname }} {{ Auth::user()->lname }}</h1>
@@ -183,11 +190,16 @@
 			                                @endif
 			                            </div>
 			                        </div>
-			                         <div class="form-group">
+			                         <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
 			                            <label for="address" class="col-md-4 control-label">Address</label>
 
 			                            <div class="col-md-6">
 			                                <textarea name="address" class="form-control" placeholder="vill city " rows="4" required>{{ Auth::user()->address }}</textarea>
+			                                @if ($errors->has('address'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('address') }}</strong>
+			                                    </span>
+			                                @endif
 			                            </div>
 			                        </div>
 								</div>
@@ -218,11 +230,16 @@
 								<div class="modal-body">
 
 									{{ csrf_field() }}
-									<div class="form-group">
+									<div class="form-group {{ $errors->has('image') ? ' has-error' : '' }}">
 			                            <label for="image" class="col-md-4 control-label"></label>
 
 			                            <div class="col-md-6">
 			                                <input id="image" type="file"  name="image" required>
+			                                @if ($errors->has('image'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('image') }}</strong>
+			                                    </span>
+			                                @endif
 			                            </div>
 			                        </div>
 

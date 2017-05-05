@@ -2,69 +2,70 @@
 @section('user_content')
 <!-- banner and search portion  -->
 <section class="search_banner">
-	<div id="slidermy" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner" role="listbox">
-			<div class="item active">
-				<img src="image\school1.jpg" alt="First slide">
-			</div>
-			
-			<div class="item">
-				<img src="image\school3.jpg" alt="Second slide">
-			</div>
-			
-			<div class="item">
-				<img src="image\school2.jpg" alt="Second slide">
-			</div>
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>Find the best schools</h1>
-					
-					<div class="pad-top-120">
-						<p>How does schools works ?</p>
-						<p><a class="btn btn-lg btn-primary" href="{{ url('/register') }}" role="button">Sign up today</a></p>
-					</div>
+		<div id="slidermy" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="image\school1.jpg" alt="First slide">
 				</div>
 				
-			</div>		
+				<div class="item">
+					<img src="image\school3.jpg" alt="Second slide">
+				</div>
+				
+				<div class="item">
+					<img src="image\school2.jpg" alt="Second slide">
+				</div>
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>Find the best schools</h1>
+						
+						<div class="pad-top-120">
+							<p>How does schools works ?</p>
+							<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
 			<a class="left carousel-control" href="#slidermy" role="button" data-slide="prev">
-				<span class="fa fa-chevron-left" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 				<span class="sr-only">Previous</span>
 			</a>
 			<a class="right carousel-control" href="#slidermy" role="button" data-slide="next">
-				<span class="fa fa-chevron-right" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-	<div class="search-container">
-		<form class="form-horizontal" role="form" method="GET"  enctype="multipart/form-data" action="search_location">
+		<div class="search-container">
+			<form class="form-horizontal" role="form" method="GET"  enctype="multipart/form-data" action="search_location">
         	{{ csrf_field() }}
 			
-			<div class="container search_control">
-				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control input-lg" name="location" placeholder="Search the location">
-				</div>
-				<div class="col-xs-12 col-sm-6">
-					<input type="text" class="form-control input-lg" name="school_name" placeholder="Enter the name of school ">
-				</div>
-				<div class="col-xs-12 col-sm-2">
-					<button type="submit" class="btn btn-success btn-lg">Search</button>
-				</div>
-				@if(Session::has('search_failed'))
-					<div class="col-sm-12 text-center">
-						<span class="src_err">{{ Session::get('search_failed') }}</span>
+				<div class="container search_control">
+					<div class="col-xs-12 col-sm-4">
+						<input type="text" class="form-control input-lg" name="location" placeholder="Search the location">
 					</div>
-				@endif
-			</div>
-		</form>
-			
+					<div class="col-xs-12 col-sm-6">
+						<input type="text" class="form-control input-lg" name="school_name" placeholder="Enter the name of school ">
+					</div>
+					<div class="col-xs-12 col-sm-2">
+						<button type="submit" class="btn btn-success btn-lg">Search</button>
+					</div>
+					@if(Session::has('search_failed'))
+						<div class="col-sm-12 text-center">
+							<span class="src_err">{{ Session::get('search_failed') }}</span>
+						</div>
+					@endif
+				</div>
+			</form>	
+		</div>
 	</div>
 </section>
 
-
-<section class="search_results">
-	<div class="container">
-
-		@if(isset($schools_byName) || isset($schools_byLocation))
+@if(isset($schools_byName) || isset($schools_byLocation))
+	<section class="search_results">
+		<div class="container">
 			<h2>Search Results</h2>
 			<p>
 				<strong>Showing results for:
@@ -130,15 +131,16 @@
 			@if(!empty($count))
 				<h3>Sorry, School Not Found</h3>
 			@endif
-		@endif
-	</div>
-</section>
+		</div>
+	</section>
+@endif
 
 <!--Features portion-->
 <section class="features">
 	<div id="slider" class="carousel slide" data-ride="carousel">
 		<div class="container">
 			<h2>Featured School</h2>
+			<span class="col-sm-12 text-center">(this section is for future use)</span>
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
 					<div class="col-xs-12 col-sm-3 Main_features">
@@ -346,6 +348,7 @@
 	<section class="Guidance">
 		<div class="container">
 			<h2>Guidance</h2>
+			<span class="col-sm-12 text-center">(this section is for future use)</span>
 			<div class="col-xs-12 col-sm-6 guide query">
 				<div class="media">
 					<div class="media-left">
@@ -354,7 +357,7 @@
 						</a>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">Media heading</h4>
+						<h4 class="media-heading">Media heading <small>demo</small></h4>
 						<p>This site provided me with latest information on schools.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Ritu Bhardwaj Teacher Shivalik Public School,Srinagar</h6>
@@ -368,7 +371,7 @@
 						</a>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">Media heading</h4>
+						<h4 class="media-heading">Media heading <small>demo</small></h4>
 						<p>Shiksha provided me with latest information on colleges and exams.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Pawan Uppal Teacher Delhi Public School,Delhi</h6>
@@ -386,7 +389,7 @@
 						</a>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">Media heading</h4>
+						<h4 class="media-heading">Media heading <small>demo</small></h4>
 						<p>This site provided me with latest information on schools.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Simpy Dora Teacher Green Field School,Mohali</h6>
@@ -400,7 +403,7 @@
 						</a>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">Media heading</h4>
+						<h4 class="media-heading">Media heading <small>demo</small></h4>
 						<p>Shiksha provided me with latest information on colleges and exams.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Neha Thakur Teacher Army Public School,Mumbai</h6>

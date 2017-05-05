@@ -1,5 +1,65 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
+    <div class="row1">
+        <div class="container-fluid">
+            <div class="form-horizontal_row2">
+            @if(isset($redirect) && isset($_GET['title']))
+                <form class="form-horizontal" role="form" method="POST" action="{{'/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id'] }}" >
+            @elseif(isset($redirect) && isset($_GET['t_title']))
+                <form class="form-horizontal" role="form" method="POST" action="{{ '/submit?redirect='.$redirect.'&t_title='.$_GET['t_title'].'&t_description='.$_GET['t_description'].'&id='.$_GET['id']  }}" >
+            @else
+                <form class="form-horizontal" role="form" method="POST" action="{{route('login.submit') }}" >
+            @endif
+                    <h4 class="login">Login</h4>
+                    {{ csrf_field() }}
+                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label for="email" class="col-sm-4 control-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label for="password" class="col-sm-4 control-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required autofocus>
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Remember me
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-success btn-lg">Sign in</button>
+                            <a href="#">Forget Password</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- 
+
 <br/>
 <div class="container">
     <div class="row">
@@ -81,5 +141,5 @@
     );
 });
     </script>
-</div>
+</div> -->
 @endsection

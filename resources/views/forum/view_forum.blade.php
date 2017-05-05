@@ -110,65 +110,65 @@
 				
 				<i class="fa fa-thumbs-o-up clickables" id="forum_0_{{$forum->id}}" name="forum_like_dislike" content="{{$forum->id}}" value=1 data=0 aria-hidden="true"></i><span>{{count($forum->forum_likes) > 0 ? count($forum->forum_likes->where('is_liked_disliked','1')) : 0}}</span>  <i class="fa fa-thumbs-o-down flipped clickables" id="forum_1_{{$forum->id}}" value=0 name="forum_like_dislike" check=0 content="{{$forum->id}}" aria-hidden="true"></i><span>{{count($forum->forum_likes) > 0 ? count($forum->forum_likes->where('is_liked_disliked','0')) : 0}}</span>
 			</div>
-		<div class="reported_flag_forum col-sm-offset-5 pull-right">
-			<i class="fa fa-flag-o clickables" id="forum_2_{{$forum->id}}" name="forum_report" value="0" content="{{$forum->id}}"	 aria-hidden="true"></i>
-		</div>
-
-		<!-- Modal For REPORT -->
-		<div class="modal fade" id="report_thread" role="dialog">
-			<div class="modal-dialog">
-				
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">What is wrong with this post?</h4>
-					</div>
-					<div class="container">
-						<div class="row">
-					        <div class="col-md-10 ">
-				                <div class="panel-body">
-				                    <form id="report_form" class="form-horizontal" role="form" method="POST" action="#">
-				                        {{ csrf_field() }}
-				                        <input type="hidden" name="data" value="{{$forum->id}}">
-				                        <div class="form-group col-md-7">
-				                        	<label class="col-md-12 padding_zero">Choose one of the following reasons:</label>                        
-						                    <input name="report" type="radio" value="abuse" >
-											<strong> Abuse </strong> 
-						                    <input name="report" type="radio" value="spam" checked>
-						                    <strong> Spam </strong>
-						                    <input name="report" type="radio" value="other">
-						                    <strong> Other </strong>
-						                </div>
-
-				                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-7">
-				                        	<label class="col-md-12 padding_zero">Description</label>
-				                            <div class="col-md-6 padding_zero">
-				                                <textarea class="form-control" name="report_description"></textarea>
-
-				                                @if ($errors->has('password'))
-				                                    <span class="help-block">
-				                                        <strong>{{ $errors->first('password') }}</strong>
-				                                    </span>
-				                                @endif
-				                            </div>
-				                        </div>
-				                        <div class="form-group">
-				                            <div class="col-md-8 col-md-offset-4">
-				                                <button type="submit"  class="btn btn-primary custom-btn">
-				                                    Submit
-				                                </button>
-				                            </div>
-				                        </div>
-				                    </form>
-				                </div>
-					        </div>
-					    </div>
-					</div>
-				</div>		
+			<div class="reported_flag_forum col-sm-offset-5 pull-right">
+				<i class="fa fa-flag-o clickables" id="forum_2_{{$forum->id}}" name="forum_report" value="0" content="{{$forum->id}}"	 aria-hidden="true"></i>
 			</div>
-		</div>
-		<!-- End of the modal -->
+
+			<!-- Modal For REPORT -->
+			<div class="modal fade" id="report_thread" role="dialog">
+				<div class="modal-dialog">
+					
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">What is wrong with this post?</h4>
+						</div>
+						<div class="container">
+							<div class="row">
+						        <div class="col-md-10 ">
+					                <div class="panel-body">
+					                    <form id="report_form" class="form-horizontal" role="form" method="POST" action="#">
+					                        {{ csrf_field() }}
+					                        <input type="hidden" name="data" value="{{$forum->id}}">
+					                        <div class="form-group col-md-7">
+					                        	<label class="col-md-12 padding_zero">Choose one of the following reasons:</label>                        
+							                    <input name="report" type="radio" value="abuse" >
+												<strong> Abuse </strong> 
+							                    <input name="report" type="radio" value="spam" checked>
+							                    <strong> Spam </strong>
+							                    <input name="report" type="radio" value="other">
+							                    <strong> Other </strong>
+							                </div>
+
+					                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-7">
+					                        	<label class="col-md-12 padding_zero">Description</label>
+					                            <div class="col-md-6 padding_zero">
+					                                <textarea class="form-control" name="report_description"></textarea>
+
+					                                @if ($errors->has('password'))
+					                                    <span class="help-block">
+					                                        <strong>{{ $errors->first('password') }}</strong>
+					                                    </span>
+					                                @endif
+					                            </div>
+					                        </div>
+					                        <div class="form-group">
+					                            <div class="col-md-8 col-md-offset-4">
+					                                <button type="submit"  class="btn btn-primary custom-btn">
+					                                    Submit
+					                                </button>
+					                            </div>
+					                        </div>
+					                    </form>
+					                </div>
+						        </div>
+						    </div>
+						</div>
+					</div>		
+				</div>
+			</div>
+			<!-- End of the modal -->
 			@endif
 			<!-- Modal For Login -->
 			<div class="modal fade" id="edit_user" role="dialog">

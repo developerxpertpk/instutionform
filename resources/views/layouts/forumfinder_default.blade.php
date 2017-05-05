@@ -1,19 +1,7 @@
 <!DOCTYPE html><!--Final Design-->
 <html>
     <head>
-        <title>School Finder</title>
-
-
-        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
-
-        <!-- Ajax Script -->
-        <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/forum_like_dislike.js')}}" type="text/javascript" charset="utf-8" ></script>
-        <script src="{{asset('js/thread_like_dislike.js')}}" type="text/javascript" charset="utf-8"></script>
-        <!-- /Ajax Script -->
-
-        
+        <title>School Finder</title>       
         
         
         <!-- Bootstrap core CSS -->
@@ -24,7 +12,8 @@
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
         <!-- close -->
-
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
         <!-- twitter -->
         <!-- <link rel="me" href="{{ Request::url() }}"> -->
         <!-- twitter -->
@@ -34,28 +23,6 @@
         <meta name="_token" content="{{ csrf_token() }}">
         <!-- /CSRF Tokken for ajax -->
         <style>
-        /* Always set the map height explicitly to define the size of the div
-        * element that contains the map. */
-        /*#map {*/
-            /*height: 100%;*/
-            /*display: none;*/
-
-        /*}*/
-        /* Optional: Makes the sample page fill the window. */
-        /*html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }*/
-        /*.map_div{*/
-            /*display: none;*/
-            /*width:500px;
-            height:600px;
-            margin-left: 100px;
-            margin-top: 30px;
-            border:2px solid #000;*/
-        /*}*/
-
         .margin_bottom{
             margin-bottom: 10px !important;
         }
@@ -129,16 +96,16 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">                                   
 
-                                <li><a href="/schools_list">List of Schools</a></li>
+                                <li><a class="nav_control" href="/schools_list">List of Schools</a></li>
 
                                 @if(isset($page))
                                     @foreach($page as $pages)
-                                        <li><a href="/{{$pages->slug}}">{{$pages->title}}</a></li>
+                                        <li><a class="nav_control" href="/{{$pages->slug}}">{{$pages->title}}</a></li>
                                     @endforeach
                                @endif
 
-                               <li><a href="/FAQ">FAQ</a></li>
-                               <li><a href="/forum">Forum</a></li>
+                               <li><a class="nav_control" href="/FAQ">FAQ</a></li>
+                               <li><a class="nav_control" href="/forum">Forum</a></li>
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
@@ -154,10 +121,12 @@
                                                 <li><a href="/home/my_profile"> Profile</a></li>
                                                 <li>
                                                     <a href="/bookmarks">
-                                                        <!-- <span class="badge bg-red pull-right">50%</span> -->
                                                         <span><i class="fa fa-star pull-right" aria-hidden="true"></i>Bookmarks</span>
                                                     </a>
                                                 </li>
+                                                @if(Auth::user()->role_id == 1)
+                                                    <li><a href="/admin/dashboard">Admin</a></li>
+                                                @endif
                                                 <li><a href="javascript:;">Help</a></li>
                                                 <li>
                                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -169,8 +138,8 @@
                                             </ul>
                                         </li>
                                     @else
-                                        <li><a href="{{ url('/login') }}">Login</a></li>
-                                        <li><a href="{{ url('/register') }}">Register</a></li>
+                                        <li><a class="nav_control" href="{{ url('/login') }}">Login</a></li>
+                                        <li><a class="nav_control" href="{{ url('/register') }}">Register</a></li>
                                     @endif
                                 @endif
                             </ul>
@@ -390,6 +359,11 @@
             </div>
                 
         </footer>
+        <!-- Ajax Script -->
+        <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/forum_like_dislike.js')}}" type="text/javascript" charset="utf-8" ></script>
+        <script src="{{asset('js/thread_like_dislike.js')}}" type="text/javascript" charset="utf-8"></script>
+        <!-- /Ajax Script -->
         <script type="text/javascript">
              CKEDITOR.replace('review_area');
 
@@ -407,8 +381,19 @@
                     $('#change_password_user').modal();
                 });
 
-                $('#my_editBtn').click(function(){
+                $('#my_editBtn,#check').click(function(){
                     $('#edit_user').modal();
+                });
+
+                $('#change_dp').click(function(){
+                    $('#change_dp_model').modal();
+                });
+
+                $('#scroll_to_reply').click(function(){
+                    $('html,body').animate({
+                        scrollTop: $('.reply_form').offset().top
+                    }, 1000);
+                    return false;
                 });
             });
         </script>

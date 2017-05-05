@@ -195,7 +195,7 @@
 			</div>
 			
 		</div>
-		<a href="/reply_post"><button class="btn btn-success pull-right" >reply to the post</button></a>
+		<a href="/reply_post"><button id="scroll_to_reply" class="btn btn-success pull-right" >reply to the post</button></a>
 		<h3>Replies</h3>
 		<!-- ANSWERS COMMENTS -->
 		@foreach($thread->thread_comments as $comments)
@@ -247,87 +247,26 @@
 
 		<h3>Post a reply</h3>
 		<div class="col-sm-10 reply_form table-bordered">
-			<form action="/threads/{{$thread->id}}/reply_submit" method="post" enctype="Multipart/form-data" accept-charset="utf-8">
+			<form action="/threads/{{$thread->id}}/reply_submit" id="@if(Auth::check()) {{'post_reply_form'}}  @else {{''}} @endif" method="post" enctype="Multipart/form-data" accept-charset="utf-8">
 				{{ csrf_field() }}
 				<br>
-				<div class="form-group">
+				<div class="form-group {{ $errors->has('comment') ? ' has-error' : '' }}">
 					<label>Your Reply *</label>
-					<textarea class="form-control" name="reply"></textarea>
+					<textarea class="form-control" name="comment"></textarea>
+					@if ($errors->has('comment'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('comment') }}</strong>
+                        </span>
+                    @endif
 				</div>
-				@if(!Auth::check())
-				<h4>Reply as:</h4>
-				<div class="form-group{{ $errors->has('fname') ? ' has-error' : '' }} padding_zero col-md-7">
-                    <label for="fname">First Name</label>
-                        <input id="fname" type="text" class="form-control" name="fname" value="{{ old('fname') }}" required autofocus>
-
-                        @if ($errors->has('fname'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('fname') }}</strong>
-                            </span>
-                        @endif
-                </div>
-
-                <div class="form-group{{ $errors->has('lname') ? ' has-error' : '' }} padding_zero col-md-7">
-                    <label for="lname">Last Name</label>
-                        <input id="lname" type="text" class="form-control" name="lname" value="{{ old('lname') }}" required autofocus>
-
-                        @if ($errors->has('lname'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('lname') }}</strong>
-                            </span>
-                        @endif
-                </div>
-
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} padding_zero col-md-7">
-                    <label for="email">E-Mail Address</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>
-
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} padding_zero col-md-7">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control" name="password" required>
-
-                    @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
-                </div>
-
-               <div class="form-group padding_zero col-md-7">
-                    <label for="password-confirm">Confirm Password</label>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                </div>
-
-                <div class="form-group padding_zero col-md-7">
-                    <label for="gender">Gender:    </label>
-                    <input name="gender" type="radio" value="M">
-					<strong> Male </strong> 
-                    <input name="gender" type="radio" value="F">
-                    <strong> Female </strong>
-
-                    @if ($errors->has('gender'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('gender') }}</strong>
-                        </span>
-                    @endif
-                </div>
-				@endif
 				<div class="form-group">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success pull-right" name="submit">
+                        <button type="submit" id="{{Auth::check() ? 'post' : 'check'}}" class="btn btn-success {{Auth::check() ? 'pull-right' : 'pull-left'}} " name="submit">
                             Post
                         </button>
                     </div>
                 </div>
 			</form>
-
 			<!-- Modal For Login -->
 			<div class="modal fade" id="edit_user" role="dialog">
 				<div class="modal-dialog">

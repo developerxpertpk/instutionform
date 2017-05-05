@@ -46,11 +46,7 @@ $(document).ready(function(){
             forum_like_dislike(id,value,data,selector_id);
         }else if(type == "forum_report"){
             check_auth(value,selector_id,id);
-        }/*else if(type == "comment_like_dislike"){
-            like_dislike_comment(id,value,data,selector_id);
-        }else{
-            comment_report(id);
-        }*/
+        }
     });
 
 
@@ -69,6 +65,7 @@ $(document).ready(function(){
                 if(response == true){
                     /*if data is saved successfully*/
                     if(value == 1){
+                        console.log(id+' '+value+' '+data+' '+selector_id+' ');
                         //for like
                         if(data == 0){
                             $("#"+selector_id).attr('class','fa fa-thumbs-up clickables');
@@ -81,14 +78,15 @@ $(document).ready(function(){
                                 var num=$("#forum_1_"+id).next().html();
                                 num--;
                                 $("#forum_1_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
                                 // console.log(num);
                             }
+                            num=$("#"+selector_id).next().html();
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }else{
                         //for dislike
+                        console.log(id+' '+value+' '+data+' '+selector_id+' ');
                         if(data == 0){
                             $("#"+selector_id).attr('class','fa fa-thumbs-down flipped clickables');
                             $("#"+selector_id).attr('data','1');
@@ -100,11 +98,11 @@ $(document).ready(function(){
                                 var num=$("#forum_0_"+id).next().html();
                                 num--;
                                 $("#forum_0_"+id).next().html(num);
-                                num=$("#"+selector_id).next().html();
-                                // console.log(num);
-                                num++;
-                                num=$("#"+selector_id).next().html(num);
+                            
                             }
+                            num=$("#"+selector_id).next().html();
+                            num++;
+                            num=$("#"+selector_id).next().html(num);
                         }
                     }
                     

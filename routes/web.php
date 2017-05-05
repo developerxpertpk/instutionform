@@ -232,6 +232,7 @@ Route::get('create_forum/{id?}', function($id = null)
 Route::group(['prefix' => 'forum'],function(){
 	Route::get('show_forum/{id}','FrontendForumController@show_forum');
 });
+
 Route::group(['prefix' => 'threads'],function(){
 	Route::post('{id}/reply_submit','FrontendthreadController@thread_reply');
 	Route::get('show_thread/{id}','FrontendthreadController@show_thread');
