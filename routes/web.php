@@ -32,15 +32,11 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
 			Route::get('profile',function(){
-
 					return view('admin.dashboard.profile');
-
 			})->name('admin.profile');
 
 			Route::get('changepwd',function(){
-
 				return view('admin.dashboard.changepwd');
-
 			})->name('admin.changepwd');
 
 			Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
@@ -57,14 +53,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 			Route::get('admin/user/search', 'UserController@search');
 
-
 			/*  route for school-institue */
 			
 			Route::resource('school','SchoolController');
             /*  route for school-institue  status*/
             Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
-            Route::post('school/school_update/{id}','SchoolController@school_update')->name('school.update1');
+            Route::post('school/school_update/{id}','SchoolController@school_update1')->name('edit_school1');
+
+
 
             /*  Routes for add News Reated to school  */
             Route::resource('school_news','SchoolNewsController');
@@ -119,7 +116,9 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
 
-
+            // Image Controller
+            Route::resource('image','ImageController');
+            Route::delete('image/{eid}-{lid}','ImageController@delete_image')->name('delete_image');
 
     	});
 });

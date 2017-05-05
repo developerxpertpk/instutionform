@@ -17,7 +17,6 @@ class Reportedforum extends Model
         });
     }
 
-
     protected $fillable = [
         'forum_id','user_id','reporting_type','reporting_reason','status',
     ];

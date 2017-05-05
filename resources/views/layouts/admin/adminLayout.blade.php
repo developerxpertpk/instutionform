@@ -11,24 +11,19 @@
     <meta name="author" content="">
 
     <title> Admin - dashboard </title>
-    <!-- addes juery -->  
-    
+    <!-- addes juery -->
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script  type="text/javascript" src="{{ asset('js/location.js')}}"></script>
-
-
     <!-- added google map api script and key -->
     <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns"async defer></script>
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
-
-
     <script src="{{asset('js/jquery-ui.js')}}"></script>
     <script src="{{asset('js/ajax_rating.js') }}"></script>
     <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
     <script src="{{ asset('js/jquery-validation.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -42,16 +37,6 @@
 
     <!-- Custom Fonts -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
-        <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
-
-    <!--[endif]-->
-
-
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -207,9 +192,6 @@
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
                         <a href=" {{ route('admin.dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('charts') }}"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <!-- users data -->
                      <li>
