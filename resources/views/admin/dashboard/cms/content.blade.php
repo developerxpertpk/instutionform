@@ -3,30 +3,29 @@
 
    <div id="page-wrapper">
 			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">
+							Static  Pages
+						</h1>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+							<li class="breadcrumb-item active">Static Content </li>
+						</ol>
+					</div>
+
+				</div>
 		<!-- Page Heading -->
-		<div class="row">
-		<div class="col-lg-12">
 
-			<h2 class="page-header">
-				Content Manager
-			</h2>
-
-		<div class="pull-right">
-
-			<a class="btn btn-success" href="{{ route('addpages')}}"> ADD PAGE  </a>
-			<a class="btn btn-danger" href="{{ route('admin.dashboard') }}"> BACK  </a>
-
-		</div>
-
-		</div>
-	</div>
+		<a class="btn btn-primary" href="{{ route('addpages')}}">Add Pages </a>
 
 	@if (count($errors))
 		<div class="alert alert-danger">
 			<strong>Whoops!</strong> There were some problems with your input.<br><br>
 			<ul>
 			@foreach ($errors->all() as $error)
-				<!--   <li>{{ $error }}</li> -->
+				  <li>{{ $error }}</li>
 					<?php echo $errors ;?>
 				@endforeach
 			</ul>
@@ -42,25 +41,29 @@
 	<div class="Pages">
 					<table class="table table-bordered">
 						<tr>
-							<h3>Pages </h3>
+							<h4>Pages </h4>
 						</tr>
 
 						<tr>
 							<th>ID</th>
 							<th>Content Type</th>
 							<th>Title</th>
-							<th>slug</th>
+							<th>Slug</th>
+							<th>Content </th>
 							<th width="320px">Action</th>
 						</tr>
 						@foreach ($page as $pages)
 							<tr>
 								<td>{{ ++$i }}</td>
 								<td>{{ $pages->content_type }}</td>
-								<td>{{ $pages->title }}</td>
+								<td>{{ str_limit($pages->title ,50,'...') }} </td>
 								<td>{{ $pages->slug }}</td>
+								<td>{!!  str_limit($pages->content,50,'...') !!}</td>
 								<td>
-									<button>view</button>
-
+				{{-- Button {{ route('content.show',$pages->id) }}for show--}}
+				<a href="/{{$pages->slug}}" target="_blank" type="button" class="btn btn-success">
+					Show
+				</a>
 				<!-- Button for  Delete-->
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
 					Delete

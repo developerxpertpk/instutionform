@@ -334,8 +334,6 @@ class SchoolController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        // echo"<pre>";
-        //$school =School::find($id)->id;
         $school = School::find($id)->update($request->all());
 
         return redirect()->route('school.index')

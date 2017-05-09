@@ -46,7 +46,7 @@
 
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 
-    <script>
+    <script  type="text/javascript">
         tinymce.init({
             selector: '#mytextarea',
             plugins: [
@@ -55,6 +55,22 @@
                 'save table contextmenu directionality emoticons template paste textcolor'
             ],
 
+        });
+        </script>
+
+        <script  type="text/javascript">
+        tinymce.init({
+            selector: '#newseditor',
+//            menu: {
+//                view: {title: 'Edit', items: 'cut, copy, paste'}
+//            }
+//            plugins: [
+////                'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+////                'searchreplace wordcount',
+////                'save directionality emoticons textcolor'
+//            ],
+
+            plugins: 'code'
         });
     </script>
  

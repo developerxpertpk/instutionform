@@ -86,7 +86,19 @@
           <td>{{ $user->gender }}</td>
           <td>{{ $user->address }}</td>
           <td>{{ $user->role->role }}</td>
-          <td>{{ $user->status }}</td>
+          <td>
+            @if($user->status==1)
+                <label type="btn" class="btn btn-success">
+                   Active
+                </label>
+              @endif
+            @if($user->status==0)
+              <label type="btn" class="btn btn-danger">
+                Inactive
+              </label>
+            @endif
+
+          </td>
           <td>
 
       <!-- Edit   button  -->
@@ -203,15 +215,15 @@
    </div>
 
       <!-- block/unblock button -->
-      @if($user->status=='0')
-        <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_unblc{{$user->id}}">
-            Block
+      @if($user->status==1)
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#blc_unblc{{$user->id}}">
+           Inactive
         </button>
       @endif
 
-      @if($user->status=='1')
-        <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_unblc{{$user->id}}">
-          UnBlock
+      @if($user->status==0)
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blc_unblc{{$user->id}}">
+          Active
         </button>
       @endif
     <!-- Modal for block/unblock user -->
@@ -225,7 +237,7 @@
           </div>
 
         <div class="modal-body">
-          @if($user->status=="0")
+          @if($user->status==1)
             <h4> Do you want to block  {{$user->fname}} ? </h4>
           @else
             <h4> Do you want to unblock {{ $user->fname}} ? </h4>

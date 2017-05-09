@@ -1,6 +1,5 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
-
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -13,19 +12,22 @@
              </div>
 
             <div class=" row school-show show-rounder">
-                <div class=" row school_profile col-md-6">
-                    <div class="profile_image col-md-5">
 
+                <div class=" row school_profile col-md-6">
+
+                    <div class="profile_image col-md-5">
                     @if(isset($profile_image))
+
                         @foreach($profile_image as $image)
-                             <img src="{{asset('upload/schools/school'.'_'.$schools->id.'/images/profile_pic/current_dp/'.$image->image)}}" onerroronerror="this.src='{{asset('image/default_school.png')}} width="100%" height="150px">
+                             <img src="{{asset('upload/schools/school'.'_'.$schools->id.'/images/profile_pic/current_dp/'.$image->image)}}" onerroronerror="this.src='{{asset('image/default_school.png')}}" width="100%">
                         @endforeach
                             {{--onerror="this.src='{{asset('image/default_school.png')}}'"--}}
-                    @else
-                        <img src="{{asset('image/default_school.png')}}" width="100%" height="150px"/>
-                    @endif
+                        @else
+                        <img src="{{asset('image/default_school.png')}}"/>
+                        @endif
 
                         <div class=" row col-md-12">
+
                             <fieldset id='demo1' class="rating">
 
                                 <input class="stars" class="star5" type="radio" id="star5" name="rating" value="5" />
@@ -48,6 +50,9 @@
                             </fieldset>
                         </div>
                         <div class="col-md-12">
+                        <span class="give_rate"> <strong> Rate school  </strong></h5>
+                        </span>
+
                         <span class="info">
                         </span>
                         </div>
@@ -70,8 +75,8 @@
                 </div>
 
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal01">
-                        ADD Review
+                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#myModal01">
+                        Review
                     </button>
 
                     <!-- Modal  for reviews -->
@@ -108,15 +113,20 @@
 
                 </div>
             </div>
+
             <div class="row school_gallery show-rounder">
+
                     <div class="gallery col-md-12">
+
                         <div  class="row">
+
                         <h4 class="pull-left">Gallery Images</h4>
                         <h4 class="pull-right"> <a href=" {{ route('image.edit', $schools->id) }}" class="btn btn-primary"> Upload </a> </h4>
                         </div>
 
                         <div class="gallery-box">
                         @if(isset($gallery_images))
+                            @if(count($gallery_images))
                          <div id="lightgallery">
                             @foreach($gallery_images as $image)
                                     <div class="col-lg-4 col-sm-4 col-xs-6">
@@ -156,6 +166,7 @@
                                         </div>
                                     </div>
                                 @endforeach
+
                                 <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
@@ -167,38 +178,45 @@
                                     </div>
                                 </div>
                         @else
-                            No Image Uploaded
+                            <div> <h6>  No Image Uploaded  </h6></div>
                         @endif
+                    @endif
                         {{--<h3> No Images </h3>--}}
                     </div>
                 </div>
                 </div>
-            </div>
-                    <div class="document show-rounder row">
-                        <div class="row">
-                        <h4 class="pull-left"> Documents </h4>
-                        <h4 class="pull-right">
-                            <button class="btn btn-primary"> Upload </button>
-                        </h4>
-                        </div>
-                        @if(isset($documents))
-                                @foreach($documents as $document)
 
-                                    <div class="pdf col-md-6">
-                                      <a href="{{asset('upload/schools/school_'.$schools->id.'/documents/'.$document->documents) }}" target="_blank"> <img src="{{asset('image/pdf_image.jpg') }}" width="100px" height="100px ">
-                                        {{ $document->documents}} </a>
+          {{--div for documents--}}
+            <div class="document show-rounder row">
+                <div class="row">
+                <h4 class="pull-left"> Documents </h4>
+                <h4 class="pull-right">
+                    <button class="btn btn-primary"> Upload </button>
+                </h4>
+                </div>
+                @if(isset($documents))
+                    @if(count($documents))
+                        @foreach($documents as $document)
+                                <div class="col-sm-2 school-pdf" >
+                                    <div  id="pdf-image">
+                                        <a href="{{asset('upload/schools/school_'.$schools->id.'/documents/'.$document->documents) }}" target="_blank">
+                                            <img src="{{asset('image/pdf1.jpg') }}">
+                                        </a>
                                     </div>
 
-                                   {{--<iframe src="{{asset('upload/schools/school_'.$schools->id.'/documents/'.$document->documents) }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>--}}
-                                {{--{{ $document->documents}}--}}
+                                    <div id="pdf-title"> <h6> {{ $document->documents}} </h6>
+                                    </div>
+                                 </div>
+                           {{--<iframe src="{{asset('upload/schools/school_'.$schools->id.'/documents/'.$document->documents) }}" frameborder="0" style="width:100%;min-height:640px;"></iframe>--}}
+                        {{--{{ $document->documents}}--}}
 
-                                @endforeach
-                            @else
-                                No document Yet
-                            @endif
-                    </div>
-             </div>
-        </div>
-
+                        @endforeach
+                    @else
+                        <div> <h6> No document Yet </h6> </div>
+                    @endif
+                @endif
             </div>
+         </div>
+        </div>
+    </div>
 @endsection

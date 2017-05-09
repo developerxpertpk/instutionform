@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-
         $.ajaxSetup({
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -20,6 +19,7 @@ $(document).ready(function(){
             if(response.ratings){
 
                 $("input[value='"+response.ratings+"']").attr('checked', true);
+                $(".give_rate").remove();
                 $(".info").html('<h5> <b> You Rate </b>' + '<b>' + response.ratings + ' star </b> </h5>');
                 $(".stars").off("click");
             }else{

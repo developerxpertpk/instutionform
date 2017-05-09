@@ -7,19 +7,16 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Manage Schools & Institutes  / Search Result
-
                     </h1>
 
                 </div>
             </div>
             <!--/.row -->
-
             <h2 class="page-header"> Result found </h2>
             <div class="pull-right">
                 <a href="{{ route('school.index')}}"> <button class="btn btn-primery">Back
                     </button></a>
             </div>
-
             <div class="message">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
@@ -54,7 +51,19 @@
                             <td>{{ $school->locations->city }} </td>
                             <td>{{ $school->locations->state}} </td>
                             <td>{{ $school->locations->country}} </td>
-                            <td>{{ $school->status }}</td>
+                            <td>
+                                @if($school->status== 1)
+                                    <label type="button" class="btn btn-success">
+                                        Active
+                                    </label>
+                                @endif
+                                @if($school->status== 0)
+                                    <label type="button" class="btn btn-danger">
+                                        Inactive
+                                    </label>
+                                @endif
+
+                            </td>
                             <td>
 
                                 <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
@@ -93,15 +102,15 @@
 
                                 <!-- block/unblock button -->
                                 <!-- check for unblock -->
-                                @if($school->status=='0')
-                                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
-                                        Block
+                                @if($school->status==1)
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
+                                       Inactive
                                     </button>
                                 @endif
                             <!-- check for block -->
-                                @if($school->status=='1')
-                                    <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
-                                        UnBlock
+                                @if($school->status==0)
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
+                                        Active
                                     </button>
                             @endif
                             <!-- Modal for block/unblock school -->
@@ -116,7 +125,7 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                @if($school->status=="0")
+                                                @if($school->status==1)
                                                     <h4> Do you want to block  {{$school->school_name}} ? </h4>
                                                 @else
                                                     <h4> Do you want to unblock {{ $school->school_name}} ? </h4>
@@ -155,7 +164,21 @@
                                 <td>{{ $school['city'] }} </td>
                                 <td>{{ $school['state']}} </td>
                                 <td>{{ $school['country']}} </td>
-                                <td>{{ $school->schools->status }}</td>
+                                <td>
+
+                                    @if($school->status== 1)
+                                        <label type="button" class="btn btn-success">
+                                            Active
+                                        </label>
+                                    @endif
+                                    @if($school->status== 0)
+                                        <label type="button" class="btn btn-danger">
+                                            Inactive
+                                        </label>
+                                    @endif
+
+
+                                </td>
                                 <td>
                                     <!-- show  button  -->
                                     <a href="{{ route('school.show' ,$school->id )}}" class="btn btn-success" > Show </a>
@@ -194,15 +217,15 @@
 
                                     <!-- block/unblock button -->
                                     <!-- check for unblock -->
-                                    @if($school->status=='0')
+                                    @if($school->status==1)
                                         <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
-                                            Block
+                                           Inactive
                                         </button>
                                     @endif
                                 <!-- check for block -->
-                                    @if($school->status=='1')
+                                    @if($school->status==0)
                                         <button type="button" class="btn btn-primery" data-toggle="modal" data-target="#blc_ublc{{$school->id}}">
-                                            UnBlock
+                                           Active
                                         </button>
                                 @endif
                                 <!-- Modal for block/unblock school -->
@@ -216,7 +239,7 @@
                                                 </div>
 
                                                 <div class="modal-body">
-                                                    @if($school->status=="0")
+                                                    @if($school->status==1)
                                                         <h4> Do you want to block  {{$school->school_name}} ? </h4>
                                                     @else
                                                         <h4> Do you want to unblock {{ $school->school_name}} ? </h4>
@@ -250,11 +273,6 @@
 
                 </table>
             </div>
-
-
-
-
-
         </div>
    </div>
 @endsection

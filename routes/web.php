@@ -24,7 +24,7 @@ Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 
 
 
-	/*   Admin Routes */
+	/* Admin Routes */
 Route::group(['middleware' => ['auth']], function () {
 
 		Route::prefix('/admin')->group(function(){
@@ -66,8 +66,16 @@ Route::group(['middleware' => ['auth']], function () {
             /*  Routes for add News Reated to school  */
             Route::resource('school_news','SchoolNewsController');
 
+            // function for update school news
+            Route::post('school_news/update/{id}','SchoolNewsController@update_news')->name('update_news');
+            // Route to update News status
+            Route::post('school_news/update_status/{id}','SchoolNewsController@update_status')->name('school_news.status');
+            //  function for autocomplete
             Route::get('school_news/get_school_data','SchoolNewsController@search_school');
-
+            // route to show the  school list
+            Route::get('school_news_search','SchoolNewsController@filter_school')->name('filter_school');
+            // function to search news realted to particular School
+            Route::get('school_news/news/{id}','SchoolNewsController@news_list')->name('filter_news');
 			// Routes for cms
             Route::resource('content','PageController');
 
@@ -82,15 +90,20 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
 
             Route::get('add_question',function(){
-
                 return view('admin.dashboard.cms.add_question');
-
             })->name('add_question');
-
 
             Route::post('question/submit','PageController@question_submit')->name('question_submit');
 
             Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
+
+            // route for edit the faq_ask_quest
+            Route::get('question/edit/{id}','PageController@edit_faq')->name('question_edit');
+
+            //route for update faq_Ask_quest
+            Route::post('question/update/{id}','PageController@update_faq')->name('question_update');
+
+
 
             // Routes for rating and reviews
             Route::resource('rating_reviews','SchoolRatingReviewsController');
@@ -99,9 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::post('submit_rating','SchoolRatingReviewsController@submit_rating');
 
-
             Route::post('rating_reviews/{id}','SchoolRatingReviewsController@update_review')->name('update_review');
-
 
             Route::post('school/check_ratings','SchoolController@check_ratings');
 
@@ -115,9 +126,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
 
             Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
-
             // Image Controller
             Route::resource('image','ImageController');
+
             Route::delete('image/{eid}-{lid}','ImageController@delete_image')->name('delete_image');
 
     	});
@@ -134,7 +145,7 @@ Route::group(['middleware' => ['check.status']],function(){
 });
 // admin routes ended
 
-
+Route::get('school_news/get_school_data','SchoolNewsController@search_school');
 
 
 

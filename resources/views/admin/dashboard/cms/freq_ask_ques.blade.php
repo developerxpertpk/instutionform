@@ -1,20 +1,24 @@
 @extends('layouts.admin.adminLayout')
-
 @section('content')
     <div class="page-wraper">
             <div class="conatiner-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="page-header">
+                        <h1 class="page-header">
                             Frequently Asked Question
-                        </h2>
-                        <div class="pull-right">
-                            <a class="btn btn-success" href="{{ route('add_question')}}">Add Question </a>
-                            <a class="btn btn-danger" href="{{ route('admin.dashboard') }}"> BACK  </a>
-                        </div>
-
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('content') }}">Static Page</a></li>
+                            <li class="breadcrumb-item active">FAQ's </li>
+                        </ol>
                     </div>
                 </div>
+
+                <a class="btn btn-success" href="{{ route('add_question')}}">Add Question </a>
+                <a href="/FAQ" target="_blank" type="button" class="btn btn-success">
+                    Show FAQ's
+                </a>
 
                 @if (count($errors))
                     <div class="alert alert-danger">
@@ -47,12 +51,13 @@
                             <th width="320px">Action</th>
                         </tr>
                         @foreach ($ques as $question)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td><p class="faq_question">{{ $question->question }}</p></td>
-                                <td><p class="faq_answer">{{ $question->answer }}</p></td>
-                                <td>
-                                    <a href="#" type="btn btn-primery">Edit </a>
+                        <tr>
+                            <td>{{ ++$i }}</td>
+                            <td><p class="faq_question">{{ $question->question }}</p></td>
+                            <td><p class="faq_answer">{!! str_limit($question->answer,50,'...') !!} </p></td>
+                            <td>
+            <!-- Button for  edit-->
+            <a href="{{route('question_edit',$question->id) }}" type="button" class="btn btn-success" > Edit </a>
 
             <!-- Button for  Delete-->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
@@ -81,7 +86,6 @@
                     </div>
                 </div>
             </div>
-
     </td>
     </tr>
     @endforeach

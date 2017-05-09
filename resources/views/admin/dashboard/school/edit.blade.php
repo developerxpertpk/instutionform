@@ -36,7 +36,7 @@
 				<h1> <u>Register School & Institute </u></h1>
 			</div>
 
-			<form  class="form-horizontal" id="validate_form" role="form" method="post"   action="{{ route('edit_school1',$school->id)}}" enctype="multipart/form-data">
+			<form  class="form-horizontal" id="validate_form" role="form" method="post"   action="#" enctype="multipart/form-data">
 				{{ csrf_field() }}
 					<div class="school-detail">
 						<h3>  <u>School Detail</u>

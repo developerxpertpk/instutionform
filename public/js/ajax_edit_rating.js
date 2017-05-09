@@ -1,8 +1,7 @@
 
-
 $(document).ready(function() {
-
     var school_id = $('input[name=hidden_input]').val();
+
     var user_id = $('input[name=hidden_input-user]').val();
 
     $.ajaxSetup({
@@ -10,8 +9,8 @@ $(document).ready(function() {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    console.log(school_id);
-    console.log(user_id);
+    // console.log(school_id);
+    // console.log(user_id);
 
     $.ajax({
         url: '/admin/edit_ratings',
@@ -29,12 +28,9 @@ $(document).ready(function() {
                 $("input[value='" + response.ratings + "']").attr('checked', true);
                 //$(".stars").off("click");
 
-            } else {
-                console.log('hello');
             }
         },
         error: function () {
-
            // console.log(response);
             console.log(' -- I m here error --');
         }
@@ -85,7 +81,6 @@ $(document).ready(function() {
             error:function(){
                     console.log('error in submit');
             },
-
 
             });
 

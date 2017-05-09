@@ -150,4 +150,20 @@ class PageController extends Controller
 
     }
 
+    // function to edit faq_ask_quest
+
+    public function edit_faq($id){
+        $result = Freq_ask_question::find($id);
+        return  view('admin.dashboard.cms.edit_faq',compact('result'));
+    }
+
+    // function to update faq
+
+    public function update_faq(Request $request,$id){
+        $result = Freq_ask_question::find($id)->update($request->all());
+        return redirect()->route('freq_ask_ques')
+                            ->with('success','Updated Successfully');
+
+    }
+
 }

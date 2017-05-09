@@ -1,25 +1,22 @@
 
 $(document).ready(function() {
 
-    initMap();
+     function map() {
+         var map = new google.maps.Map(document.getElementById('map'), {
+             center: {lat: 21.170240,lng: 72.831061},
+             zoom: 4,
+         });
+      //   infoWindow = new google.maps.InfoWindow;
 
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 21.170240,lng: 72.831061},
-            zoom: 4,
-        });
-        infoWindow = new google.maps.InfoWindow;
-
-        // var marker = new google.maps.Marker({
-        //     position:{lat: 21.170240,lng: 72.831061},
-        //     map: map
-        // });
-    }
-
-});
+         // var marker = new google.maps.Marker({
+         //     position:{lat: 21.170240,lng: 72.831061},
+         //     map: map
+         // });
+     }
+     map();
+ });
 
     function getLocation() {
-
         var zip = $('.zip').val();
         getAddressInfoByZip(zip);
         return false;
@@ -77,7 +74,6 @@ $(document).ready(function() {
                         if(addr.city == null){
                             addr.city = addr.state;
                         }
-
 
                         $('#countryId').removeAttr('value');
                         $('#stateId').removeAttr('value');

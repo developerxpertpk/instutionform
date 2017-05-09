@@ -8,7 +8,6 @@
         <div class="col-lg-12">
             <h1 class="page-header">
                 Manage Schools & Institutes Ratings  / Search Result
-
             </h1>
 
         </div>
@@ -46,7 +45,8 @@
                 <td>{{ $data->locations->state }} </td>
                 <td>{{ $data->locations->country }} </td>
                 <td>
-                    <a href="{{ route('rating_reviews.show',$data->id) }}" class="btn btn-success" >Show List </a> </td>
+
+                <a href="{{ route('rating_reviews.show',$data->id) }}" class="btn btn-success" >Show List </a> </td>
 
                 </td>
             @endforeach
