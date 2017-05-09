@@ -21,7 +21,7 @@
 						<td width="20%">{{$forum->title}}</td>
 						<td width="35%">{!! str_limit($forum->description, $limit = 100, $end = ' ~read more..') !!}</td>
 						<td width="15%">@if(count($forum->threads) == 1)1 post @elseif(!count($forum->threads)) No posts @else {{count($forum->threads)}} posts @endif</td>
-						<td width="15%">@if(count($forum->forum_likes)) {{count($forum->forum_likes->where('is_liked_disliked','1'))}} likes {{count($forum->forum_likes->where('is_liked_disliked','0'))}} dislikes @else No votes yet @endif</td>
+						<td width="15%">@if(count($forum->forum_likes)) {{count($forum->forum_likes->where('is_liked_disliked','1'))}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{count($forum->forum_likes->where('is_liked_disliked','0'))}} <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> @else No votes yet @endif</td>
 						<td width="15%">{{$forum->created_at}}</td>
 					</tr>
 				@endforeach

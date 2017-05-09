@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\School_rating;
+use App\School_image;
 use App\Location;
 use App\School;
 use Session;
@@ -127,7 +128,7 @@ class UnregisteredController extends BaseController
         
         // die();
 
-        $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',2.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
+        $lowest_rated_schools=School_rating::having(DB::raw('avg(ratings)'),'<',4.5)->groupBy('school_id')->orderBy(DB::raw('avg(ratings)'))->get();
 
         return view('user.guests.list_of_schools')->with('schools',$schools)
                                                     ->with('schools_latest',$schools_latest)
@@ -227,5 +228,12 @@ class UnregisteredController extends BaseController
             Session::flash('sent_success','Mail has been sent successfully.');
             return back();
         }
+    }
+
+
+
+    public function school_gallery($school_id){
+        $images=School_image::where('school_id','=',$school_id)->get();
+        return view('user.guests.gallery')->with('images',$images);
     }
 }

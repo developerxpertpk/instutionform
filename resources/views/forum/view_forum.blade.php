@@ -249,20 +249,24 @@
 		<div class="col-sm-10 table-bordered">
 		<h3>Some Recent Discussions</h3>
 			<table class="table table-hover table-responsive table-striped" style="cursor: pointer;">
-				@foreach($forum->threads as $threads)
-					<tr class='clickable-row' href="/threads/show_thread/{{$threads->id}}">
-						<td width="70%">{{$threads->title}}</td>
-						<td width="30%">{{ count($threads->thread_comments) != 0 ? count($threads->thread_comments) : 0}} replies</td>
-					</tr>
-				@endforeach
+				@if(count($forum->threads))
+					@foreach($forum->threads as $threads)
+						<tr class='clickable-row' href="/threads/show_thread/{{$threads->id}}">
+							<td width="70%">{{$threads->title}}</td>
+							<td width="30%">{{ count($threads->thread_comments) != 0 ? count($threads->thread_comments) : 0}} replies</td>
+						</tr>
+					@endforeach
+				@else
+					{{'No Discussions yet'}}
+				@endif
 			</table>
 		</div>
 		<div class="col-sm-2 table-bordered">
 			<h4>Google Adsense</h4>
 		</div>
 	</div>
-	
 </div>
+<br/>
 @if(Session::has('failed'))
 <script type="text/javascript">
 	$(document).ready(function(){

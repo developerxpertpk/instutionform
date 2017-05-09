@@ -12,11 +12,6 @@
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
         <!-- close -->
-        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
-        <!-- twitter -->
-        <!-- <link rel="me" href="{{ Request::url() }}"> -->
-        <!-- twitter -->
         <link rel="shortcut icon" href="/css/style.css">
 
         <!-- CSRF Tokken for ajax -->
@@ -32,12 +27,8 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-
-        
     </head>
     <body>
-        
-
         <script>
             window.fbAsyncInit = function() {
                 FB.init({
@@ -58,8 +49,6 @@
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-
-
         <script>
             window.twttr = (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0],
@@ -147,14 +136,16 @@
                     </div>
                 </nav>
             </div>
-
         </header>
 
         @yield('user_content')
-
+        
+        <div class="footer_bottom_margin">
+            
+        </div>
         <!--Footer Portion-->
         <footer id="footer" class="dark">
-            <div class="primary-footer">
+            <!-- <div class="primary-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
@@ -346,7 +337,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="secondary-footer">
                 <div class="container">
                     <div>
@@ -357,8 +348,11 @@
                     </div>
                 </div>
             </div>
-                
         </footer>
+
+        <!-- js scripts  -->
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
         <!-- Ajax Script -->
         <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/forum_like_dislike.js')}}" type="text/javascript" charset="utf-8" ></script>

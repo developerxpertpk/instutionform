@@ -300,6 +300,8 @@ float:left;
 width:100%;
 background:black;
 color:white;
+position: fixed;
+bottom:0;
 }
 
 
@@ -523,6 +525,67 @@ margin-top:0%;
 }
 
 
+/*gallery css*/
+.gallery-title
+{
+    font-size: 40px;
+    color: #5cb85c;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 30px;
+ margin-top: 40px;
+}
+.gallery-title:after {
+    content: "";
+    position: absolute;
+    width: 7.5%;
+    left: 46.5%;
+    height: 45px;
+    
+}
+.filter-button
+{
+    font-size: 18px;
+    border: 1px solid #5cb85c;
+    border-radius: 5px;
+    text-align: center;
+    color: #5cb85c;
+    margin-bottom: 20px;
 
+}
+.filter-button:hover
+{
+    font-size: 18px;
+    border: 1px solid #42B32F;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #42B32F;
+
+}
+.btn-default:active .filter-button:active
+{
+    background-color: #42B32F;
+    color: white;
+}
+
+.port-image
+{
+    width: 100%;
+}
+
+.gallery_product
+{
+    margin-bottom: 30px;
+}
+
+.g_img {
+    background: #ccc none repeat scroll 0 0;
+    float: left;
+    height: 150px;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}
 
 /*reetu*\

@@ -16,16 +16,14 @@
                 <div class=" row school_profile col-md-6">
 
                     <div class="profile_image col-md-5">
-                    @if(isset($profile_image))
 
+                    @if(isset($profile_image) && count($profile_image))
                         @foreach($profile_image as $image)
-                             <img src="{{asset('upload/schools/school'.'_'.$schools->id.'/images/profile_pic/current_dp/'.$image->image)}}" onerroronerror="this.src='{{asset('image/default_school.png')}}" width="100%">
+                             <img src="{{asset('upload/schools/school'.'_'.$schools->id.'/images/profile_pic/current_dp/'.$image->image)}}" onerror="this.src='{{asset('image/default_school.png')}}'" width="100%" height="150px">
                         @endforeach
-                            {{--onerror="this.src='{{asset('image/default_school.png')}}'"--}}
-                        @else
-                        <img src="{{asset('image/default_school.png')}}"/>
-                        @endif
-
+                    @else
+                        <img src="{{asset('image/default_school.png')}}" width="100%" height="150px"/>
+                    @endif
                         <div class=" row col-md-12">
 
                             <fieldset id='demo1' class="rating">

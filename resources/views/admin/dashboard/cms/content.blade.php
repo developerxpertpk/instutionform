@@ -64,6 +64,10 @@
 				<a href="/{{$pages->slug}}" target="_blank" type="button" class="btn btn-success">
 					Show
 				</a>
+				{{-- Button for edit--}}
+				<a href="{{ route('content.edit',) }}" target="_blank" type="button" class="btn btn-success">
+					Show
+				</a>
 				<!-- Button for  Delete-->
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
 					Delete

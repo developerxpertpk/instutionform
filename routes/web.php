@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
 			Route::get('profile',function(){
-					return view('admin.dashboard.profile');
+				return view('admin.dashboard.profile');
 			})->name('admin.profile');
 
 			Route::get('changepwd',function(){
@@ -159,9 +159,7 @@ Route::group(['middleware' => ['auth','check.status']], function () {
 
     Route::group(['prefix' => 'home'],function(){
 
-		Route::get('my_profile',function(){
-			return view('user.my_profile');
-		});
+		Route::get('my_profile','HomeController@my_profile');
 
 		Route::post('profile_edit','HomeController@profile_edit');
 
@@ -275,6 +273,10 @@ Route::group(['prefix' => 'threads'],function(){
 	Route::get('show_thread/{id}','FrontendthreadController@show_thread');
 });
 
-Route::get('show_school/{id}','UnregisteredController@show_school');
+Route::group(['prefix' => 'show_school'],function(){
+	Route::get('/{id}/gallery','UnregisteredController@school_gallery');
+	Route::get('{id}','UnregisteredController@show_school');
+});
+
 
 Route::get('/{slug}','PageController@page_show');

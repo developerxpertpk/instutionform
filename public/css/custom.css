@@ -626,9 +626,7 @@
 .school_main{
   text-align: center;
 }
-.review_container{
-  margin:20px 0px ;
-}
+
 .review_form{
   margin:20px 0px ;
 }
@@ -705,3 +703,10 @@ td p{
      font-family: cursive;
      color:white;
  }
+
+.footer_bottom_margin{
+  margin-bottom: 70px;
+}
+.crousel_container{
+  width:1348px;
+}
