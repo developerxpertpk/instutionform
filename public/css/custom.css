@@ -605,9 +605,7 @@
 .school_main{
   text-align: center;
 }
-.review_container{
-  margin:20px 0px ;
-}
+
 .review_form{
   margin:20px 0px ;
 }
@@ -616,7 +614,6 @@
   width:100px;
   height:100px;
 }
-<<<<<<< HEAD
 /*code for school gallery*/
 .img-thunb-gal img{
     float: left;
@@ -651,4 +648,10 @@ td p{
 }
 .text_center{
   text-align: center !important;
+}
+.footer_bottom_margin{
+  margin-bottom: 70px;
+}
+.crousel_container{
+  width:1348px;
 }

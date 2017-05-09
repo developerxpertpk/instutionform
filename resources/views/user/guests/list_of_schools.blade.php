@@ -47,8 +47,20 @@
 							
 						<div class="container border_con">
 							<div class="col-xs-12 col-sm-3 pull-left">
+								<?php $count=0;  ?>
 								@if(count($school->school_images))
-									<img  src="{{asset('upload/'.$school->school_images->image)}}">
+									@foreach($school->school_images as $images)
+										@if($images->image_type == 1)
+											<img src="{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}" style="height:180px;width:100%;">
+											<?php $count++; ?>
+										@endif
+										@if($count > 0)
+											@break
+										@endif
+									@endforeach
+									@if($count == 0)
+										<img src="{{asset('upload/def_school.png')}}">
+									@endif
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
 								@endif
@@ -86,8 +98,20 @@
 							
 						<div class="container border_con">
 							<div class="col-xs-12 col-sm-3 pull-left">
+								<?php $count=0;  ?>
 								@if(count($school->schools['school_images']))
-									<img  src="{{asset('upload/'.$school->schools['school_images']->image)}}">
+									@foreach($school->schools['school_images'] as $images)
+										@if($images->image_type == 1)
+											<img src="{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}" style="height:180px;width:100%;">
+											<?php $count++; ?>
+										@endif
+										@if($count > 0)
+											@break
+										@endif
+									@endforeach
+									@if($count == 0)
+										<img src="{{asset('upload/def_school.png')}}">
+									@endif
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
 								@endif
@@ -127,11 +151,23 @@
 							
 						<div class="container border_con">						
 							<div class="col-xs-12 col-sm-3 pull-left">
+							<?php $count=0;  ?>
 								@if(count($school->schools['school_images']))
-									<img  src="{{asset('upload/'.$school->school_images->image)}}">
+									@foreach($school->schools['school_images'] as $images)
+										@if($images->image_type == 1)
+											<img src="{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}" style="height:180px;width:100%;">
+											<?php $count++; ?>
+										@endif
+										@if($count > 0)
+											@break
+										@endif
+									@endforeach
+									@if($count == 0)
+										<img src="{{asset('upload/def_school.png')}}">
+									@endif
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
-								@endif
+								@endif 
 							</div>
 							<div class="heading col-xs-12 col-sm-9 pull-right">
 								<h3>{{$school->schools->school_name}}</h3>
@@ -167,11 +203,23 @@
 							
 						<div class="container border_con">
 							<div class="col-xs-12 col-sm-3 pull-left">
+								<?php $count=0;  ?>
 								@if(count($school->school_images))
-									<img  src="{{asset('upload/'.$school->school_images->image)}}">
+									@foreach($school->school_images as $images)
+										@if($images->image_type == 1)
+											<img src="{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}" style="height:180px;width:100%;">
+											<?php $count++; ?>
+										@endif
+										@if($count > 0)
+											@break
+										@endif
+									@endforeach
+									@if($count == 0)
+										<img src="{{asset('upload/def_school.png')}}">
+									@endif
 								@else
 									<img src="{{asset('upload/def_school.png')}}">
-								@endif
+								@endif 
 							</div>
 							<div class="heading col-xs-12 col-sm-9 pull-right">
 								<h3>{{$school->school_name}}</h3>
@@ -208,4 +256,4 @@
 	@else
 	<h1>No Records in the database</h1>
 	@endif
-	@endsection
+@endsection

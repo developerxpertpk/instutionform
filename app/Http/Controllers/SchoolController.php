@@ -43,7 +43,7 @@ class SchoolController extends Controller
             'state' => 'required',
             'city' => 'required',
             'profile' => 'image',
-            'image[]' =>'image',
+            'image[]' =>'image|max:20000000',
             'document[]' =>'mime|docx,doc,pdf,txt',
         );
 
@@ -252,8 +252,7 @@ class SchoolController extends Controller
         return view('admin.dashboard.school.edit', compact('school','gallery_profile','gallery_images','documents'));
     }
 
-    public function school_update1(Request $request, $id)
-    {
+    public function school_update1(Request $request, $id) {
         $rules = array(
             'school_name' => 'required',
             'school_address' => 'required',
@@ -296,35 +295,34 @@ class SchoolController extends Controller
                 $fileName = $files->getClientOriginalName();
                 $image_path = $destinationPath.'/'.$fileName;
 
+                if(!File::exists($destinationPath)){
+                    File::makeDirectory($destinationPath, 0777, true);
+                }
+
                 //if there is an data from database
                 if(count($image_profile)){
-
                     File::delete('upload/schools/school_'.$id.'/images/profile_pic/current_dp/'.$image_profile->image);
                     $files->move($destinationPath,$fileName);
                     $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
-                    $result = School_image::where('id','=',$image_profile->id )
-                                        ->update(['image' => $fileName]);
-                    }else{
-
-                    if(!File::exists($destinationPath)){
-                        File::makeDirectory($destinationPath, 0777, true);
-                    }
+                    /*update database*/
+                    $image_profile->image=$fileName;
+                    $image_profile->save();
+                }else{
 
                     $files->move($destinationPath,$fileName);
                     $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
 
                     //query to insert imgae in table
-                    $image = new School_image();
-                    $image->image = $fileName;
-                    $image->image_type = 1;
-                    $image->school_id = $id;
-                    $image->save();
+                    $image_new= new School_image;
+                    $image_new->image=$fileName;
+                    $image_new->school_id=$id;
+                    $image_new->image_type=1;
+                    $image_new->save();
                 }
             }
-            return redirect()->route('school.index')
-                ->with('success', 'school updated successfully');
         }
-
+        return redirect()->route('school.index')
+                ->with('success', 'school updated successfully');
     }
 
 

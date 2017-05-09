@@ -7,12 +7,12 @@
 		@foreach($particular_school as $school)
 			<br/>
 			<!-- Facebook Preview Tags -->
-			<meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+			<meta property="og:url"           content="{{Request::url()}}" />
 	        <meta property="og:type"          content="website" />
 	        <meta property="og:title"         content="{{$school->school_name}}" />
-	        <meta property="og:description"   content="Your description" />
-	        <meta property="og:description"   content="Your description" />
-	        <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+	        <meta property="og:description"   content="Here, you can find best schools and courses for your carrer" />
+	        <meta property="og:description"   content="Here, you can find best schools and courses for your carrer" /><!-- 
+	        <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" /> -->
 	        <!-- /Facebook Preview Tags Close -->
 
 	        <!-- twitter preview tags -->
@@ -21,17 +21,30 @@
 
 			<div class="container-fluid">
 				<div class="container">
-				@if( count($school->school_images) != 0 )
-					@if(asset('upload/'.$school->school_images))
-					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/'.$school->school_images->image)}}');">
-					<img src="{{asset('upload/'.$school->school_images->image)}}">
-					@endif
-				@else
-					<div class="school_dp col-sm-5" style="background-image: url('{{asset('upload/def_school.png')}}');">
-						<img src="{{asset('upload/def_school.png')}}">
-				@endif
-						<!-- <img src="{{asset('image/bookmark.png')}}" class="bookmark_logo"> -->
-					</div>
+					<?php $count=0;  ?>
+						@if(count($school->school_images))
+							@foreach($school->school_images as $images)
+								@if($images->image_type == 1)
+									<div class="school_dp col-sm-5 padding_zero" style="height:250px;background-image: url('{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}');background-size:cover; ">
+
+	        							<meta property="og:image"         content="{{asset('upload/schools/school_'.$images->school_id.'/images/profile_pic/current_dp/'.$images->image)}}" />
+	        						</div>
+									<?php $count++; ?>
+								@endif
+								@if($count > 0)
+									@break
+								@endif
+							@endforeach
+							@if($count == 0)
+								<div class="school_dp col-sm-5"  style="height:250px;background-image: url('{{asset('upload/def_school.png')}}');background-size:cover;">
+									<meta property="og:image"         content="{{asset('upload/def_school.png')}}" />
+								</div>
+							@endif
+						@else
+							<div class="school_dp col-sm-5" style="height:250px;background-image: url('{{asset('upload/def_school.png')}}');background-size:cover;">
+								<meta property="og:image"         content="{{asset('upload/def_school.png')}}" />
+							</div>
+						@endif 
 					<div class="heading_box col-sm-6">
 						<span class="col-sm-12">
 							<h3>{{$school->school_name}}</h3>
@@ -89,60 +102,50 @@
 								<p>No ratings yet</p>
 							@endif
 						</div>
-						<div >
-							<span class="col-sm-12">
+						<span class="col-sm-12">
 							
 							@if(Auth::check() && isset($school->bookmarked_schools) && count($school->bookmarked_schools->where('user_id',Auth::id())))
 								<i class="fa fa-bookmark bookmark_icon_glow" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@else
 								<i class="fa fa-bookmark bookmark_class" title="{{$school->id}}" id="bookmark_icon" aria-hidden="true"></i>
 							@endif
-							</span>
+						</span>
+						<div class="col-sm-12 padding_zero">
 							<span class="col-sm-2">
 								<div class="fb-share-button" data-href="www.google.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
 							</span>
 							<span class="col-sm-2">
 								<a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">Tweet</a>
-							</span>	
-								<!-- <a href="https://api.addthis.com/oexchange/0.8/forward/email/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/email.png" border="0" alt="Email"/></a>
-
-								<a href="https://api.addthis.com/oexchange/0.8/forward/facebook/offer?url=http%3A%2F%2Fwww.google.com%2F&pubid=ra-42fed1e187bae420&title=GoogleHome%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/facebook.png" border="0" alt="Facebook"/></a>
-
-								<a href="https://api.addthis.com/oexchange/0.8/forward/google_plusone_share/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/google_plusone_share.png" border="0" alt="Google+"/></a>
-
-								<a href="https://api.addthis.com/oexchange/0.8/forward/twitter/offer?url=http%3A%2F%2Fwww.addthis.com%2F&pubid=ra-42fed1e187bae420&title=AddThis%20%7C%20Home&ct=1" target="_blank"><img src="https://cache.addthiscdn.com/icons/v3/thumbs/32x32/twitter.png" border="0" alt="Twitter"/></a> -->
-
-								<!-- AddToAny BEGIN -->
+							</span>
 							<span class="col-sm-2">
-								<!-- <a href="https://www.addtoany.com/add_to/facebook?linkurl=www.google.com&amp;linkname=demo" target="_blank"><img src="{{asset('image/facebook.svg')}}" width="32" height="32"></a>
-
-								<a href="https://www.addtoany.com/add_to/twitter?linkurl=www.google.com&amp;linkname=" target="_blank"><img src="https://static.addtoany.com/buttons/twitter.svg" width="32" height="32"></a> -->
-
 								<a href="#" class="share_via_email"><img src="{{asset('image/mail.png')}}" width="32" height="32"></a>
-								<!-- AddToAny END -->
-
 							</span>
 						</div>
-						<span>
-							<img src="" alt="">
-						</span>
+						<div class="col-sm-12 padding_zero">
+							<div class="col-sm-6 ">
+								<a href="{{$school->id}}/gallery" ><input type="submit" class="btn btn-success btn-sm" value="Gallery"></a>
+							</div>
+						</div>					
 					</div>
 				</div>
+
+				<br/>
+				<br/>
+
 				<div class="container school_main">
-						@if(Auth::check())
-							<!-- menu profile quick info -->
-	                        <div class="profile_circle center-block">
-	                            <div class="profile_dp">
-	                            	@if( count(Auth::user()->image) != 0 )
-	                                <img src="{{asset('upload/'.Auth::user()->image)}}" alt="..." class="user_image">
-	                                @else
-	                                <img src="{{asset('upload/user.png')}}" class="user_image">
-	                                @endif
-	                            </div>
-	                        </div>
-	                        <!-- /menu profile quick info -->
-						@endif
-				
+					@if(Auth::check())
+						<!-- menu profile quick info -->
+                        <div class="profile_circle center-block">
+                            <div class="profile_dp">
+                            	@if( !empty(Auth::user()->image) )
+                                	<img src="{{asset('upload/'.Auth::user()->image)}}" alt="..." class="user_image">
+                                @else
+                                	<img src="{{asset('upload/user.png')}}" class="user_image">
+                                @endif
+                            </div>
+                        </div>
+                        <!-- /menu profile quick info -->
+					@endif
                     <div class="rating_box col-sm-12">
                     	<div id='demo3' class="col-sm-offset-3 col-sm-4 rating">
                     		<input type="hidden" name="hidden_input" value="{{$school->id}}" />
@@ -182,7 +185,6 @@
 
 	                    </div>
                     </div>
-	                    
 				</div>
 
 				@if(Session::has('failed') || Session::has('send_failed'))
@@ -193,128 +195,127 @@
 					</script>
 				@endif
 
-					<!-- Modal For Login -->
-					<div class="modal fade" id="edit_user" role="dialog">
-						<div class="modal-dialog">
-							
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Login First</h4><a class="non_user" href="{{ route('register') }}">not registered yet?</a>
-								</div>
-								<div class="confirm_login">
-									<div class="row">
-								        <div class="col-md-10 ">
-							                <div class="panel-body">
-							                @if(Session::has('failed'))
-							                	<span class="alert-danger" >{{Session::get('failed')}}</span>
-							                @endif
-							                    <form class="form-horizontal" role="form" method="POST" action="{{route('review_login')}}">
-							                        {{ csrf_field() }}
+				<!-- Modal For Login -->
+				<div class="modal fade" id="edit_user" role="dialog">
+					<div class="modal-dialog">
+						
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Login First</h4><a class="non_user" href="{{ route('register') }}">not registered yet?</a>
+							</div>
+							<div class="confirm_login">
+								<div class="row">
+							        <div class="col-md-10 ">
+						                <div class="panel-body">
+						                @if(Session::has('failed'))
+						                	<span class="alert-danger" >{{Session::get('failed')}}</span>
+						                @endif
+						                    <form class="form-horizontal" role="form" method="POST" action="{{route('review_login')}}">
+						                        {{ csrf_field() }}
 
-							                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-							                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+						                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+						                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-							                            <div class="col-md-6">
-							                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+						                            <div class="col-md-6">
+						                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-							                                @if ($errors->has('email'))
-							                                    <span class="help-block">
-							                                        <strong>{{ $errors->first('email') }}</strong>
-							                                    </span>
-							                                @endif
-							                            </div>
-							                        </div>
+						                                @if ($errors->has('email'))
+						                                    <span class="help-block">
+						                                        <strong>{{ $errors->first('email') }}</strong>
+						                                    </span>
+						                                @endif
+						                            </div>
+						                        </div>
 
-							                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-							                            <label for="password" class="col-md-4 control-label">Password</label>
+						                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+						                            <label for="password" class="col-md-4 control-label">Password</label>
 
-							                            <div class="col-md-6">
-							                                <input id="password" type="password" class="form-control" name="password" required autofocus>
+						                            <div class="col-md-6">
+						                                <input id="password" type="password" class="form-control" name="password" required autofocus>
 
-							                                @if ($errors->has('password'))
-							                                    <span class="help-block">
-							                                        <strong>{{ $errors->first('password') }}</strong>
-							                                    </span>
-							                                @endif
-							                            </div>
-							                        </div>
-							                        <div class="form-group">
-							                            <div class="col-md-8 col-md-offset-4">
-							                                <button type="submit" class="btn btn-primary custom-btn">
-							                                    Login
-							                                </button>
+						                                @if ($errors->has('password'))
+						                                    <span class="help-block">
+						                                        <strong>{{ $errors->first('password') }}</strong>
+						                                    </span>
+						                                @endif
+						                            </div>
+						                        </div>
+						                        <div class="form-group">
+						                            <div class="col-md-8 col-md-offset-4">
+						                                <button type="submit" class="btn btn-primary custom-btn">
+						                                    Login
+						                                </button>
 
-							                                <a class="btn btn-link" href="{{ route('password.request') }}">
-							                                    Forgot Password ?
-							                                </a>
-							                            </div>
-							                        </div>
-							                    </form>
-							                </div>
-								        </div>
-								    </div>
-								</div>
-							</div>		
-						</div>
+						                                <a class="btn btn-link" href="{{ route('password.request') }}">
+						                                    Forgot Password ?
+						                                </a>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+							        </div>
+							    </div>
+							</div>
+						</div>		
 					</div>
+				</div>
 
-					<!-- Modal For Mail -->
-					<div class="modal fade" id="mail_model" role="dialog">
-						<div class="modal-dialog">
-							
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Share via email</h4>
-								</div>
-								<div class="confirm_login">
-									<div class="row">
-								        <div class="col-md-10 ">
-							                <div class="panel-body">
-							                @if(Session::has('send_failed'))
-							                	<span class="alert-danger" >{{Session::get('send_failed')}}</span>
-							                @endif
-							                    <form class="form-horizontal" role="form" method="POST" action="/share_via_email">
-							                        {{ csrf_field() }}
+				<!-- Modal For Mail -->
+				<div class="modal fade" id="mail_model" role="dialog">
+					<div class="modal-dialog">
+						
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Share via email</h4>
+							</div>
+							<div class="confirm_login">
+								<div class="row">
+							        <div class="col-md-10 ">
+						                <div class="panel-body">
+						                @if(Session::has('send_failed'))
+						                	<span class="alert-danger" >{{Session::get('send_failed')}}</span>
+						                @endif
+						                    <form class="form-horizontal" role="form" method="POST" action="/share_via_email">
+						                        {{ csrf_field() }}
 
-							                        <input type="hidden" name="url" value="{{Request::url()}}">
+						                        <input type="hidden" name="url" value="{{Request::url()}}">
 
-							                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-							                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+						                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+						                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-							                            <div class="col-md-6">
-							                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+						                            <div class="col-md-6">
+						                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-							                                @if ($errors->has('email'))
-							                                    <span class="help-block">
-							                                        <strong>{{ $errors->first('email') }}</strong>
-							                                    </span>
-							                                @endif
-							                            </div>
-							                        </div>
+						                                @if ($errors->has('email'))
+						                                    <span class="help-block">
+						                                        <strong>{{ $errors->first('email') }}</strong>
+						                                    </span>
+						                                @endif
+						                            </div>
+						                        </div>
 
-							                        
-							                        <div class="form-group">
-							                            <div class="col-md-8 col-md-offset-4">
-							                                <button type="submit" class="btn btn-primary custom-btn">
-							                                    Send
-							                                </button>
-							                            </div>
-							                        </div>
-							                    </form>
-							                </div>
-								        </div>
-								    </div>
-								</div>
-							</div>		
-						</div>
+						                        
+						                        <div class="form-group">
+						                            <div class="col-md-8 col-md-offset-4">
+						                                <button type="submit" class="btn btn-primary custom-btn">
+						                                    Send
+						                                </button>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+							        </div>
+							    </div>
+							</div>
+						</div>		
 					</div>
+				</div>
 
-
-				<div class="container review_container">
+				<div class="container">
 					<div class="col-sm-9">
 					<h1>Reviews</h1>
 						@foreach( $school->school_ratings as $ratings )
@@ -367,7 +368,6 @@
 					<div class="col-sm-2 table-bordered">
 						<h4>Google Adsense</h4>
 					</div>
-						
 				</div>
 			</div>
 		@endforeach

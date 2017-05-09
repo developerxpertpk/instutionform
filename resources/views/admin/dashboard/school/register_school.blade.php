@@ -65,7 +65,7 @@
 					</label>
 
 					<div class=" col-sm-6 col-md-6 ">
-						<textarea name="school_address" class="form-control" rows="4"> write here your address </textarea>
+						<textarea name="school_address" class="form-control" placeholder="write here your address" rows="4"></textarea>
 
 						@if ($errors->has('address'))
 						<span class="help-block error_message">

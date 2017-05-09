@@ -121,10 +121,10 @@
 
                         requestAjax(location_data);
                     }else{
-                        alert("No results found");
+                        console.log("No results found");
                     }
                 }else{
-                    alert("Geocoder failed due to: " + status);
+                    console.log("Geocoder failed due to: " + status);
                 }
             });
         }
