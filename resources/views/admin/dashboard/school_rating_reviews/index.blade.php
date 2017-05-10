@@ -4,22 +4,24 @@
         <div class="conatiner-fluid">
             <!-- Page Heading -->
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Manage Rating & Reviews
-                    </h1>
+                <h2 class="page-header">
+                    <i class="fa fa-star fa-1x"> Rating & Reviews</i>
+                </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active"> Rating & Reviews </li>
+                </ol>
 
-                <div class="pull-left">
+            </div>
 
-                </div>
+            <div class="row">
 
                 <div class="pull-right">
                     {!! Form::open(['method' => 'GET', 'route' => 'rating_search'] ) !!}
-                    {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any name or email']) !!}
+                    {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any school name ']) !!}
                     {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
                     {!! Form::close() !!}
 
-                </div>
                 </div>
             </div>
 
@@ -30,7 +32,6 @@
                     </div>
                 @endif
             </div>
-
 
             <div class="Ratings-list">
                 <table class="table table-bordered">
@@ -53,7 +54,6 @@
                             <td>{{ $data->schools->school_name }}</td>
                             <td> {{ $data->schools->school_address }}</td>
                             <td>{{ $data->users->fname.$data->users->lname }} </td>
-
                             <td>
                                 @for( $i=1;$i <= $data->ratings; $i++)
                                     <i class="fa fa-star" aria-hidden="true"  style="color:blue;"></i>
@@ -62,9 +62,12 @@
                                     <i class="fa fa-star-o" aria-hidden="true"></i>
                                 @endfor
                             </td>
-                            <td> {{ str_limit($data->reviews, $limit = 20, $end = '{.....}') }} </td>
+
+                            <td> {!! str_limit($data->reviews, $limit = 20, $end = '{.....}') !!} </td>
+
                             <td>
                                 <a href="{{ route('rating_reviews.edit',$data->id) }}" class="btn btn-success"> Edit </a>
+
                                 <!-- Button for  Delete-->
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
                                     Delete
@@ -94,16 +97,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </td>
                         </tr>
                     @endforeach
                 </table>
-            </div>
-
+             </div>
             {!! $paginate->links() !!}
-
         </div>
     </div>
 @endsection

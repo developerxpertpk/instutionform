@@ -22,9 +22,18 @@
                     <div class="form-group">
                         <label class="col-sm-4 col-md-2 col-lg-2 control-label">Content Type* </label>
                         <div class="col-sm-8 col-md-8 ">
+
                             <select class="form-control" name="content_type">
-                                <option value="Static">Static</option>
-                                <option value="other">other</option>
+                                <option >
+                                @if($result->content_type ='static')
+                                <option value="static" selected>Static</option>
+                                @endif
+                                @if($result->content_type ='error-page')
+                                <option value="error-page" selected>Error Page</option>
+                                @endif
+                                @if($result->content_type ='error-page')
+                                <option value="other" selected>other</option>
+                                @endif
                             </select>
                              @if ($errors->has('school_name'))
                                 <span class="help-block">

@@ -1,24 +1,21 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
-
    <div id="page-wrapper">
 			<div class="container-fluid">
 
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">
+						<h3 class="page-header">
 							Static  Pages
-						</h1>
+						</h3>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
 							<li class="breadcrumb-item active">Static Content </li>
 						</ol>
 					</div>
-
 				</div>
 		<!-- Page Heading -->
-
-		<a class="btn btn-primary" href="{{ route('addpages')}}">Add Pages </a>
+	<a class="btn btn-primary" href="{{ route('addpages')}}">Add Pages </a>
 
 	@if (count($errors))
 		<div class="alert alert-danger">
@@ -56,17 +53,17 @@
 							<tr>
 								<td>{{ ++$i }}</td>
 								<td>{{ $pages->content_type }}</td>
-								<td>{{ str_limit($pages->title ,50,'...') }} </td>
+								<td>{!!  str_limit($pages->title ,100,'...') !!}  </td>
 								<td>{{ $pages->slug }}</td>
-								<td>{!!  str_limit($pages->content,50,'...') !!}</td>
+								<td>{!!  str_limit($pages->content,100,'...') !!}</td>
 								<td>
 				{{-- Button {{ route('content.show',$pages->id) }}for show--}}
 				<a href="/{{$pages->slug}}" target="_blank" type="button" class="btn btn-success">
 					Show
 				</a>
 				{{-- Button for edit--}}
-				<a href="{{ route('content.edit',) }}" target="_blank" type="button" class="btn btn-success">
-					Show
+				<a href="{{ route('content.edit',$pages->id) }}" type="button" class="btn btn-primary">
+					Edit
 				</a>
 				<!-- Button for  Delete-->
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
@@ -98,11 +95,9 @@
 					</div>
 				</div>
 
-								</td>
-							</tr>
-
-
-			@endforeach
+			</td>
+		</tr>
+	@endforeach
 	</table>
 	</div>
 
