@@ -17,7 +17,7 @@
 	        <tbody>
 	        @if(count($forums))
 	        	@foreach($forums as $forum)
-					<tr class='clickable-row' href="/forum/show_forum/{{$forum->id}}" style="cursor: pointer;" >
+					<tr class='clickable-row' href="{{url('/forum/show_forum/'.$forum->id)}}" style="cursor: pointer;" >
 						<td width="20%">{{$forum->title}}</td>
 						<td width="35%">{!! str_limit($forum->description, $limit = 100, $end = ' ~read more..') !!}</td>
 						<td width="15%">@if(count($forum->threads) == 1)1 post @elseif(!count($forum->threads)) No posts @else {{count($forum->threads)}} posts @endif</td>
@@ -32,7 +32,7 @@
 	    </table>
 	    {{$forums->links()}}
 	    <div class="col-xs-12 text-right">
-	        <a href="/create_forum">
+	        <a href="{{url('/create_forum')}}">
 	        	<button type="submit" class="btn btn-success btn-sm">Create Forum</button>
 	        </a>
 	    </div>
@@ -67,7 +67,7 @@
 	                    	@if(count($popular_threads))
 		                    	@foreach($popular_threads as $threads)
 
-		                    		<tr class='clickable-row' href="/threads/show_thread/{{$threads->threads->id}}" style="cursor: pointer;" >
+		                    		<tr class='clickable-row' href="{{url('/threads/show_thread/'.$threads->threads->id)}}" style="cursor: pointer;" >
 			 							<td width="30%">{{$threads->threads->title}}</td>
 			 							<td width="40%">{!! str_limit($threads->threads->description, $limit = 100, $end = ' ~read more..') !!}</td>
 			 							<td width="15%">@if(count($threads->threads['thread_comments'])) {{count($threads->threads['thread_comments'])}} replies @else no replies yet @endif</td>
@@ -89,7 +89,7 @@
                         <tbody>
 	                        @if(count($recent_threads))
 			                    @foreach($recent_threads as $threads)
-			 						<tr class='clickable-row' href="/threads/show_thread/{{$threads->id}}" style="cursor: pointer;" >
+			 						<tr class='clickable-row' href="{{url('/threads/show_thread/'.$threads->id)}}" style="cursor: pointer;" >
 			 							<td width="30%">{{$threads->title}}</td>
 			 							<td width="40%">{!! str_limit($threads->description, $limit = 50, $end = ' ~read more..') !!}</td>
 			 							<td width="15%">@if(count($threads->thread_comments)) {{count($threads->thread_comments)}} replies @else no replies yet @endif</td>

@@ -1,12 +1,17 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
     <div class="row1">
-        <div class="container-fluid">
+        <div class="container-fluid padding_btm_lr">
             <div class="form-horizontal_row2">
+            @if(Session::has('error_auth'))
+                <span class="help-block">
+                    <strong>{{ Session::get('error_auth') }}</strong>
+                </span>
+            @endif
             @if(isset($redirect) && isset($_GET['title']))
-                <form class="form-horizontal" role="form" method="POST" action="{{'/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id'] }}" >
+                <form class="form-horizontal" role="form" method="POST" action="{{url('/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id']) }}" >
             @elseif(isset($redirect) && isset($_GET['t_title']))
-                <form class="form-horizontal" role="form" method="POST" action="{{ '/submit?redirect='.$redirect.'&t_title='.$_GET['t_title'].'&t_description='.$_GET['t_description'].'&id='.$_GET['id']  }}" >
+                <form class="form-horizontal" role="form" method="POST" action="{{url('/submit?redirect='.$redirect.'&t_title='.$_GET['t_title'].'&t_description='.$_GET['t_description'].'&id='.$_GET['id'])  }}" >
             @else
                 <form class="form-horizontal" role="form" method="POST" action="{{route('login.submit') }}" >
             @endif
@@ -34,7 +39,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             <div class="checkbox">
                                 <label>
@@ -42,12 +47,12 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             <button type="submit" class="btn btn-success btn-lg">Sign in</button>
-                            <a href="#">Forget Password</a>
+                            <a href="{{route('password.request')}}">Forget Password</a>
                         </div>
                     </div>
                 </form>

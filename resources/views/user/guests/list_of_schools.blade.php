@@ -1,8 +1,8 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
-
+	
 	@if($schools->count())
-		<section class="container-fluid tab_schools">
+		<section class="container-fluid tab_schools padding_btm">
 			<div class="texts text-center">
 				<div class="container">
 					<h2>Trusted Schools</h2>
@@ -72,7 +72,7 @@
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->id }}">
+								<a href="{{url('show_school/'.$school->id)}}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>
@@ -123,7 +123,7 @@
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->school_id }}">
+								<a href="{{url('show_school/'.$school->id)}}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>
@@ -176,7 +176,7 @@
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->school_id }}">
+								<a href="{{url('show_school/'.$school->id)}}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>
@@ -228,7 +228,7 @@
 									students who have passed 10th standard. Briefly, it seemed like Science stream and its popularity had tarnished the image
 									of Commerce stream. It made it look like this stream was reserved for students who were not too bright.					
 								</p>
-								<a href="show_school/{{ $school->id }}">
+								<a href="{{url('show_school/'.$school->id)}}">
 									<button type="submit" class="btn btn-primary btn-xs">
 										Read More
 									</button>

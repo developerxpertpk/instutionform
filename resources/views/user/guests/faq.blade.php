@@ -3,7 +3,7 @@
 	
 	@if(isset($faq_data))
 
-		<section class="Trend_School">
+		<section class="Trend_School padding_btm">
 			<div class="container">	
 				<h2>FAQ</h2>
 				<h5>(Frequently Asked Questions)</h5>

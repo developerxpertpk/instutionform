@@ -153,7 +153,7 @@
                                                     <div class="modal-footer">
 
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-                                                        {!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id,$schools->id ],'style'=>'display:inline','class'=>'delete']) !!}
+                                                        {!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id],'style'=>'display:inline','class'=>'delete']) !!}
 
                                                         {!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
                                                         {!! Form::close() !!}

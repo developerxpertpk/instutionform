@@ -18,7 +18,6 @@
 	        <!-- twitter preview tags -->
 	        <link rel="canonical" href="{{ Request::url() }}">
 	        <!-- /twitter preview tags -->
-
 			<div class="container-fluid">
 				<div class="container">
 					<?php $count=0;  ?>
@@ -121,11 +120,15 @@
 								<a href="#" class="share_via_email"><img src="{{asset('image/mail.png')}}" width="32" height="32"></a>
 							</span>
 						</div>
-						<div class="col-sm-12 padding_zero">
-							<div class="col-sm-6 ">
-								<a href="{{$school->id}}/gallery" ><input type="submit" class="btn btn-success btn-sm" value="Gallery"></a>
+						<div class="col-sm-12 padding_zero upper_margin">
+							<div class="col-sm-3 ">
+								<a href="{{$school->id}}/gallery" ><input type="submit" class="btn btn-success btn-sm" style="width:92px;" value="Gallery"></a>
 							</div>
-						</div>					
+							<div class="col-sm-3 padding_zero">
+								<a href="{{$school->id}}/documents" ><input type="submit" class="btn btn-danger " style="width:95px;" value="Documents"></a>
+							</div>
+						</div>
+
 					</div>
 				</div>
 
@@ -335,15 +338,14 @@
 						@endforeach
 						@if(Auth::check())
 							<h3>Post a review</h3>
-							<a href="/create_forum/{{$school->id}}"><button class="btn btn-success" style="float:right;">Create Forum</button></a>
 						@else
 							<h3>Login to post your review</h3>
 							<!-- <span class="col-sm-10"> -->
 								<a href="#" id="review_login_link">login..</a>
 								<a href="{{route('register')}}">Not a user?</a>
-								<a href="/create_forum/{{$school->id}}"><button class="btn btn-success" style="float:right;">Create Forum</button></a>
 							<!-- </span> -->
 						@endif
+						<a href="{{url('/create_forum/'.$school->id)}}"><button class="btn btn-success" style="float:right;">Create Forum</button></a>
 						
 						<div class="form-horizontal review_form">
 						@if(Session::has('failed'))
@@ -374,7 +376,306 @@
 	@else
 		No records Found
 	@endif
-			
+	<script>
+	    window.fbAsyncInit = function() {
+	        FB.init({
+	            appId      : '201788563656236',
+	            xfbml      : true,
+	            version    : 'v2.8'
+	        });
+	        FB.AppEvents.logPageView();
+	    };
+	</script>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+            t._e.push(f);
+            };
+
+          return t;
+        }
+        (document, "script", "twitter-wjs"));
+    </script>
+	<script>
+        // create social networking pop-ups
+        (function() {
+            // link selector and pop-up window size
+            var Config = {
+                Link: "a.share",
+                Width: 500,
+                Height: 500
+            };
+
+            // add handler links
+            var slink = document.querySelectorAll(Config.Link);
+            for (var a = 0; a < slink.length; a++) {
+                slink[a].onclick = PopupHandler;
+            }
+
+            // create popup
+            function PopupHandler(e) {
+
+                e = (e ? e : window.event);
+                var t = (e.target ? e.target : e.srcElement);
+
+                // popup position
+                var
+                    px = Math.floor(((screen.availWidth || 1024) - Config.Width) / 2),
+                    py = Math.floor(((screen.availHeight || 700) - Config.Height) / 2);
+
+                // open popup
+                var popup = window.open(t.href, "social", 
+                    "width="+Config.Width+",height="+Config.Height+
+                    ",left="+px+",top="+py+
+                    ",location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1");
+                if (popup) {
+                    popup.focus();
+                    if (e.preventDefault) e.preventDefault();
+                    e.returnValue = false;
+                }
+
+                return !!popup;
+            }
+
+        }());
+    </script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+
+		    var school_id=$('input[name=hidden_input]').val();
+		    console.log(school_id);
+
+		    $.ajaxSetup({
+		        headers: {
+		            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+		        }
+		    });
+		    $.ajax({
+		        url:"{{url('/check_rate')}}",
+		        type:'POST',
+		        //datatype:'json',
+		        // processData:false,
+		        data:{
+		                'school_id':school_id,
+		            },
+
+		        success: function(response){
+		            console.log('check rate success: '+response);
+
+		            if(response == false || response == 'not exist'){
+		                $('.school_main').append("<h5 class='rating_heading'>Rate this school</h5>");
+
+		            }else{
+		                var i=1;
+		                var j=response.ratings;
+		                // console.log(j);
+
+		                rate(j);
+		                // $("input[class='stars']").unbind( "click" );
+		                $('.school_main').append("<h5>Thanks For your ratings</h5>");
+		            }
+		        },
+		        error:function(response){
+		            console.log('error check rate: '+response);
+		        }
+		    });
+
+
+
+
+
+		    $("#demo3 .stars").click(function () {
+
+		        var rating=$(this).attr('value');
+		        
+		        var school_id=$('input[name=hidden_input]').val();
+
+		        var label = $("label[for='" + $(this).attr('id') + "']");
+
+		        $.ajax({
+		            url:'check_login',
+		            type:'GET',
+		            data:{'test':'test'},
+
+		            success: function(response){
+
+
+		                if(response == false){
+		                    // $(this).attr("unchecked");
+		                    $('#starzero3').prop('checked', true);
+		                    edit_user();
+		                }
+		                /*else if(isNaN(response)){
+		                    
+		                }*/
+		                else{
+		                    rating_store(school_id,rating);
+		                }
+
+		            },
+
+		            error: function(response){
+		                console.log('error in check login: '+response);
+		            }
+		        });
+		        
+		    });
+
+
+
+
+
+
+		    function rating_store(school_id,rating){
+		        console.log(school_id);
+		        console.log(rating);
+
+		        $.ajax({
+
+		            url:"{{url('/rate_school')}}",
+		            type:'POST',
+		            data:{
+		                "school_id":school_id,
+		                "rating":rating,
+		            },
+
+		            success: function(response){
+
+		                console.log(response.ratings);
+
+		                if(response == true){
+		                    console.log('rating successfull');
+		                    $( ".rating_heading" ).replaceWith( "<h5>Thanks For your ratings</h5>" );
+		                    rate(response.ratings);
+
+		                }else{
+		                    console.log('Already Rated');
+		                    rate(response.ratings);
+		                }
+
+		            },
+
+		            error: function(response){
+
+		                console.log('error: '+response);
+		            }
+
+		        });
+		    }
+
+
+
+
+		    window.edit_user = function(){
+		        $("#edit_user").modal();
+		    }
+
+
+
+		    function rate(value){
+		        console.log(value);
+		        $("input[value='"+value+"']").prop('checked', true);
+		    }
+
+
+
+
+
+		    /*Bookmark functionality*/
+		    $('#bookmark_icon').click(function(){
+		        var school_id=$(this).attr('title');
+		        // alert(school_id);
+
+		        $.ajax({
+		            url:"{{url('/check_bookmark')}}",
+		            type:'POST',
+		            data:{
+		                'school_id':school_id,
+		            },
+
+		            success: function(response){
+		                console.log('success check_bookmark: '+response);
+
+		                if(response == false){
+		                    console.log('You are not Logged in');
+		                    edit_user();
+		                }else if(response == 500){
+		                    console.log('You have been blocked');
+		                }else{
+		                    console.log(response);
+		                    $('#bookmark_icon').toggleClass('bookmark_class');
+		                    $('#bookmark_icon').toggleClass('bookmark_icon_glow');
+		                }
+		            },
+		            error: function(response){
+		                console.log('error check_bookmark: '+response);
+		            }
+		        });
+		    });
+
+		    /*for user bookmarks*/
+		    /*for Styling*/
+		    $('.delete_user_bookmark').hover(function(){
+		      $(this).attr('class','fa fa-trash delete_user_bookmark');
+		      $(this).css('font-size','25px');
+		    },function(){
+		      $(this).attr('class','fa fa-trash-o delete_user_bookmark');
+		      $(this).css('font-size','20px');
+		    });
+
+		    /*for deletion*/
+		    $('.delete_user_bookmark').click(function(){
+		      var bookmark_id=$(this).attr('id');
+		      var school_name=$(this).parent().prev().prev().prev().prev().html();
+		      var row_id=$(this).parent().parent().attr('id');
+
+		      var confrm = confirm('Do you really want to delete this bookmark? ('+school_name+')');
+		      
+		      if(confrm == true){
+		        console.log('here');
+		        $.ajax({
+		          url:"{{url('/bookmark_school_delete')}}",
+		          method:'POST',
+		          data:{
+		            'bookmark_id':bookmark_id,
+		          },
+
+		          success:function(response){
+		            if(response == 404){
+		              console.log('doesnot exists');
+		            }else{
+		              console.log(true);
+		              $('#'+row_id).hide();
+		            }
+		          },
+		          error:function(response){
+		            console.log('error: '+response);
+		          }
+		        })
+		      }
+		    });
+		});
+    </script>
+    <!-- <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script> -->
 		
 @else
 	<script type="text/javascript">

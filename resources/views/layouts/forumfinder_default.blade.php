@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
         <!-- close -->
+
+        <!-- js scripts  -->
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+        <!-- /js scripts close -->
+
         <link rel="shortcut icon" href="/css/style.css">
 
         <!-- CSRF Tokken for ajax -->
@@ -29,47 +35,8 @@
     </script>
     </head>
     <body>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '201788563656236',
-                    xfbml      : true,
-                    version    : 'v2.8'
-                });
-                FB.AppEvents.logPageView();
-            };
-        </script>
-        <div id="fb-root"></div>
-        <script>
-            (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <script>
-            window.twttr = (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-                if (d.getElementById(id)) return t;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://platform.twitter.com/widgets.js";
-                fjs.parentNode.insertBefore(js, fjs);
-
-                t._e = [];
-                t.ready = function(f) {
-                t._e.push(f);
-                };
-
-              return t;
-            }
-            (document, "script", "twitter-wjs"));
-        </script>
         <header>
-            <div class="container-fluid navigation">
+            <div class="container-fluid navigation ">
                 <!-- Static navbar -->
                 <nav class="navbar navbar-default">
                     <div class="container">
@@ -80,21 +47,21 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="/"><img src="{{asset('image\finallogo.png')}}"></a>
+                            <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('image\finallogo.png')}}"></a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">                                   
 
-                                <li><a class="nav_control" href="/schools_list">List of Schools</a></li>
+                                <li><a class="nav_control" href="{{url('/schools_list')}}">List of Schools</a></li>
 
                                 @if(isset($page))
                                     @foreach($page as $pages)
-                                        <li><a class="nav_control" href="/{{$pages->slug}}">{{$pages->title}}</a></li>
+                                        <li><a class="nav_control" href="{{url('/'.$pages->slug)}}">{{$pages->title}}</a></li>
                                     @endforeach
                                @endif
 
-                               <li><a class="nav_control" href="/FAQ">FAQ</a></li>
-                               <li><a class="nav_control" href="/forum">Forum</a></li>
+                               <li><a class="nav_control" href="{{url('/FAQ')}}">FAQ</a></li>
+                               <li><a class="nav_control" href="{{url('/forum')}}">Forum</a></li>
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
@@ -103,20 +70,24 @@
                                         
                                         <li class="">
                                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <img src="{{ asset('upload/'.Auth::user()->image) }}" alt="">{{Auth::user()->fname." ".Auth::user()->lname}}
+                                            @if( !empty(Auth::user()->image) && asset('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp'.Auth::user()->image) )
+                                                <img src="{{ asset('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp'.Auth::user()->image) }}">      
+                                            @else
+                                                <img src="{{ asset('images/user.png') }}">  
+                                            @endif
+                                                {{Auth::user()->fname." ".Auth::user()->lname}}
                                                 <span class=" fa fa-angle-down"></span>
                                             </a>
                                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                                <li><a href="/home/my_profile"> Profile</a></li>
+                                                <li><a href="{{url('/home/my_profile')}}"> Profile</a></li>
                                                 <li>
-                                                    <a href="/bookmarks">
+                                                    <a href="{{url('/bookmarks')}}">
                                                         <span><i class="fa fa-star pull-right" aria-hidden="true"></i>Bookmarks</span>
                                                     </a>
                                                 </li>
                                                 @if(Auth::user()->role_id == 1)
-                                                    <li><a href="/admin/dashboard">Admin</a></li>
+                                                    <li><a href="{{url('/admin/dashboard')}}">Admin</a></li>
                                                 @endif
-                                                <li><a href="javascript:;">Help</a></li>
                                                 <li>
                                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -140,223 +111,507 @@
 
         @yield('user_content')
         
-        <div class="footer_bottom_margin">
+        <!-- <div class="footer_bottom_margin">
             
-        </div>
+        </div> -->
         <!--Footer Portion-->
         <footer id="footer" class="dark">
-            <!-- <div class="primary-footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="head5">About Us</div>
-                                <ul class="f-list">
-                                    <span>Passionate about simplifying schooling decisions, Sqoolz.com offers students, parents and schools an extensive online ecosystem. 
-                                    Admission seekers can discover the best schools in the neighbourhood and refine search results based on board, location, facilities, language and gender.
-                                    </span>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="head5">For Schools</div>
-                                    <ul class="f-lists">
-                                        <li>
-                                            <a href="/addSchool" target="_blank">
-                                                <h3>Add Your School</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="mailto:sales@sqoolz.com">
-                                                <h3>Claim Your Listing</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://connect.schoolfinder.co.in/" target="_blank">
-                                                <h3>Parent Connect</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://acquire.sqoolz.com/login" target="_blank">
-                                                <h3>Student Acquisition</h3>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="head5">Help</div>
-                                    <ul class="f-lists">
-                                        <li>
-                                            <a href="mailto:info@sqoolz.com">
-                                                <h3>Contact Us</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/directory" target="_blank">
-                                                <h3>Sitemap</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="mailto:info@sqoolz.com">
-                                                <h3>Facebook</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="mailto:info@sqoolz.com">
-                                                <h3>Twitter</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="pull-left">
-                                                <div class="social-link circle a data-toggle="tooltip" data-placement="auto" data-original-title="Facebook" class="facebook" href="/externalLink?link=https://www.facebook.com/sqoolz" target="_blank">
-                                                    <i class="fa fa-facebook"></i></a>
-                                                    <a data-toggle="tooltip" data-placement="auto" data-original-title="Twitter" class="twitter" href="/externalLink?link=https://twitter.com/sqoolzhq" target="_blank">
-                                                        <i class="fa fa-twitter"></i>
-                                                    </a>
-                                                    <a data-toggle="tooltip" data-placement="auto" data-original-title="Google Plus" class="google" href="/externalLink?link=https://plus.google.com/%2BSqoolz" target="_blank">
-                                                        <i class="fa fa-google-plus"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="head5">Terms</div>
-                                    <ul class="f-lists">
-                                        <li>
-                                            <a href="/termsofuse">
-                                                <h3>Terms Of Use</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/privacypolicy">
-                                                <h3>Privacy Policy</h3>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.sqoolz.com/what-we-do/" target="_blank">
-                                                <h3>What We Do</h3>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="primary-footer botom_f">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                            <div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
-                                <ul class="f-list">
-                                    <li>
-                                        <a href="/schools/Pune" target="_blank">
-                                            <h3>Best schools in Pune</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Mumbai" target="_blank">
-                                            <h3>Best schools in Mumbai</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Delhi" target="_blank">
-                                            <h3>Best schools in Delhi</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Bangalore" target="_blank">
-                                            <h3>Best schools in Bangalore</h3>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
-                                <ul class="f-list">
-                                    <li>
-                                        <a href="/schools/Chennai" target="_blank">
-                                            <h3>Best schools in Chennai</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Hyderabad" target="_blank">
-                                            <h3>Best schools in Hyderabad</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Kolkata" target="_blank">
-                                            <h3>Best schools in Kolkata</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Ahmedabad" target="_blank">
-                                            <h3>Best schools in Ahmedabad</h3>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
-                                <ul class="f-list">
-                                    <li>
-                                        <a href="/schools/Coimbatore" target="_blank">
-                                            <h3>Best schools in Coimbatore</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Indore" target="_blank">
-                                            <h3>Best schools in Indore</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Darjeeling" target="_blank">
-                                            <h3>Best schools in Darjeeling</h3>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/schools/Dehradun" target="_blank">
-                                            <h3>Best schools in Dehradun</h3>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-lg-3 col-xs-12">
-                                <ul class="f-list">
-                                    <li>
-                                        <a href="/schools/Panchgani" target="_blank">
-                                            <h3>Best schools in Panchgani</h3>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <div class="secondary-footer">
                 <div class="container">
                     <div>
                         <div class="col-md-12 text-color pull-left">
                             <span>© 2017 By 
-                                <a href="http://www.wishtreetech.com" target="_blank" class="text-color">Talentelgia Technologies LLP.</a> All Rights Reserved </span>
+                                <a href="http://www.talentelgia.com/" target="_blank" class="text-color">Talentelgia Technologies Pvt. Ltd.</a> All Rights Reserved </span>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
 
-        <!-- js scripts  -->
-        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
         <!-- Ajax Script -->
-        <script src="{{asset('js/ajax_functioning.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/forum_like_dislike.js')}}" type="text/javascript" charset="utf-8" ></script>
-        <script src="{{asset('js/thread_like_dislike.js')}}" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8" >
+
+           /*Forum js*/
+            $(document).ready(function(){
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+
+
+                $('#report_form').submit(function(){
+                    var report_type=$('input[name=report]:checked').val();
+                    var report_reason=$('textarea[name=report_description]').val();
+                    var forum_id=$('input[name=data]').val();
+                    var user_id=$('input[name=user]').val();
+
+                    console.log(report_reason);
+
+                    if(report_reason == ''){
+                        $('input[name=report_description]').toggleClass('has-error');
+                    }else{
+                        var data={
+                            'forum_id':forum_id,
+                            'user_id':user_id,
+                            'report_reason':report_reason,
+                            'report_type':report_type,
+                        };
+                        forum_report(data);
+                    }
+                    return false;
+
+                });
+
+
+
+                $('.clickables').click(function(){
+
+                    var id=$(this).attr('content');
+                    var type=$(this).attr('name');
+                    var selector_id=$(this).attr('id');
+                    var data=$(this).attr('data');
+                    var value=$(this).attr('value');
+                    // alert($(this).attr('name'));
+
+                    if(type == "forum_like_dislike"){
+                        forum_like_dislike(id,value,data,selector_id);
+                    }else if(type == "forum_report"){
+                        check_auth(value,selector_id,id);
+                    }
+                });
+
+
+                function forum_like_dislike(id,value,data,selector_id){
+
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/forum_like_dislike')}}",
+                        data:{
+                            'forum_id':id,
+                            'like_dislike':value,
+                        },
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                /*if data is saved successfully*/
+                                if(value == 1){
+                                    console.log(id+' '+value+' '+data+' '+selector_id+' ');
+                                    //for like
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-up clickables');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#forum_1_"+id).attr('data') != 0 ){
+                                            /*for dislike off*/
+                                            $("#forum_1_"+id).attr('data','0');
+                                            $("#forum_1_"+id).attr('class','fa fa-thumbs-o-down flipped clickables');
+                                            var num=$("#forum_1_"+id).next().html();
+                                            num--;
+                                            $("#forum_1_"+id).next().html(num);
+                                            // console.log(num);
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }else{
+                                    //for dislike
+                                    console.log(id+' '+value+' '+data+' '+selector_id+' ');
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-down flipped clickables');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#forum_0_"+id).attr('data') != 0 ){
+                                            /*for like off*/
+                                            $("#forum_0_"+id).attr('data','0');
+                                            $("#forum_0_"+id).attr('class','fa fa-thumbs-o-up clickables');
+                                            var num=$("#forum_0_"+id).next().html();
+                                            num--;
+                                            $("#forum_0_"+id).next().html(num);
+                                        
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }
+                                
+                            }else if(response == 400){
+                                console.log('not authenticated');
+                                $('#edit_user').modal();
+                            }else{
+                                //failed to save data
+                                console.log('failed to save data');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+
+                }
+
+                function forum_report(data){
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/forum_report')}}",
+                        data:data,
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+
+                                $('#report_forum').modal('toggle');
+                                
+                                $("#forum_2_"+data.forum_id).attr('class','fa fa-flag clickables');
+                                $("#forum_2_"+data.forum_id).attr('value','1');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+                }
+
+                
+                function forum_del_report(id_selector,id){
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/forum_del_report')}}",
+                        data:{
+                            'forum_id':id,
+                        },
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                $("#"+id_selector).attr('class','fa fa-flag-o clickables');
+                                $("#"+id_selector).attr('value','0');
+                                console.log('report deleted');
+                            }else{
+                                console.log('unable to delete report');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+                }
+
+                function check_auth(value,id_selector,id){
+
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/check_auth')}}",
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                if(value == 0){
+                                    $('#report_forum').modal();    
+                                }else{
+                                    forum_del_report(id_selector,id);
+                                }
+                            }else{  
+                                $('#edit_user').modal();
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+
+                }
+
+            });  
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+                $('#post_reply_form').submit(function(){
+                    console.log('here');
+                    return false;
+                });
+
+                $('#report_form').submit(function(){
+                    var report_type=$('input[name=report]:checked').val();
+                    var report_reason=$('textarea[name=report_description]').val();
+                    var thread_id=$('input[name=data]').val();
+                    var user_id=$('input[name=user]').val();
+
+                    console.log(report_reason);
+
+                    if(report_reason == ''){
+                        $('input[name=report_description]').toggleClass('has-error');
+                    }else{
+                        var data={
+                            'thread_id':thread_id,
+                            'user_id':user_id,
+                            'report_reason':report_reason,
+                            'report_type':report_type,
+                        };
+                        thread_report(data);
+                    }
+                    return false;
+
+                });
+
+
+
+                $('.clickable').click(function(){
+
+                    var id=$(this).attr('content');
+                    var type=$(this).attr('name');
+                    var selector_id=$(this).attr('id');
+                    var data=$(this).attr('data');
+                    var value=$(this).attr('value');
+                    // alert($(this).attr('name'));
+
+                    if(type == "thread_like_dislike"){
+                        thread_like_dislike(id,value,data,selector_id);
+                    }else if(type == "thread_report"){
+                        check_auth(value,selector_id,id);
+                    }else if(type == "comment_like_dislike"){
+                        like_dislike_comment(id,value,data,selector_id);
+                    }else{
+                        comment_report(id);
+                    }
+                });
+
+
+                function thread_like_dislike(id,value,data,selector_id){
+
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/thread_like_dislike')}}",
+                        data:{
+                            'thread_id':id,
+                            'like_dislike':value,
+                        },
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                /*if data is saved successfully*/
+                                if(value == 1){
+                                    //for like
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-up clickable');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#thread_1_"+id).attr('data') != 0 ){
+                                            /*for dislike off*/
+                                            $("#thread_1_"+id).attr('data','0');
+                                            $("#thread_1_"+id).attr('class','fa fa-thumbs-o-down flipped clickable');
+                                            var num=$("#thread_1_"+id).next().html();
+                                            num--;
+                                            $("#thread_1_"+id).next().html(num);
+                                            
+                                            // console.log(num);
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }else{
+                                    //for dislike
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-down flipped clickable');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#thread_0_"+id).attr('data') != 0 ){
+                                            /*for like off*/
+                                            $("#thread_0_"+id).attr('data','0');
+                                            $("#thread_0_"+id).attr('class','fa fa-thumbs-o-up clickable');
+                                            var num=$("#thread_0_"+id).next().html();
+                                            num--;
+                                            $("#thread_0_"+id).next().html(num);
+                                        
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        // console.log(num);
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }
+                                
+                            }else if(response == 400){
+                                console.log('not authenticated');
+                                $('#edit_user').modal();
+                            }else{
+                                //failed to save data
+                                console.log('failed to save data');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+
+                }
+
+                function thread_report(data){
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/thread_report')}}",
+                        data:data,
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+
+                                $('#report_thread').modal('toggle');
+                                
+                                $("#thread_2_"+data.thread_id).attr('class','fa fa-flag clickable');
+                                $("#thread_2_"+data.thread_id).attr('value','1');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+                }
+
+                function like_dislike_comment(id,value,data,selector_id){
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/comment_like_dislike')}}",
+                        data:{
+                            'thread_comment_id':id,
+                            'like_dislike':value,
+                        },
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                /*if data is saved successfully*/
+                                if(value == 1){
+                                    //for like
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-up clickable');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#comment_1_"+id).attr('data') != 0 ){
+                                            /*for dislike off*/
+                                            $("#comment_1_"+id).attr('data','0');
+                                            $("#comment_1_"+id).attr('class','fa fa-thumbs-o-down flipped clickable');
+                                            var num=$("#comment_1_"+id).next().html();
+                                            num--;
+                                            $("#comment_1_"+id).next().html(num);
+                                        
+                                            // console.log(num);
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }else{
+                                    //for dislike
+                                    if(data == 0){
+                                        $("#"+selector_id).attr('class','fa fa-thumbs-down flipped clickable');
+                                        $("#"+selector_id).attr('data','1');
+
+                                        if($("#comment_0_"+id).attr('data') != 0 ){
+                                            /*for like off*/
+                                            $("#comment_0_"+id).attr('data','0');
+                                            $("#comment_0_"+id).attr('class','fa fa-thumbs-o-up clickable');
+                                            var num=$("#comment_0_"+id).next().html();
+                                            num--;
+                                            $("#comment_0_"+id).next().html(num);
+                                        
+                                        }
+                                        num=$("#"+selector_id).next().html();
+                                        // console.log(num);
+                                        num++;
+                                        num=$("#"+selector_id).next().html(num);
+                                    }
+                                }
+                                
+                            }else if(response == 400){
+                                console.log('not authenticated');
+                                $('#edit_user').modal();
+                            }else{
+                                //failed to save data
+                                console.log('failed to save data');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+                    
+                }
+
+                function del_report(id_selector,id){
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/del_report')}}",
+                        data:{
+                            'thread_id':id,
+                        },
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                $("#"+id_selector).attr('class','fa fa-flag-o clickable');
+                                $("#"+id_selector).attr('value','0');
+                                console.log('report deleted');
+                            }else{
+                                console.log('unable to delete report');
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+                }
+
+                function check_auth(value,id_selector,id){
+
+                    $.ajax({
+                        method:'POST',
+                        url:"{{url('/check_auth')}}",
+                        
+                        success:function (response) {
+                            console.log(response);
+                            if(response == true){
+                                if(value == 0){
+                                    $('#report_thread').modal();    
+                                }else{
+                                    del_report(id_selector,id);
+                                }
+                            }else{  
+                                $('#edit_user').modal();
+                            }
+
+                        },
+                        error: function(response){
+                            console.log('error '+response);
+                        }
+                    });
+
+                }
+
+            });  
+        </script>
         <!-- /Ajax Script -->
         <script type="text/javascript">
              CKEDITOR.replace('review_area');
@@ -392,49 +647,6 @@
             });
         </script>
 
-        <script>
-            // create social networking pop-ups
-            (function() {
-                // link selector and pop-up window size
-                var Config = {
-                    Link: "a.share",
-                    Width: 500,
-                    Height: 500
-                };
-
-                // add handler links
-                var slink = document.querySelectorAll(Config.Link);
-                for (var a = 0; a < slink.length; a++) {
-                    slink[a].onclick = PopupHandler;
-                }
-
-                // create popup
-                function PopupHandler(e) {
-
-                    e = (e ? e : window.event);
-                    var t = (e.target ? e.target : e.srcElement);
-
-                    // popup position
-                    var
-                        px = Math.floor(((screen.availWidth || 1024) - Config.Width) / 2),
-                        py = Math.floor(((screen.availHeight || 700) - Config.Height) / 2);
-
-                    // open popup
-                    var popup = window.open(t.href, "social", 
-                        "width="+Config.Width+",height="+Config.Height+
-                        ",left="+px+",top="+py+
-                        ",location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1");
-                    if (popup) {
-                        popup.focus();
-                        if (e.preventDefault) e.preventDefault();
-                        e.returnValue = false;
-                    }
-
-                    return !!popup;
-                }
-
-            }());
-        </script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $(".clickable-row").click(function() {

@@ -7,7 +7,7 @@
             <div class="panel panel-default animated bounce">
                 <div class="panel-heading">Start a Discussion</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="/create_thread">
+                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{url('/create_thread')}}">
                         {{ csrf_field() }}
 
                         <input type="hidden" name="id" value="{{isset($forum_id) ? $forum_id : ''}}">
@@ -52,13 +52,21 @@
     </div>	
 </div>
 
-@if(isset($schooldata) && $schooldata->forums->count())
+@if(isset($schooldata) && count($schooldata->forums))
 	<div class="container">
 		<div class="col-sm-10">
-			<h2>Existing Forums</h2>
-				@foreach($schooldata->forums as $data)
-					{{$data->id}}
+            <table class="table table-striped table-responsive">
+    			<h2>Existing Forums</h2>
+				@foreach($schooldata->forums as $forum)
+                    <tr class='clickable-row' href="{{url('/forum/show_forum/'.$forum->id)}}" style="cursor: pointer;" >
+                        <td width="20%">{{$forum->title}}</td>
+                        <td width="35%">{!! str_limit($forum->description, $limit = 100, $end = ' ~read more..') !!}</td>
+                        <td width="15%">@if(count($forum->threads) == 1)1 post @elseif(!count($forum->threads)) No posts @else {{count($forum->threads)}} posts @endif</td>
+                        <td width="15%">@if(count($forum->forum_likes)) {{count($forum->forum_likes->where('is_liked_disliked','1'))}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{count($forum->forum_likes->where('is_liked_disliked','0'))}} <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> @else No votes yet @endif</td>
+                        <td width="15%">{{$forum->created_at}}</td>
+                    </tr>
 				@endforeach
+            </table>
 		</div>
 	</div>
 @endif

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\School_rating;
+use App\School_detail;
 use App\School_image;
 use App\Location;
 use App\School;
@@ -235,5 +236,10 @@ class UnregisteredController extends BaseController
     public function school_gallery($school_id){
         $images=School_image::where('school_id','=',$school_id)->get();
         return view('user.guests.gallery')->with('images',$images);
+    }
+
+    public function school_documents($school_id){
+        $documents=School_detail::where('school_id','=',$school_id)->paginate(18);
+        return view('user.guests.documents')->with('documents',$documents);
     }
 }

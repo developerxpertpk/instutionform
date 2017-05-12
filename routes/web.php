@@ -29,6 +29,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 		Route::prefix('/admin')->group(function(){
 
+            Route::post('school_updatess',function(){
+                echo "here";
+            });
+
 			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
 			Route::get('profile',function(){
@@ -55,12 +59,14 @@ Route::group(['middleware' => ['auth']], function () {
 
 			/*  route for school-institue */
 			
-			Route::resource('school','SchoolController');
+			
             /*  route for school-institue  status*/
             Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
-            Route::post('school/school_update/{id}','SchoolController@school_update1')->name('edit_school1');
+            // Route::get('schools/school_update/{id}','SchoolController@school_update1')->name('schools.update');
+            
 
+            Route::resource('school','SchoolController');
 
 
             /*  Routes for add News Reated to school  */
@@ -129,7 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
             // Image Controller
             Route::resource('image','ImageController');
 
-            Route::delete('image/{eid}-{lid}','ImageController@delete_image')->name('delete_image');
+            Route::delete('image/{id}','ImageController@delete_image')->name('delete_image');
 
     	});
 });
@@ -191,11 +197,11 @@ Route::post('post_review','UnregisteredController@post_review')->name('post_revi
 
 Route::post('/share_via_email','UnregisteredController@share_via_email');
 
-Route::post('create_forums','FrontendForumController@createforum');
+Route::post('create_forums','FrontendforumController@createforum');
 
-Route::get('create_forums','FrontendForumController@createforum')->name('create_forums');
+Route::get('create_forums','FrontendforumController@createforum')->name('create_forums');
 
-Route::get('forum','FrontendForumController@forum_index');
+Route::get('forum','FrontendforumController@forum_index');
 
 Route::get('create_thread/{id}',function($id){
 	return view('forum.thread_create')->with('forum_id',$id);
@@ -234,7 +240,6 @@ Route::group(['middleware' => ['CheckAuthAjax']], function () {
 
 	Route::post('comment_like_dislike','ForumajaxController@comment_like_dislike');
 
-
 	Route::post('forum_like_dislike','ForumajaxController@forum_like_dislike');
 
 	Route::post('forum_report','ForumajaxController@forum_report');
@@ -260,12 +265,12 @@ Route::get('create_forum/{id?}', function($id = null)
   		//is null
   		$ids=array('nothing');
   	}
-  	return \App::make('App\http\Controllers\FrontendforumController')->callAction('createForumView', $ids);
+  	return \App::make('App\Http\Controllers\FrontendforumController')->callAction('createForumView', $ids);
 });
 
 /*Showing a particular forum*/
 Route::group(['prefix' => 'forum'],function(){
-	Route::get('show_forum/{id}','FrontendForumController@show_forum');
+	Route::get('show_forum/{id}','FrontendforumController@show_forum');
 });
 
 Route::group(['prefix' => 'threads'],function(){
@@ -275,6 +280,7 @@ Route::group(['prefix' => 'threads'],function(){
 
 Route::group(['prefix' => 'show_school'],function(){
 	Route::get('/{id}/gallery','UnregisteredController@school_gallery');
+    Route::get('/{id}/documents','UnregisteredController@school_documents');
 	Route::get('{id}','UnregisteredController@show_school');
 });
 

@@ -242,7 +242,7 @@
 	</div>
 	<div class="container">
 	</br>
-		<a href="/create_thread/{{$forum->id}}"><button class="btn btn-success" >Start a Discussion</button></a>
+		<a href="{{url('/create_thread/'.$forum->id)}}"><button class="btn btn-success" >Start a Discussion</button></a>
 	</div>
 	</br>
 	<div class="col-sm-12 padding_zero">
@@ -251,7 +251,7 @@
 			<table class="table table-hover table-responsive table-striped" style="cursor: pointer;">
 				@if(count($forum->threads))
 					@foreach($forum->threads as $threads)
-						<tr class='clickable-row' href="/threads/show_thread/{{$threads->id}}">
+						<tr class='clickable-row' href="{{url('/threads/show_thread/'.$threads->id)}}">
 							<td width="70%">{{$threads->title}}</td>
 							<td width="30%">{{ count($threads->thread_comments) != 0 ? count($threads->thread_comments) : 0}} replies</td>
 						</tr>
