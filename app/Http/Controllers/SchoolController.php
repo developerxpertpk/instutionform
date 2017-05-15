@@ -257,7 +257,6 @@ class SchoolController extends Controller
 
     public function school_update1() {
 
-        die('abc');
         $rules = array(
             'school_name' => 'required',
             'school_address' => 'required',
