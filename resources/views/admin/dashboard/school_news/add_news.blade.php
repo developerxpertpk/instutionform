@@ -14,13 +14,13 @@
                     </ol>
 
             </div>
-            </div>
             <!--/.row -->
-            @if ($message = Session::get('success'))
+        @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p>{{  $message }}</p>
             </div>
         @endif
+
         @if(count($errors))
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>

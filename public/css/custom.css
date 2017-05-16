@@ -192,7 +192,7 @@
      font-family: cursive;
      text-align: center;
  }
- /* css for school regiser */
+ /* css for school regiser  */
 .google-map{
     border: 1px solid;
     border-radius: 10px;
@@ -350,6 +350,13 @@
 .delete_user_block{
   display: block;
 }
+/* css for admin profile*/
+ .admin-profile img{
+     border-radius: 100px;
+     height: 250px;
+     float: left;
+     width: 100%;
+ }
 /*neha*/
 
 #user-search {

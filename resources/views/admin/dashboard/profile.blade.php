@@ -5,17 +5,15 @@
 
 <div class="container fluid">
 	<div class="container"> 
-	     <H2><strong> Admin Profile </strong></H2>
+	     <h2 class="page-header"><strong>
+                 Admin Profile </strong></h2>
 
 		<div class="row">
 
     	<div class="col-xs-6 col-sm-6 col-md-6">
-            <div class="form-group">
-                
-               <img src="{{asset('/upload')}}/{{ Auth::user()->image }}" width="300px" height="250px">
-
+            <div class="col-md-6 admin-profile ">
+               <img src="{{asset('/upload')}}/{{ Auth::user()->image }}" onerror="this.src='{{asset('image/user.png')}}'">
             </div>
-             <strong> Admin Pic</strong>
         </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6">
@@ -57,12 +55,16 @@
          <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 <strong>Status:</strong>
-                    {{ Auth::user()->status}}
+                    @if(Auth::user()->status==1)
+                    <button class="btn btn-success"> Active </button>
+                    @else
+                    <button class="btn btn-danger"> Inactive </button>
+                    @endif
+
             </div>
         </div>
       
       </div>
-          <h1> *********************************************************************************** </h1>
       </div>
       </div>
 

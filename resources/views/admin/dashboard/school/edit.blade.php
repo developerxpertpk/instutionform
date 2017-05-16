@@ -288,13 +288,17 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+        $(document).ready(function (){
+            function map() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 21.170240,lng: 72.831061},
+                    zoom: 4,
+                });
+            }
+            map();
+        });
+	</script>
 </div>
-<!-- <script type="text/javascript">
-	$(document).ready(function(){
-		$('#edit_register').click(function(){
-
-		});
-	});
-</script> -->
-
 @endsection

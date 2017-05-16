@@ -94,6 +94,9 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('page/submit','PageController@store')->name('page.submit');
 
 		Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
+		// Route To update page
+
+        Route::post('freq_ask_ques/update/{id}','PageController@update_page')->name('update_page');
 
         Route::get('add_question',function(){
             return view('admin.dashboard.cms.add_question');
