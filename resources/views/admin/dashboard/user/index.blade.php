@@ -126,9 +126,8 @@
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
 
                   <div class="form-group" id="user-img">
-                    <img src="{{asset('/upload/'.$user->image )}}"  onerror="this.src='{{ asset('upload/default_user.jpg') }}' ">
+                    <img src="{{asset('/upload/'.$user->image )}}"  onerror="this.src='{{ asset('image/user.png') }}' ">
                   </div>
-
                 </div>
 
                 <div class="col-xs-6 col-sm-6 col-md-6">

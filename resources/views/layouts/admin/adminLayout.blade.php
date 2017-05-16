@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,42 +11,42 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> Admin - dashboard </title>
+    <title> Admin dashboard </title>
     <!-- addes juery -->
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <!--  Location.js-->
     <script  type="text/javascript" src="{{ asset('js/location.js')}}"></script>
     <!-- added google map api script and key -->
     <script language="javascript" src="https://maps.google.com/maps/api/js?&key=AIzaSyBPnarv312BM-0LEDilopAMkE1gw0RUVns"async defer></script>
+    <!-- added google map api script and key -->
+    <script src="{{asset('js/validate.min.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-    <script src="{{asset('js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/additional-methods.min.js')}}"></script>
+    {{--<script src="{{asset('js/jquery-ui.js')}}"></script>--}}
     <script src="{{asset('js/ajax_rating.js') }}"></script>
     <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
     <script src="{{ asset('js/jquery-validation.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    {{-- added css--}}
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="{{ asset('css/plugins/morris.css') }}" rel="stylesheet">
-
+    {{--<!-- Morris Charts CSS -->--}}
+    {{--<link href="{{ asset('css/plugins/morris.css') }}" rel="stylesheet">--}}
     <!-- Custom Fonts -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
     <script>
-        window.Laravel = {!! json_encode([
+        window.Laravel ={!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
 
 
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
-
     <script  type="text/javascript">
         tinymce.init({
             selector: '#mytextarea',
@@ -61,18 +62,9 @@
         <script  type="text/javascript">
         tinymce.init({
             selector: '#newseditor',
-//            menu: {
-//                view: {title: 'Edit', items: 'cut, copy, paste'}
-//            }
-//            plugins: [
-////                'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-////                'searchreplace wordcount',
-////                'save directionality emoticons textcolor'
-//            ],
-
             plugins: 'code'
         });
-    </script>
+        </script>
  
 </head>
 <body>
@@ -88,7 +80,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="route('admin.dashboard')"> Admin </a>
+                <a class="navbar-brand" href="{{route('admin.dashboard')}}">Admin </a>
             </div>
             <div></div>
             <!-- Top Menu Items -->
@@ -161,12 +153,6 @@
                         <li>
                             <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
                         </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="#">View All</a>
@@ -182,9 +168,11 @@
                         <li>
                             <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
+
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
+
                         <li>
                             <a href= "{{ route('admin.changepwd') }}" ><i class="fa fa-fw fa-gear"></i> Change Password</a>
                         </li>
@@ -215,43 +203,36 @@
                     </li>
 
                     <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#school"><i class="fa fa-fw fa-arrows-v" ></i> Manage School <class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#school"><i class="fa fa-fw fa-arrows-v" ></i> Manage School <class="fa fa-fw fa-caret-down"></i> </a>
                         <ul id="school" class="collapse">
                         <li>
-                            <a href="{{route('school.index')}}">School</a>
+                            <a href="{{route('school.index')}}"> <i class="fa fa-university" aria-hidden="true"></i> School</a>
                         </li>
                             <li>
-                                <a href="{{route('school_news.index')}}">News </a>
+                                <a href="{{route('school_news.index')}}"> <i class="fa fa-newspaper-o" aria-hidden="true"></i> News </a>
                             </li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#cms"><i class="fa fa-fw fa-arrows-v" ></i> CMS <class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#cms"><i class="fa fa-arrow-down" aria-hidden="true"></i>Content Management </a>
                         <ul id="cms" class="collapse">
 
                             <li>
-                                <a href="{{route('content')}}"> Static Content</a>
+                                <a href="{{route('content')}}"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Static Content</a>
                             </li>
                             <li>
-                                <a href="{{ route('freq_ask_ques')}}">FAQ's</a>
+                                <a href="{{ route('freq_ask_ques')}}"> <i class="fa fa-quora" aria-hidden="true"></i> FAQ's</a>
                             </li>
                         </ul>
                     </li>
 
                     <li>
-
-                        <a href="javascript:;" data-toggle="collapse" data-target="#rating_review"><i class="fa fa-fw fa-arrows-v" ></i> Rating & Reviews <class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="rating_review" class="collapse">
-
-                            <li>
-                                <a href="{{route('rating_reviews.index')}}"> View Rating & Reviews </a>
-                            </li>
-                        </ul>
+                        <a href="{{route('rating_reviews.index')}}"><i class="fa fa-star-half-o" aria-hidden="true"></i> Rating & Reviews </a>
                     </li>
 
                     <li>
-                        <a href="{{ route('forum.index')}}"> <i class="fa fa-fw fa-edit"></i>Forum </a>
+                        <a href="{{ route('forum.index')}}"><i class="fa fa-comments" aria-hidden="true"></i> Forum </a>
                     </li>
 
                 </ul>
@@ -265,17 +246,7 @@
             </div>
         <!-- /#page-wrapper -->
       </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-
-     {{--<script src="{{asset('js/jquery.js')}}"></script>--}}
-    <!-- Bootstrap Core JavaScript -->
-    {{--<script src="{{asset('js/bootstrap.min.js')}}"></script>--}}
-    <!-- Morris Charts JavaScript -->
-    {{--<script src="{{asset('js/plugins/morris/raphael.min.js')}}"></script>--}}
-    {{--<script src="{{ asset('js/plugins/morris/morris.min.js')}}"></script>--}}
-    {{--<script src="{{asset('js/plugins/morris/morris-data.js') }}"></script>--}}
+ </div>
 
 </body>
 

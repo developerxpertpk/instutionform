@@ -2,24 +2,26 @@
 @section('content')
  <div class="page-wrapper">
      <div class="container-fluid">
-            <div class="row">
-                <h3 class="page-header"> Manage Forum </h3>
-            </div>
+         <div class="row">
+             <h2 class="header">
+                 <i class="fa fa-comments fa x5" aria-hidden="true"></i>  Forum
+             </h2>
+             <ol class="breadcrumb">
+                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                 <li class="breadcrumb-item active"> <i class="fa fa-comments fa x5" aria-hidden="true"></i> Forum</li>
+             </ol>
+         </div>
 
          <div class="row">
                {{-- code for search bar--}}
              <div class="pull-right">
-
                  <form method="get" action="{{ route('search.fourm.submit') }}"  >
                      <select name="search" class="form-control search-box">
-
                         <option> <h3> Search Reported forum </h3></option>
                          <option value="abuse"> Abuse</option>
                          <option value="span"> Span </option>
                          <option value="other"> Other </option>
-
                      </select>
-
                      <input type="submit" class="btn btn-success" />
                  </form>
 
@@ -37,9 +39,7 @@
 
          <div class="forum-data">
                  <table class="table table-bordered">
-
                      <tr> <h4> Forum List </h4></tr>
-
                      <tr>
                          <td>ID </td>
                          <td> Uesr Name  </td>
@@ -50,7 +50,6 @@
          @if(isset($forum_data) && $forum_data->count())
              @foreach( $forum_data as $data)
                          <tr>
-
                              <td>{{ ++$i }} </td>
                              <td> {{ $data->users->fname }} </td>
                              <td> {{ $data->schools->school_name }}  </td>
@@ -92,12 +91,8 @@
          </tr>
          @endforeach
  @endif
-
      </table>
-
-
          </div>
-
      </div>
  </div>
 @endsection

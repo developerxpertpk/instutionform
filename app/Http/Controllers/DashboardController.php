@@ -21,8 +21,6 @@ class DashboardController extends Controller
     	  	return view('admin.dashboard.charts');	
 		}
 
-
-
 	public function pwdchange(Request $request){
 
 		 $rules = array(
@@ -76,6 +74,10 @@ class DashboardController extends Controller
 		}
 	} // END OF FUNCTION
 
-
-
+//    public function dashboard_data(){
+//        $users= DB::table('users')->groupBy('id')->count();
+//        print_r($users);
+//        die('a');
+//	    return view('admin.dashboard',comapact('users'));
+//    }
 }
