@@ -18,7 +18,7 @@
 	        <!-- twitter preview tags -->
 	        <link rel="canonical" href="{{ Request::url() }}">
 	        <!-- /twitter preview tags -->
-			<div class="container-fluid">
+			<div class="container-fluid padding_btm">
 				<div class="container">
 					<?php $count=0;  ?>
 						@if(count($school->school_images))
@@ -140,8 +140,8 @@
 						<!-- menu profile quick info -->
                         <div class="profile_circle center-block">
                             <div class="profile_dp">
-                            	@if( !empty(Auth::user()->image) )
-                                	<img src="{{asset('upload/'.Auth::user()->image)}}" alt="..." class="user_image">
+                            	@if( !empty(Auth::user()->image) && File::exists('upload/users/user'.'_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image))
+                                	<img src="{{ asset('upload/users/user'.'_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image) }}" alt="..." class="user_image">
                                 @else
                                 	<img src="{{asset('upload/user.png')}}" class="user_image">
                                 @endif
@@ -326,7 +326,11 @@
 								<div class="media">
 								  	<div class="media-left media-middle ">
 								    	<a href="#">
-								      		<img class="media-object table-bordered" src="{{asset('upload/'.$ratings->users->image)}}" alt="...">
+								    	@if( !empty($ratings->users->image) && File::exists('upload/users/user'.'_'.$ratings->users->id.'/images/profile_pic/current_dp/'.$ratings->users->image))
+                                			<img class="media-object table-bordered" src="{{ asset('upload/users/user'.'_'.$ratings->users->id.'/images/profile_pic/current_dp/'.$ratings->users->image) }}" alt="...">
+		                                @else
+		                                	<img class="media-object table-bordered" src="{{asset('upload/user.png')}}">
+		                                @endif
 								    	</a>
 								  	</div>
 								  	<div class="media-body ">

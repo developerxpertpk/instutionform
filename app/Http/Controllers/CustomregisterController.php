@@ -48,8 +48,12 @@ class CustomregisterController extends Controller
          if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
          
             $fileName = $file->getClientOriginalName();
-            $user_id = User::orderBy('id','DESC')->first()->id;
-
+            if( count(User::all()) ){
+               $user_id = User::orderBy('id','DESC')->first()->id+1;
+            }else{
+               $user_id=1;
+            }
+            
             $userfolder_path = 'upload/users/user'.'_'.$user_id.'/images/profile_pic/current_dp';
             $userfolder_path_1 = 'upload/users/user'.'_'.$user_id.'/images/profile_pic';
             
@@ -61,7 +65,7 @@ class CustomregisterController extends Controller
               File::makeDirectory($destinationPath, 0777, true);
             }
 
-            $files->move($destinationPath,$fileName);
+            $file->move($destinationPath,$fileName);
             //  copy image in profile pic folder
             $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
 

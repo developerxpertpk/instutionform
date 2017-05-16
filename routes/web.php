@@ -27,117 +27,117 @@ Route::post('/submit','Auth\LoginController@login')->name('login.submit');
 	/* Admin Routes */
 Route::group(['middleware' => ['auth']], function () {
 
-		Route::prefix('/admin')->group(function(){
+	Route::prefix('/admin')->group(function(){
 
-            Route::post('school_updatess',function(){
-                echo "here";
-            });
+        Route::post('school_updatess',function(){
+            echo "here";
+        });
 
-			Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
+		Route::get('/dashboard','DashboardController@index')->name('admin.dashboard');
 
-			Route::get('profile',function(){
-				return view('admin.dashboard.profile');
-			})->name('admin.profile');
+		Route::get('profile',function(){
+			return view('admin.dashboard.profile');
+		})->name('admin.profile');
 
-			Route::get('changepwd',function(){
-				return view('admin.dashboard.changepwd');
-			})->name('admin.changepwd');
+		Route::get('changepwd',function(){
+			return view('admin.dashboard.changepwd');
+		})->name('admin.changepwd');
 
-			Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
+		Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
 
-			Route::get('charts','DashboardController@chart')->name('charts');
+		Route::get('charts','DashboardController@chart')->name('charts');
 
-            // Route for Users
+        // Route for Users
 
-			Route::resource('user','UserController');
+		Route::resource('user','UserController');
 
-            Route::post('user/update_user/{id}','UserController@user_update')->name('user.updateuser');
+        Route::post('user/update_user/{id}','UserController@user_update')->name('user.updateuser');
 
-			Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
+		Route::post('user/update/{id}','UserController@status_update')->name('user.update1');
 
-			Route::get('admin/user/search', 'UserController@search');
+		Route::get('admin/user/search', 'UserController@search');
 
-			/*  route for school-institue */
-			
-			
-            /*  route for school-institue  status*/
-            Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
+		/*  route for school-institue */
+		
+		
+        /*  route for school-institue  status*/
+        Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
-            // Route::get('schools/school_update/{id}','SchoolController@school_update1')->name('schools.update');
-            
+        // Route::get('schools/school_update/{id}','SchoolController@school_update1')->name('schools.update');
+        
 
-            Route::resource('school','SchoolController');
-
-
-            /*  Routes for add News Reated to school  */
-            Route::resource('school_news','SchoolNewsController');
-
-            // function for update school news
-            Route::post('school_news/update/{id}','SchoolNewsController@update_news')->name('update_news');
-            // Route to update News status
-            Route::post('school_news/update_status/{id}','SchoolNewsController@update_status')->name('school_news.status');
-            //  function for autocomplete
-            Route::get('school_news/get_school_data','SchoolNewsController@search_school');
-            // route to show the  school list
-            Route::get('school_news_search','SchoolNewsController@filter_school')->name('filter_school');
-            // function to search news realted to particular School
-            Route::get('school_news/news/{id}','SchoolNewsController@news_list')->name('filter_news');
-			// Routes for cms
-            Route::resource('content','PageController');
-
-			Route::get('content','PageController@index')->name('content');
-
-			Route::get('pages',function(){
-				  return view('admin.dashboard.cms.add_page');
-			})->name('addpages');
-
-			Route::post('page/submit','PageController@store')->name('page.submit');
-
-			Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
-
-            Route::get('add_question',function(){
-                return view('admin.dashboard.cms.add_question');
-            })->name('add_question');
-
-            Route::post('question/submit','PageController@question_submit')->name('question_submit');
-
-            Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
-
-            // route for edit the faq_ask_quest
-            Route::get('question/edit/{id}','PageController@edit_faq')->name('question_edit');
-
-            //route for update faq_Ask_quest
-            Route::post('question/update/{id}','PageController@update_faq')->name('question_update');
+        Route::resource('school','SchoolController');
 
 
+        /*  Routes for add News Reated to school  */
+        Route::resource('school_news','SchoolNewsController');
 
-            // Routes for rating and reviews
-            Route::resource('rating_reviews','SchoolRatingReviewsController');
+        // function for update school news
+        Route::post('school_news/update/{id}','SchoolNewsController@update_news')->name('update_news');
+        // Route to update News status
+        Route::post('school_news/update_status/{id}','SchoolNewsController@update_status')->name('school_news.status');
+        //  function for autocomplete
+        Route::get('school_news/get_school_data','SchoolNewsController@search_school');
+        // route to show the  school list
+        Route::get('school_news_search','SchoolNewsController@filter_school')->name('filter_school');
+        // function to search news realted to particular School
+        Route::get('school_news/news/{id}','SchoolNewsController@news_list')->name('filter_news');
+		// Routes for cms
+        Route::resource('content','PageController');
 
-            Route::post('edit_ratings','SchoolRatingReviewsController@edit_ratings');
+		Route::get('content','PageController@index')->name('content');
 
-            Route::post('submit_rating','SchoolRatingReviewsController@submit_rating');
+		Route::get('pages',function(){
+			  return view('admin.dashboard.cms.add_page');
+		})->name('addpages');
 
-            Route::post('rating_reviews/{id}','SchoolRatingReviewsController@update_review')->name('update_review');
+		Route::post('page/submit','PageController@store')->name('page.submit');
 
-            Route::post('school/check_ratings','SchoolController@check_ratings');
+		Route::get('freq_ask_ques','PageController@show_faq')->name('freq_ask_ques');
 
-            Route::post('school/admin_rating','SchoolController@school_rating');
+        Route::get('add_question',function(){
+            return view('admin.dashboard.cms.add_question');
+        })->name('add_question');
+
+        Route::post('question/submit','PageController@question_submit')->name('question_submit');
+
+        Route::delete('question_delete/{question}','PageController@delete_faq')->name('quest_destroy');
+
+        // route for edit the faq_ask_quest
+        Route::get('question/edit/{id}','PageController@edit_faq')->name('question_edit');
+
+        //route for update faq_Ask_quest
+        Route::post('question/update/{id}','PageController@update_faq')->name('question_update');
 
 
 
-            // Forum Controller
-            Route::resource('forum','ForumController');
+        // Routes for rating and reviews
+        Route::resource('rating_reviews','SchoolRatingReviewsController');
 
-            Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
+        Route::post('edit_ratings','SchoolRatingReviewsController@edit_ratings');
 
-            Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
-            // Image Controller
-            Route::resource('image','ImageController');
+        Route::post('submit_rating','SchoolRatingReviewsController@submit_rating');
 
-            Route::delete('image/{id}','ImageController@delete_image')->name('delete_image');
+        Route::post('rating_reviews/{id}','SchoolRatingReviewsController@update_review')->name('update_review');
 
-    	});
+        Route::post('school/check_ratings','SchoolController@check_ratings');
+
+        Route::post('school/admin_rating','SchoolController@school_rating');
+
+
+
+        // Forum Controller
+        Route::resource('forum','ForumController');
+
+        Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
+
+        Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
+        // Image Controller
+        Route::resource('image','ImageController');
+
+        Route::delete('image/{id}','ImageController@delete_image')->name('delete_image');
+
+	});
 });
 
 Route::get('/search', 'UserController@search');
@@ -246,15 +246,9 @@ Route::group(['middleware' => ['CheckAuthAjax']], function () {
 
 	Route::post('forum_del_report','ForumajaxController@forum_del_report');
 });
-	
-/*Ajax calls close*/
+/*----------------/Ajax calls close-------------------*/
 
-/*Route::get('/',function(){
-	return view('mail_template.share_school');
-});*/
-//forum&finder_welcome
-
-/*To create a forum */
+/*----------------To create a forum------------------ */
 Route::get('create_forum/{id?}', function($id = null)
 {
   	// Run controller and method
@@ -268,7 +262,7 @@ Route::get('create_forum/{id?}', function($id = null)
   	return \App::make('App\Http\Controllers\FrontendforumController')->callAction('createForumView', $ids);
 });
 
-/*Showing a particular forum*/
+/*---------------Showing a particular forum-------------*/
 Route::group(['prefix' => 'forum'],function(){
 	Route::get('show_forum/{id}','FrontendforumController@show_forum');
 });

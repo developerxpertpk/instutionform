@@ -37,8 +37,8 @@
 			
 		<div class="profile_view">
 			<div class="profile_picture col-md-4">
-				@if( !empty(Auth::user()->image) && asset('upload/'.Auth::user()->image) )
-					<img src="{{ asset('upload/'.Auth::user()->image) }}">		
+				@if( !empty(Auth::user()->image) && File::exists('upload/users/user'.'_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image) )
+					<img src="{{ asset('upload/users/user'.'_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image) }}">		
 				@else
 					<img src="{{ asset('images/user.png') }}">	
 				@endif
@@ -75,7 +75,7 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4 class="modal-title">Change Password</h4>
 							</div>
-							<form class="form-horizontal" id="change_password" role="form" method="POST"  enctype="multipart/form-data" action="/home/password_user">
+							<form class="form-horizontal" id="change_password" role="form" method="POST"  enctype="multipart/form-data" action="{{url('home/password_user')}}">
 								<div class="modal-body">
 
 									{{ csrf_field() }}
@@ -148,7 +148,7 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4 class="modal-title">Profile Editor</h4>
 							</div>
-							<form class="form-horizontal" role="form" id="profile_editor" method="POST"  enctype="multipart/form-data" action="/home/profile_edit">
+							<form class="form-horizontal" role="form" id="profile_editor" method="POST"  enctype="multipart/form-data" action="{{url('home/profile_edit')}}">
 								<div class="modal-body">
 								
 			                        {{ csrf_field() }}
@@ -229,7 +229,7 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4 class="modal-title">Choose an image</h4>
 							</div>
-							<form class="form-horizontal" id="change_password" role="form" method="POST"  enctype="multipart/form-data" action="/home/change_dp_user">
+							<form class="form-horizontal" id="change_password" role="form" method="POST"  enctype="multipart/form-data" action="{{url('home/change_dp_user')}}">
 								
 								<div class="modal-body">
 
