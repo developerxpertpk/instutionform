@@ -70,8 +70,8 @@
                                         
                                         <li class="">
                                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            @if( !empty(Auth::user()->image) && asset('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp'.Auth::user()->image) )
-                                                <img src="{{ asset('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp'.Auth::user()->image) }}">      
+                                            @if( !empty(Auth::user()->image) && File::exists('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image) )
+                                                <img src="{{ asset('upload/users/user_'.Auth::id().'/images/profile_pic/current_dp/'.Auth::user()->image) }}">      
                                             @else
                                                 <img src="{{ asset('images/user.png') }}">  
                                             @endif

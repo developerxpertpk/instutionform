@@ -128,52 +128,40 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-
             return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        }else{
+        $file = Input::file('image');
 
-            $file = Input::file('image');
+        $extention = $file->getClientOriginalExtension();
 
-            $extention = $file->getClientOriginalExtension();
+        if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
+            
+            $fileName = $file->getClientOriginalName();
 
-            if( $extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
-                $fileName = $file->getClientOriginalName() ;
-                
-                $image_name=str_ireplace(" ","_",$fileName);
-
-                $imagedata=explode("/",Auth::user()->image);
-                $imagefolder=$imagedata[0];
-
-                $path='upload/'.$imagefolder;
-                $image_path=$imagefolder.'/'.$image_name;
-
-                /*Check if image exists*/
-                if (File::exists ( public_path ( $image_path ) ) ) {
-                    //Overwrite Image name and path  
-                    $image_name=$image_name.rand(5);
-                    $image_path=$imagefolder.'/'.$image_name;   
-                }
-                
-                $destinationPath = public_path($path);
-                
-                $file->move($destinationPath,$image_name);
-
-                $result=User::find(Auth::id());
-                    $result->image=$image_path;
-                    $result->save();
+            $insert =User::find(Auth::id());
         
-                return back();
-            }else{
-                
-                return redirect()->back()->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
-                /*return view('user.my_profile')->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));*/
+            $userfolder_path = 'upload/users/user'.'_'.Auth::id().'/images/profile_pic/current_dp';
+            $userfolder_path_1 = 'upload/users/user'.'_'.Auth::id().'/images/profile_pic';
+            
+            $destinationPath = public_path().'/'.$userfolder_path;
+            $destinationPath_1 = public_path().'/'.$userfolder_path_1;
+
+            /*Check for folder existance*/
+            if (!File::exists($destinationPath)){
+              File::makeDirectory($destinationPath, 0777, true);
             }
+
+            $file->move($destinationPath,$fileName);
+            //  copy image in profile pic folder
+            $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+
+            $insert->image = $fileName;
+            $insert->save();
+
+            return back();
+        }else{
+            return redirect()->back()->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
         }
     }
-
-
-
-
-
 }
