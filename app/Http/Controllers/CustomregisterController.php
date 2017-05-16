@@ -13,82 +13,67 @@ class CustomregisterController extends Controller
 
 	public function showloginform(){
 		return view('auth.login');	
+	}
+   
+   public function insert(Request $request){
+
+		$rules=array(
+				'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
+            'lname' => 'required|max:255|regex:/^[\pL\s]+$/u',
+            'email' => 'required|email|max:255|unique:users|regex:/^[a-zA-Z0-9@_.]*$/',
+            'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9@_. ]*$/',
+            'image' => 'image',
+            'address' => 'required',
+			);
+
+		$validator = Validator::make($request->all(), $rules);
+
+		if($validator -> fails()){
+			return redirect('register')->withErrors($validator);
 		}
- 	
- /*	protected function validator(array $data)
-    	{
-        return Validator::make($data, [
+
+      $insert =new User();
+      /*Entries for database*/
+      $insert->fname = $request['fname'];
+      $insert->lname = $request['lname'];
+      $insert->email = $request['email'];
+      $insert->password = bcrypt($request['password']);
+      $insert->gender = $request['gender'];
+      $insert->address = $request['address'];
+
+      if($request->hasFile('image')){
+         $file = $request->file('image');
+         $extention = $file->getClientOriginalExtension();
+
+         if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
+         
+            $fileName = $file->getClientOriginalName();
+            $user_id = User::orderBy('id','DESC')->first()->id;
+
+            $userfolder_path = 'upload/users/user'.'_'.$user_id.'/images/profile_pic/current_dp';
+            $userfolder_path_1 = 'upload/users/user'.'_'.$user_id.'/images/profile_pic';
             
-        	]);
-    	}*/
-
-   	public function insert(Request $request){
-
-   		$rules=array(
-   				'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
-          'lname' => 'required|max:255|regex:/^[\pL\s]+$/u',
-          'email' => 'required|email|max:255|unique:users|regex:/^[a-zA-Z0-9@_.]*$/',
-          'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9@_.]*$/',
-          'image' => 'required|image',
-          'address' => 'required',
-   			);
-
-   		$validator = Validator::make($request->all(), $rules);
-
-   		if($validator -> fails()){
-   			return redirect('register')->withErrors($validator);
-   		}
-
-		$insert =new User();
-		// check weather request has image path or not 
-		$file = $request->file('image');
-
-		$extention = $file->getClientOriginalExtension();
-
-		if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
-			
-			$fileName = $file->getClientOriginalName();
-                   
-            $image_name=str_ireplace(" ","_",$fileName);
-
-            $imagefolder=$request['fname']."_".$request['lname']."_".rand().rand().rand();
-
-            $path='upload/'.$imagefolder;
-
-            $photo_path=$imagefolder."/".$image_name;
-
-            $destinationPath = public_path($path);
+            $destinationPath = public_path().'/'.$userfolder_path;
+            $destinationPath_1 = public_path().'/'.$userfolder_path_1;
 
             /*Check for folder existance*/
-            if ( !File::exists($destinationPath) ){
-                //Folder doesn't exists
-                //creating new folder 
-                File::MakeDirectory( $destinationPath );
+            if (!File::exists($destinationPath)){
+              File::makeDirectory($destinationPath, 0777, true);
             }
-            
 
-           	/*File upload on server*/
-            $file->move($destinationPath,$image_name);
+            $files->move($destinationPath,$fileName);
+            //  copy image in profile pic folder
+            $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
 
-            /*Entries for database*/
-            $insert->fname = $request['fname'];
-            $insert->lname = $request['lname'];
-            $insert->email = $request['email'];
-            $insert->password = bcrypt($request['password']);
-            $insert->gender = $request['gender'];
-            $insert->image = $photo_path;
-            $insert->address = $request['address'];
+            $insert->image = $fileName;
 
-            $insert->save();
+         }else{
+            return redirect('register')
+               ->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
+         }
+      }
 
-            
-		return redirect()->route('show.login');
-
-		}else{
-
-			return redirect('register')
-				->withErrors(array('image_error' => 'Image type must be of jpg, png or jpeg'));
-		}
+      $insert->save();
+      return redirect()->route('show.login');	
 	}
-
 }

@@ -3,64 +3,63 @@
 <!-- banner and search portion  -->
 <div class="container padding_zero crousel_container">
 	<section class="search_banner">
-			<div id="slidermy" class="carousel slide" data-ride="carousel">
-				<!-- Indicators -->
-				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						<img src="image\school1.jpg" alt="First slide">
-					</div>
-					
-					<div class="item">
-						<img src="image\school3.jpg" alt="Second slide">
-					</div>
-					
-					<div class="item">
-						<img src="image\school2.jpg" alt="Second slide">
-					</div>
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Find the best schools</h1>
-							
-							<div class="pad-top-120">
-								<p>How does schools works ?</p>
-								<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-							</div>
-						</div>
-						
-					</div>
+		<div id="slidermy" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="image\school1.jpg" alt="First slide">
 				</div>
 				
-				<a class="left carousel-control" href="#slidermy" role="button" data-slide="prev">
-					<span class="fa fa-chevron-left" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="right carousel-control" href="#slidermy" role="button" data-slide="next">
-					<span class="fa fa-chevron-right" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-			</div>
-			<div class="search-container">
-				<form class="form-horizontal" role="form" method="GET"  enctype="multipart/form-data" action="search_location">
-	        	{{ csrf_field() }}
+				<div class="item">
+					<img src="image\school3.jpg" alt="Second slide">
+				</div>
 				
-					<div class="container search_control">
-						<div class="col-xs-12 col-sm-4">
-							<input type="text" class="form-control input-lg" name="location" placeholder="Search the location">
+				<div class="item">
+					<img src="image\school2.jpg" alt="Second slide">
+				</div>
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>Find the best schools</h1>
+						
+						<div class="pad-top-120">
+							<p>How does schools works ?</p>
+							<p><a class="btn btn-lg btn-primary" href="{{ url('/register') }}" role="button">Sign up today</a></p>
 						</div>
-						<div class="col-xs-12 col-sm-6">
-							<input type="text" class="form-control input-lg" name="school_name" placeholder="Enter the name of school ">
-						</div>
-						<div class="col-xs-12 col-sm-2">
-							<button type="submit" class="btn btn-success btn-lg">Search</button>
-						</div>
-						@if(Session::has('search_failed'))
-							<div class="col-sm-12 text-center">
-								<span class="src_err">{{ Session::get('search_failed') }}</span>
-							</div>
-						@endif
 					</div>
-				</form>	
+					
+				</div>
 			</div>
+			
+			<a class="left carousel-control" href="#slidermy" role="button" data-slide="prev">
+				<span class="fa fa-chevron-left crousel_icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#slidermy" role="button" data-slide="next">
+				<span class="fa fa-chevron-right crousel_icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+		<div class="search-container">
+			<form class="form-horizontal" role="form" method="GET"  enctype="multipart/form-data" action="search_location">
+        	{{ csrf_field() }}
+			
+				<div class="container search_control">
+					<div class="col-xs-12 col-sm-4">
+						<input type="text" class="form-control input-lg" name="location" placeholder="Search the location">
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<input type="text" class="form-control input-lg" name="school_name" placeholder="Enter the name of school ">
+					</div>
+					<div class="col-xs-12 col-sm-2">
+						<button type="submit" class="btn btn-success btn-lg">Search</button>
+					</div>
+					@if(Session::has('search_failed'))
+						<div class="col-sm-12 text-center">
+							<span class="src_err">{{ Session::get('search_failed') }}</span>
+						</div>
+					@endif
+				</div>
+			</form>	
 		</div>
 	</section>
 </div>
@@ -94,7 +93,7 @@
 											{{ $schools->locations->city.", ".$schools->locations->state.", ".$schools->locations->country}}
 										</td>
 										<td>
-											<a href="show_school/{{ $schools->id }}">
+											<a href="{{url('/show_school/'.$schools->id)}}">
 												<button type="submit" class="btn btn-primary  btn-xs">View</button>
 											</a>
 										</td>
@@ -118,7 +117,7 @@
 												{{ $schools->city.", ".$schools->state.", ".$schools->country}}
 											</td>
 											<td>
-												<a href="show_school/{{ $schools->schools['id'] }}">
+												<a href="{{url('/show_school/'.$schools->schools['id'])}}">
 													<button type="submit" class="btn btn-primary  btn-xs">View</button>
 												</a>
 											</td>
@@ -348,7 +347,7 @@
 	</section>
 	
 	<!--Guidance portion-->
-	<section class="Guidance">
+	<section class="Guidance padding_btm">
 		<div class="container">
 			<h2>Guidance</h2>
 			<span class="col-sm-12 text-center">(this section is for future use)</span>
@@ -375,7 +374,7 @@
 					</div>
 					<div class="media-body">
 						<h4 class="media-heading">Media heading <small>demo</small></h4>
-						<p>Shiksha provided me with latest information on colleges and exams.
+						<p>This site provided me with latest information on colleges and exams.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Pawan Uppal Teacher Delhi Public School,Delhi</h6>
 						</p>
@@ -407,7 +406,7 @@
 					</div>
 					<div class="media-body">
 						<h4 class="media-heading">Media heading <small>demo</small></h4>
-						<p>Shiksha provided me with latest information on colleges and exams.
+						<p>This site provided me with latest information on colleges and exams.
 							Regular reminders on important deadlines helped me stay on top of all my college and exam applications.
 							<h6>Neha Thakur Teacher Army Public School,Mumbai</h6>
 						</p>

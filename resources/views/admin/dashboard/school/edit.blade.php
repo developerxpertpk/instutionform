@@ -33,9 +33,9 @@
 				<h1><u>Register School & Institute</u></h1>
 			</div>
 
-			<form  class="form-horizontal" id="validate_form" role="form" method="post"   action="#" enctype="multipart/form-data">
+			<form  class="form-horizontal" id="validate_form" method="post" action="{{ url( '/admin/school_updates' ) }}" enctype="multipart/form-data">
 				{{ csrf_field() }}
-
+				<input type="hidden" name="school_id" value="{{$school->id}}">
 				<div class="school-detail col-sm-12">
 					<h3><u>School Detail</u></h3>
 
@@ -81,65 +81,63 @@
 
 				<div class="school_location col-sm-12">
 					<h3><u>School location</u></h3>
-					<div class="row col-lg-12 col-md-12">
-						<div class="col-md-6 col-md-6">
-							<div class="form-group">
-								<label class="col-sm-12 col-md-8 col-lg-8 control-label "> country*</label>
-								<div class="col-lg-6 col-md-6" id="location">
-									<input id="countryId" class="countries form-control" name="country" value ="{{ $school->locations->country }}" placeholder="country *">
-									</input>
-									@if ($errors->has('country'))
-									<span class="help-block error_message">
-										<strong>{{ $errors->first('country') }}</strong>
-									</span>
-									@endif
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-12 col-md-8 col-lg-8 control-label "> state* </label>
-								<div class="col-md-6 col-lg-6" id="location">
-									<input id="stateId" class="states form-control" name="state" value="{{ $school->locations->state }}" placeholder="state *">
-									</input>
-								</div>
-								@if ($errors->has('state'))
+					<div class="col-md-6 col-md-6">
+						<div class="form-group">
+							<label class="col-sm-12 col-md-8 col-lg-8 control-label "> country*</label>
+							<div class="col-lg-6 col-md-6" id="location">
+								<input id="countryId" class="countries form-control" name="country" value ="{{ $school->locations->country }}" placeholder="country *">
+								</input>
+								@if ($errors->has('country'))
 								<span class="help-block error_message">
-									<strong>{{ $errors->first('state') }}</strong>
+									<strong>{{ $errors->first('country') }}</strong>
 								</span>
 								@endif
 							</div>
+						</div>
 
-							<div class="form-group">
-								<label class="col-sm-12 col-md-8 col-lg-8 control-label "> City * </label>
-								<div class="col-lg-6 col-md-6" id="location">
-									<input id="cityId" class="cities form-control" name="city" value="{{ $school->locations->city }}" placeholder="city *">
-									</input>
-									@if ($errors->has('city'))
-									<span class="help-block error_message">
-										<strong>{{ $errors->first('city') }}</strong>
-									</span>
-									@endif
-								</div>
+						<div class="form-group">
+							<label class="col-sm-12 col-md-8 col-lg-8 control-label "> state* </label>
+							<div class="col-md-6 col-lg-6" id="location">
+								<input id="stateId" class="states form-control" name="state" value="{{ $school->locations->state }}" placeholder="state *">
+								</input>
 							</div>
+							@if ($errors->has('state'))
+							<span class="help-block error_message">
+								<strong>{{ $errors->first('state') }}</strong>
+							</span>
+							@endif
+						</div>
 
-							<div class="form-group">
-								<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2" id="location">
-									<input id="lat" type="hidden" class="lat form-control" name="latitude" value="{{ $school->locations->latitude }}" class="hidden" >
-									</input>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2" id="location">
-									<input id="long"  type="hidden" class="long form-control" name="longitude" value=" {{ $school->locations->longitude }}" >
-									</input>
-								</div>
+						<div class="form-group">
+							<label class="col-sm-12 col-md-8 col-lg-8 control-label "> City * </label>
+							<div class="col-lg-6 col-md-6" id="location">
+								<input id="cityId" class="cities form-control" name="city" value="{{ $school->locations->city }}" placeholder="city *">
+								</input>
+								@if ($errors->has('city'))
+								<span class="help-block error_message">
+									<strong>{{ $errors->first('city') }}</strong>
+								</span>
+								@endif
 							</div>
 						</div>
 
-						<div class="col-md-6 col-lg-6  google-map">
-							<div id="map">
+						<div class="form-group">
+							<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2" id="location">
+								<input id="lat" type="hidden" class="lat form-control" name="latitude" value="{{ $school->locations->latitude }}" class="hidden" >
+								</input>
 							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2" id="location">
+								<input id="long"  type="hidden" class="long form-control" name="longitude" value=" {{ $school->locations->longitude }}" >
+								</input>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-6  google-map">
+						<div id="map">
 						</div>
 					</div>
 				</div>
@@ -181,7 +179,7 @@
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-												{!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id,$school->id ],'style'=>'display:inline','class'=>'delete']) !!}
+												{!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id],'style'=>'display:inline','class'=>'delete']) !!}
 												{!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
 												{!! Form::close() !!}
 											</div>
@@ -227,7 +225,7 @@
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-													{!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id,$school->id ],'style'=>'display:inline','class'=>'delete']) !!}
+													{!! Form::open(['method' => 'DELETE','route' => ['delete_image',$image->id ],'style'=>'display:inline','class'=>'delete']) !!}
 													{!! Form::submit('delete', ['class' => 'btn btn-success']) !!}
 													{!! Form::close() !!}
 												</div>
@@ -270,14 +268,13 @@
 							@endif
 						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<div class=" col-md-offset-4 col-md-2">
-						<button type="submit" class="btn btn-primary">
+					<div class="form-group">
+						<button type="submit" id="edit_register" class="col-md-offset-4 col-md-2 btn btn-primary">
 						Register
 						</button>
 					</div>
 				</div>
+					
 			</form>
 			<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -304,5 +301,4 @@
         });
 	</script>
 </div>
-
 @endsection

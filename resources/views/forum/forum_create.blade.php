@@ -7,7 +7,7 @@
             <div class="panel panel-default animated bounce">
                 <div class="panel-heading">Create Forum</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="/create_forums">
+                    <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{url('/create_forums')}}">
                         {{ csrf_field() }}
 
                         <input type="hidden" name="school_id" value="{{ isset($school_id) ? $school_id : '' }}">
@@ -88,7 +88,7 @@
                 </thead>
                 <tbody>
                     @foreach($schooldata->forums as $forum)
-                        <tr class='clickable-row' href="/forum/show_forum/{{$forum->id}}" style="cursor: pointer;" >
+                        <tr class='clickable-row' href="{{url('/forum/show_forum/'.$forum->id)}}" style="cursor: pointer;" >
                             <td width="20%">{{$forum->title}}</td>
                             <td width="35%">{!! str_limit($forum->description, $limit = 100, $end = ' ~read more..') !!}</td>
                             <td width="15%">@if(count($forum->threads) == 1)1 post @elseif(!count($forum->threads)) No posts @else {{count($forum->threads)}} posts @endif</td>

@@ -252,7 +252,11 @@ class SchoolController extends Controller
         return view('admin.dashboard.school.edit', compact('school','gallery_profile','gallery_images','documents'));
     }
 
-    public function school_update1(Request $request, $id) {
+
+
+
+    public function school_update1() {
+
         $rules = array(
             'school_name' => 'required',
             'school_address' => 'required',
@@ -260,19 +264,18 @@ class SchoolController extends Controller
             'country' => 'required',
             'state' => 'required',
             'city' => 'required',
-            'profile' => 'image|max:20000',
-            'image[]' =>'image|max:20000',
+            'profile' => 'image|max:20000000',
+            'image[]' =>'image|max:20000000',
             'document[]' =>'mime|docx,doc,pdf,txt,jpg,png',
         );
 
-        $validator = Validator::make(Input::all(), $rules);
+        $validator = Validator::make($request->all(), $rules);
         // server side validation
         if ($validator->fails()) {
-            return redirect()->route('school.edit',$id)
-                                ->withInput()
-                                ->withErrors($validator);
+            return back()->withInput()->withErrors($validator);
 
         } else {
+            $id=$request->school_id;
             $loc_id = School::find($id)->location_id;
             location::find($loc_id)->update($request->all());
             School::find($id)->update($request->all());
@@ -320,6 +323,78 @@ class SchoolController extends Controller
                     $image_new->save();
                 }
             }
+
+            // code for upload images if any
+            if ($request->hasFile('image')) {
+
+                $files = $request->file('image');
+                // Making counting of uploaded images
+                $file_count = count($files);
+                // start count how many uploaded
+                $uploadcount = 0;
+                $school_id = $id;
+                $schoolfolder_path = 'upload/schools/school'.'_'. $school_id;
+                $destinationPath = public_path().'/'.$schoolfolder_path;
+
+                if (!File::exists($destinationPath)) {
+                    File::MakeDirectory($destinationPath, 0777, true);
+                }
+                    
+                $dataSet = [];
+                $now = Carbon::now();
+                foreach ($files as $file) {
+                    $fileName = $file->getClientOriginalName();
+                    $extention = $file->getClientOriginalExtension();
+                    $file->move($destinationPath . '/images/gallery/', $fileName);
+                    $timestamp = $now->getTimestamp();
+                    $image_path = $destinationPath . '/images/gallery' . '/' . $fileName;
+
+                    $dataSet[] = [
+                        'image' => $fileName,
+                        'image_type'=>0,
+                        'school_id' => $school_id,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                    $uploadcount++;
+                }
+                DB::table('school_images')->insert($dataSet);
+                
+            }
+
+            //code for documents
+            if($request->hasFile('document')){
+                $documents = $request->file('document');
+                // Making counting of uploaded images
+                $file_count = count($documents);
+                // start count how many uploaded
+                $uploadcount = 0;
+                $school_id = $id;
+                $schoolfolder_path = 'upload/schools/school'.'_'. $school_id;
+                $destinationPath = public_path() .'/'. $schoolfolder_path;
+
+                if (!File::exists($destinationPath)){
+                    File::MakeDirectory($destinationPath, 0777, true);
+                }
+                $dataSet = [];
+                $now = Carbon::now();
+                foreach ($documents as $file) {
+                    $fileName = $file->getClientOriginalName();
+                    $extention = $file->getClientOriginalExtension();
+                    $file->move($destinationPath . '/documents/', $fileName);
+                    $timestamp = $now->getTimestamp();
+                    $file_path = $schoolfolder_path . '/documents/' . $fileName;
+                    $dataSet[] = [
+                        'school_id' => $school_id,
+                        'documents' => $fileName,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+
+                    $uploadcount++;
+                }
+                DB::table('school_details')->insert($dataSet);
+            } //end of document if
         }
         return redirect()->route('school.index')
                 ->with('success', 'school updated successfully');

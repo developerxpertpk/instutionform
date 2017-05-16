@@ -8,8 +8,10 @@ use Route;
 use Auth;
 use App\User;
 use Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use App\Page;
+use Session;
 use Illuminate\Support\Facades\View;
 
 class LoginController extends Controller
@@ -46,21 +48,29 @@ class LoginController extends Controller
 
 
    public function login(){
-      // store email and password in variables
 
+      $data=array(
+         'email' => $_POST['email'],
+         'password' => $_POST['password'],
+         );
+
+      $rules=array(
+         'email' => 'required|email|max:255|regex:/^[a-zA-Z0-9@_.]*$/',
+         'password' => 'required|regex:/^[a-zA-Z0-9@_. ]*$/',
+         );
+
+      $validator= Validator::make($data,$rules);
+
+      if ($validator->fails()) {
+         return Redirect::back()->withErrors($validator);
+      }
+
+      // store email and password in variables
       $email=$_POST['email'];
       $password=$_POST['password'];
 
       if(Auth::attempt(array('email'=> $email,'password' => $password)))
       {  
-          
-         // validate() is use to validate user is blocked  if status 1= blocked
-         if(Auth::validate(['email'=>$email, 'password'=>$password, 'status' => '1'])){  
-            //   echo "u r no t allowed";
-            Auth::logout();
-            return redirect()->to('/');
-            
-         }
 
          /*For Forum Query String Redirections*/
          if(Input::has('redirect')){
@@ -89,7 +99,7 @@ class LoginController extends Controller
          }
 
          //check  user role id 2 
-         if(Auth::user()->role_id == '2' && Auth::user()->status =='0') {  
+         if(Auth::user()->role_id == '2' && Auth::user()->status =='1') {  
             return redirect('/');
          }  
 
@@ -99,7 +109,8 @@ class LoginController extends Controller
          } 
       }else{
          //if no email and password match then redirect to registration
-         return view('auth.register');
+         Session::flash('error_auth','Incorrect email or password');
+         return back();
       }
        
    }
@@ -115,8 +126,8 @@ class LoginController extends Controller
    }
 
    public function logout(){
-                 Auth::logout();
-                 return redirect('/');
+      Auth::logout();
+      return redirect('/');
    }
 
 }

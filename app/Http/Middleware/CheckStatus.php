@@ -27,7 +27,7 @@ class CheckStatus
             if($request->ajax()){
 
                 /*Check whether user is blocked*/
-                if(Auth::user()->status == 1){
+                if(Auth::user()->status == 0){
                     return 500;
                 }
                 return $next($request);
@@ -41,7 +41,7 @@ class CheckStatus
 
             if( Auth::attempt(['email' => $request->input('email'),'password' => $request->input('password')]) ){
 
-                if(Auth::user()->status == 1){
+                if(Auth::user()->status == 0){
 
                     Auth::logout();
                     return redirect('access_denied')->with('status_error','Sorry,you have been blocked by Finder & Forum');
