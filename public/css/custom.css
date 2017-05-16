@@ -131,6 +131,23 @@
 .school_document_img{
     margin:auto 0;
 }
+/* css for school edit*/
+ .school_image_update{
+     border: 1px solid red;
+     padding: 1%;
+     margin-bottom: 30%;
+     float: left;
+     width: 100%;
+ }
+ .school_image_update img{
+     float:left;
+     width:100%;
+ }
+ .custom_buttom{
+     float: left;
+     width: 100%;
+     margin-top: 2px;
+ }
 
 /* css for school show */
  .show-rounder {

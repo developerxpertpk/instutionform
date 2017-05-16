@@ -45,8 +45,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 			Route::post('postpwd','DashboardController@pwdchange')->name('admin.postpwd');
 
-			Route::get('charts','DashboardController@chart')->name('charts');
-
             // Route for Users
 
 			Route::resource('user','UserController');
@@ -61,17 +59,17 @@ Route::group(['middleware' => ['auth']], function () {
 			
 			
             /*  route for school-institue  status*/
-            Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
 
-            // Route::get('schools/school_update/{id}','SchoolController@school_update1')->name('schools.update');
-            
 
             Route::resource('school','SchoolController');
+
+            Route::post('school/status/{id}','SchoolController@status_update')->name('school.status');
+
+            Route::post('school/update/{id}','SchoolController@school_update');
 
 
             /*  Routes for add News Reated to school  */
             Route::resource('school_news','SchoolNewsController');
-
             // function for update school news
             Route::post('school_news/update/{id}','SchoolNewsController@update_news')->name('update_news');
             // Route to update News status
@@ -83,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
             // function to search news realted to particular School
             Route::get('school_news/news/{id}','SchoolNewsController@news_list')->name('filter_news');
 			// Routes for cms
+
             Route::resource('content','PageController');
 
 			Route::get('content','PageController@index')->name('content');
@@ -135,10 +134,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('forum-search','ForumController@reported_search')->name('search.fourm.submit');
 
             Route::delete('reported_delete/{id}','ForumController@reported_delete')->name('destroy_reported');
-            // Image Controller
-            Route::resource('image','ImageController');
 
+            // Image Controller
+           // Route::resource('image','ImageController');
+
+            //Route::delete('school_profile/{id}','ImageController@delete_profile')->name('delete_profile');
             Route::delete('image/{id}','ImageController@delete_image')->name('delete_image');
+
+            Route::delete('document/{id}','ImageController@delete_document')->name('delete_document');
 
     	});
 });
@@ -146,7 +149,6 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/search', 'UserController@search');
 Route::get('/school_search','SchoolController@search')->name('school_search');
 Route::get('rating_reviews/search','SchoolRatingReviewsController@school_search')->name('rating_search');
-
 
 
 Route::group(['middleware' => ['check.status']],function(){

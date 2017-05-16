@@ -119,7 +119,7 @@
                         <div  class="row">
 
                         <h4 class="pull-left">Gallery Images</h4>
-                        <h4 class="pull-right"> <a href=" {{ route('image.edit', $schools->id) }}" class="btn btn-primary"> Upload </a> </h4>
+                        <h4 class="pull-right"> <a href="#" class="btn btn-primary"> Upload </a> </h4>
                         </div>
 
                         <div class="gallery-box">
