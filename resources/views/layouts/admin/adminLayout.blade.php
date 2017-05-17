@@ -11,6 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
     <title> Admin dashboard </title>
     <!-- addes juery -->
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
@@ -99,12 +100,12 @@
                         <li>
                            <a href=" {{ route('admin.profile') }}"> <i class="fa fa-fw fa-user fa-x3"></i> Profile</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
 
                         <li>
                             <a href= "{{ route('admin.changepwd') }}" ><i class="fa fa-fw fa-gear"></i> Change Password</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('freq_ask_ques')}}"> <i class="fa fa-pencil" aria-hidden="true"></i>Edit Account</a>
                         </li>
 
                         <li class="divider">logout</li>
@@ -148,7 +149,7 @@
                         <ul id="cms" class="collapse">
 
                             <li>
-                                <a href="{{route('content')}}"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Static Content</a>
+                                <a href="{{route('content.index')}}"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Static Content</a>
                             </li>
                             <li>
                                 <a href="{{ route('freq_ask_ques')}}"> <i class="fa fa-quora" aria-hidden="true"></i> FAQ's</a>

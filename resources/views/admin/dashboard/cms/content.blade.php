@@ -57,12 +57,12 @@
 					<td>{{ $pages->slug }}</td>
 					<td>{!!  str_limit($pages->content,50,'...') !!}</td>
 					<td>
-			<?php /*	{{-- Button {{ route('content.show',$pages->id) }}for show--}} */?>
+				{{-- Button {{ route('content.show',$pages->id) }}for show--}}
 				<a href="/{{$pages->slug}}" target="_blank" type="button" class="btn btn-success">
 					Show
 				</a>
-			<?php /*	{{-- Button for edit--}} */ ?>
-				<a href="{{ route('content.edit',$pages->id) }}" target="_blank" type="button" class="btn btn-success">
+				{{-- Button for edit--}}
+				<a href="{{ route('content.edit',$pages->id) }}"  type="button" class="btn btn-success">
 					Edit
 				</a>
 				<!-- Button for  Delete-->

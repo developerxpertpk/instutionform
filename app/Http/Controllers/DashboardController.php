@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\User;
 use Validator;
@@ -11,9 +12,17 @@ use Validator;
 class DashboardController extends Controller
 {
     //
-    public function index(Request $request){  
-     
-    	  	return view('admin.dashboard.index');	
+    public function index(Request $request){
+
+            $users = DB::table('users')->count();
+            $schools=  DB::table('schools')->count();
+            $news =DB::table('school_news')->count();
+            $forums=DB::table('forums')->count();
+            $reviews =DB::table('school_ratings')->count('reviews');
+            $ratings = DB::table('school_ratings')->count('ratings');
+            $pages= DB::table('pages')->count();
+            $faq = DB::table('freq_ask_questions')->count();
+    	  	return view('admin.dashboard.index',compact('users','schools','news','forums','reviews','ratings','pages','faq'));
 		}
 
 	public function chart(Request $request){  
@@ -74,10 +83,4 @@ class DashboardController extends Controller
 		}
 	} // END OF FUNCTION
 
-//    public function dashboard_data(){
-//        $users= DB::table('users')->groupBy('id')->count();
-//        print_r($users);
-//        die('a');
-//	    return view('admin.dashboard',comapact('users'));
-//    }
 }
