@@ -15,13 +15,11 @@
             </div>
 
             <div class="row">
-
                 <div class="pull-right">
                     {!! Form::open(['method' => 'GET', 'route' => 'rating_search'] ) !!}
                     {!! Form::text('search', null, ['class="form-control search-box" ','placeholder' =>'Enter any school name ']) !!}
                     {!! Form::submit('search', ['class' => 'btn btn-primery']) !!}
                     {!! Form::close() !!}
-
                 </div>
             </div>
 

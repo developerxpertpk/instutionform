@@ -11,7 +11,6 @@ use Validator;
 
 class DashboardController extends Controller
 {
-    //
     public function index(Request $request){
 
             $users = DB::table('users')->count();
@@ -82,5 +81,6 @@ class DashboardController extends Controller
 
 		}
 	} // END OF FUNCTION
+
 
 }

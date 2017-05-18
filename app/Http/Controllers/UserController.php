@@ -33,24 +33,37 @@ class UserController extends Controller
     public function store(Request $request){
 
                 $this->validate($request, [
-                    'fname' => 'required',
+                    'fname' => 'required|max:255',
                     'lname' => 'required',
-                    'email' => 'required',
+                    'email' => 'required|email|max:255|unique:users',
                     'gender' => 'required',
                     'address' =>'required',
                 ]);
 
                 $insert =new User();
-
                 // check weather request has image path or not
+                if($file = $request->hasFile('image')){
 
-                if($file = $request->hasFile('image')) { 
+                    $this->validate($request, [
+                        'image'=>'image|max:200000',
+                    ]);
+                    $result=DB::select("SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".env('DB_DATABASE')."' AND TABLE_NAME = 'users'");
+                    $user_id=$result[0]->AUTO_INCREMENT;
 
                     $file = $request->file('image');
-                    $fileName = $file->getClientOriginalName() ;
-                    $extention = $file->getClientOriginalExtension();
-                    $destinationPath = public_path().'/upload/' ;
-                    $file->move($destinationPath,$fileName);
+                    $fileName = $file->getClientOriginalName();
+                    $destinationPath = public_path().'/upload/users/user_'.$user_id.'/images/profile_pic/current_dp/';
+                    $destinationPath_1 = public_path().'/upload/users/user_'.$user_id.'/images/profile_pic/';
+
+                    // path does not exist
+                    if (!file_exists($destinationPath)){
+                        File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                    }
+                    //move file
+                    $image=  $file->move($destinationPath, $fileName);
+                    //copy file
+                    $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+                    $insert->image =  $fileName ;
                 }
 
                 $insert->fname = $request['fname'];
@@ -58,9 +71,7 @@ class UserController extends Controller
                 $insert->email = $request['email'];
                 $insert->password = bcrypt($request['password']);
                 $insert->gender = $request['gender'];
-                $insert->image =  $fileName ;
                 $insert->address = $request['address'];
-
                 $insert->save();
                 return redirect()->route('user.index')
                 ->with('success','Item created successfully');
@@ -74,23 +85,10 @@ class UserController extends Controller
 
 
 	public function edit($id){
-		$user = User::find($id);	
+
+		$user = User::find($id);
         return view('admin.dashboard.user.edit',compact('user'));
 	}
-
-    public function update(Request $request,$id)
-    {     
-        $this->validate($request, [
-            'status' => 'required',
-            'description' => 'required',
-        ]);
-       
-        User::find($id)->update($request->all());
-        return redirect()->route('user.index')
-                         ->with('success','user blocked successfully');
-
-    }
-
 
     public function destroy($id)
     {
@@ -160,38 +158,52 @@ class UserController extends Controller
 
         public function user_update(Request $request,$id)
         {
+            // validate Input
             $this->validate($request, [
-                'fname' => 'required',
+                'fname' => 'required|max:255',
                 'lname' => 'required',
-                'email' => 'required',
+                'email' => 'required|email|max:255',
+                'gender' => 'required',
                 'address' =>'required',
             ]);
+            //create object
+            $object = User::find($id);
 
-            if($file = $request->hasFile('image')) {
-
+            if($file = $request->hasFile('image')){
                 $this->validate($request, [
-                    'image'=>'mimes:jpeg|image|png',
+                    'image'=>'image|max:200000',
                 ]);
                 $file = $request->file('image');
-                $fileName = $file->getClientOriginalName() ;
-                $extention = $file->getClientOriginalExtension();
-                $destinationPath = public_path().'/upload/' ;
-                $file->move($destinationPath,$fileName);
+                $fileName = $file->getClientOriginalName();
+                $destinationPath = public_path().'/upload/users/user_'.$id.'/images/profile_pic/current_dp/';
+                $destinationPath_1 = public_path().'/upload/users/user_'.$id.'/images/profile_pic/';
+                // path does not exist
+                if (!file_exists($destinationPath)){
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                 }
+
+                //move file
+                $image=  $file->move($destinationPath, $fileName);
+                //copy file
+                $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);
+                //deleting the existing dp
+                File::delete($destinationPath.'/'.$object->image);
+                $object->image =$fileName;
+            }
+            $object->fname =$request->fname;
+            $object->lname =$request->lname;
+            $object->email =$request->email;
+            $object->gender =$request->gender;
+            $object->address =$request->address;
+            $object->save();
+
+            if($object->role_id=='1')
+            {
+                return view('admin.dashboard.profile');
             }
 
-             $update = User::where('id','=',$id)->update( [
-                 'fname'=> $request->fname,
-                 'lname'=> $request->lname,
-                 'email'=>$request->email,
-                 'gender' =>$request->gender,
-                 'image'=>$fileName,
-                 'address'=>$request->address,
-             ]);
-
-
-
-             return redirect()->route('user.index')
-                            ->with('success','user updated successfully');
+            return redirect()->route('user.index')
+                ->with('success','user updated successfully');
         }
 
 }   

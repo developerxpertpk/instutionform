@@ -38,7 +38,6 @@ class SchoolRatingReviewsController extends Controller
     }
 
     public function destroy($id){
-
         School_rating::find($id)->delete();
         return redirect()->route('school_rating.index')
             ->with('success','Rating and reviews deleted successfully');
@@ -139,8 +138,7 @@ class SchoolRatingReviewsController extends Controller
     //function to update Reviews of user
 
     public function  update_review(Request $request,$id){
-
-        $update = School_rating::where('id', '=',$request->id)
+        $update = School_rating::where('id','=',$request->id)
             ->update(['reviews' => $request->reviews]);
         $school_rating = School_rating::find($request->id);
         return view('admin.dashboard.school_rating_reviews.edit',compact('school_rating'))

@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('postpwd', 'DashboardController@pwdchange')->name('admin.postpwd');
 
+        Route::get('edit_profile',function(){
+            return view('admin.dashboard.edit_profile');
+        })->name('edit_profile');
 
         // Route for User
         Route::resource('user', 'UserController');
@@ -126,12 +129,12 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('submit_rating', 'SchoolRatingReviewsController@submit_rating');
 
-        Route::post('rating_reviews/{id}', 'SchoolRatingReviewsController@update_review')->name('update_review');
 
         Route::post('school/check_ratings', 'SchoolController@check_ratings');
 
         Route::post('school/admin_rating', 'SchoolController@school_rating');
 
+        Route::post('rating_reviews/{id}','SchoolRatingReviewsController@update_review')->name('update_review');
 
         // Forum Controller
         Route::resource('forum', 'ForumController');

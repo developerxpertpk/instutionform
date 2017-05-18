@@ -1,5 +1,4 @@
 @extends('layouts.admin.adminLayout')
-
 @section('content')
 
     <div id="page-wrapper">

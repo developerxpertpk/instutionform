@@ -169,7 +169,7 @@
                                         <i class="fa fa-comments fa-5x" aria-hidden="true"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">  {{ $faq }}</div>
+                                        <div class="huge">  {{ $faq }} </div>
                                         <div>FAQ's</div>
                                     </div>
                                 </div>

@@ -23,9 +23,9 @@
     <script src="{{asset('js/validate.min.js')}}"></script>
 
     <script type="text/javascript" src="{{asset('js/additional-methods.min.js')}}"></script>
-    {{--<script src="{{asset('js/jquery-ui.js')}}"></script>--}}
-    <script src="{{asset('js/ajax_rating.js') }}"></script>
-    <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
+    <script src="{{asset('js/jquery-ui.js')}}"></script>
+    {{--<script src="{{asset('js/ajax_rating.js') }}"></script>--}}
+    {{--<script src="{{asset('js/ajax_edit_rating.js') }}"></script>--}}
     <script src="{{ asset('js/jquery-validation.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
@@ -105,7 +105,7 @@
                             <a href= "{{ route('admin.changepwd') }}" ><i class="fa fa-fw fa-gear"></i> Change Password</a>
                         </li>
                         <li>
-                            <a href="{{ route('freq_ask_ques')}}"> <i class="fa fa-pencil" aria-hidden="true"></i>Edit Account</a>
+                            <a href="{{ route('edit_profile')}}"> <i class="fa fa-pencil" aria-hidden="true"></i>Edit Account</a>
                         </li>
 
                         <li class="divider">logout</li>
