@@ -152,6 +152,10 @@ class HomeController extends Controller
               File::makeDirectory($destinationPath, 0777, true);
             }
 
+            if(File::exists($destinationPath.'/'.Auth::user()->image)){
+                File::delete($destinationPath.'/'.Auth::user()->image);
+            }
+
             $file->move($destinationPath,$fileName);
             //  copy image in profile pic folder
             $copy = File::copy($destinationPath.'/'.$fileName,$destinationPath_1.'/'.$fileName);

@@ -29,22 +29,12 @@
 				<div class="col-md-12">
 					<div class="col-middle">
 						<div class="text-center text-center">
-							<h1 class="error-number">404</h1>
-							<h2>Access Denied</h2>
-							<p>You have been temporary blocked !! <a href="#">Report this?</a>
+							<h1 class="error-number">!</h1>
+							<h3>Blocked</h3>
+							<p>You have been temporary blocked by School Finder !! <a href="#">Learn more...</a>
 						</p>
 						<div class="mid_center">
-							<h3>Search</h3>
-							<form>
-								<div class="col-xs-12 form-group pull-right top_search">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Search for...">
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button">Go!</button>
-										</span>
-									</div>
-								</div>
-							</form>
+							
 							<p><a href="/">back to home...</a></p>
 						</div>
 					</div>

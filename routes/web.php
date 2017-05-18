@@ -183,6 +183,9 @@ Route::group(['middleware' => ['auth','check.status']], function () {
 Route::get('access_denied',function(){
 	return view('temporary_blocked');
 });
+Route::get('Not_found',function(){
+    return view('user.page_404');
+});
 
 Route::get('details',function(){
 	return view('user.guests.view_school');
@@ -206,7 +209,12 @@ Route::get('create_forums','FrontendforumController@createforum')->name('create_
 
 Route::get('forum','FrontendforumController@forum_index');
 
-Route::get('create_thread/{id}',function($id){
+Route::get('create_thread/{id?}',function($id=null){
+    if($id == null){
+        return back();
+    }
+    $page = App\Page::orderBy('id','DESC')->where('active','=',0)->get();
+    View::share('page', $page);
 	return view('forum.thread_create')->with('forum_id',$id);
 });
 Route::get('create_thread','FrontendthreadController@create_thread')->name('create_thread');

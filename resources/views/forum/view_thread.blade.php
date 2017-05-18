@@ -1,7 +1,7 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 
-<div class="container">
+<div class="container padding_btm">
 	<h2>Discussions</h2>
 	<div class="col-sm-12 center-block google_adsense">
 		<div class="col-sm-8 text-center table-bordered" style="float:none;margin: auto;">
@@ -21,7 +21,11 @@
 			<div class="media col-sm-12 question_description padding_zero">
 	  			<div class="media-left">
 	    			<a href="#">
-	    				<img class="media-object description_img" src="{{asset('upload/'.$thread->users->image)}}" alt="{{asset('images/user.png')}}">
+	    				@if( !empty($thread->users->image) && File::exists('upload/users/user_'.$thread->users->id.'/images/profile_pic/current_dp/'.$thread->users->image) )
+                            <img class="media-object description_img" src="{{ asset('upload/users/user_'.$thread->users->id.'/images/profile_pic/current_dp/'.$thread->users->image) }}">      
+                        @else
+                            <img class="media-object description_img" src="{{ asset('images/user.png') }}">  
+                        @endif
 	    			</a>
 	  			</div>
 
@@ -206,7 +210,11 @@
 			<div class="media col-sm-12 question_description padding_zero">
 	  			<div class="media-left">
 	    			<a href="#">
-	    				<img class="media-object description_img" src="{{asset('upload/'.$comments->users->image)}}" alt="{{asset('images/user.png')}}">
+	    				@if( !empty($thread->users->image) && File::exists('upload/users/user_'.$comments->users->id.'/images/profile_pic/current_dp/'.$comments->users->image) )
+                            <img class="media-object description_img" src="{{ asset('upload/users/user_'.$comments->users->id.'/images/profile_pic/current_dp/'.$comments->users->image) }}">      
+                        @else
+                            <img class="media-object description_img" src="{{ asset('images/user.png') }}">  
+                        @endif
 	    			</a>
 	  			</div>
 

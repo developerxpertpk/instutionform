@@ -1,6 +1,65 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 
+
+<div class="row3">
+    <div class="form-horizontal_row3">
+        <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{url('/create_forums')}}">
+            <div class="container-fluid">
+                <h3 class="register">Create Forum</h3>
+                {{ csrf_field() }}
+                <input type="hidden" name="school_id" value="{{ isset($school_id) ? $school_id : '' }}">
+          
+                <div class="form-group {{ isset($error['title']) ? ' has-error' : '' }}">
+                    <label for="title" class="col-sm-4 control-label">Title</label>
+                    <div class="col-sm-8">
+                        <input id="title" type="text" class="form-control" name="title" value="{{ isset($schooldata) ? $schooldata->school_name : old('title') }}" required autofocus>
+                        @if (isset($error['title']))
+                            <span class="help-block">
+                                <strong>{{ $error['title'] }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+          
+                <div class="form-group  {{ isset($error['description']) ? ' has-error' : '' }}">
+                    <label for="description" class="col-sm-4 control-label">Description</label>
+                    <div class="col-sm-8">
+                        <textarea name="description" id="review_area" class="form-control" >{{ old('description') }}</textarea>
+                        @if (isset($error['description']))
+                            <span class="help-block">
+                                <strong>{{ $error['description'] }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                @if(isset($schools))
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Select School</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="school_select_id" id="sel1">
+                                @foreach($schools as $school)
+                                    <option value="{{$school->id}}">{{ $school->school_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endif
+        
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-success btn-lg">Start</button>
+                    </div>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>
+
+
+
+<!-- 
 <div class="container"><br/>
 	<div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -100,6 +159,6 @@
             </table>
 		</div>
 	</div>
-@endif
+@endif -->
 
 @endsection

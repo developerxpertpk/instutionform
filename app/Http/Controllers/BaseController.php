@@ -13,5 +13,5 @@ class BaseController extends Controller{
 
         // Sharing is caring
         View::share('page', $page);
-  }
+  	}
 }

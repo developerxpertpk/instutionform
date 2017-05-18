@@ -1,13 +1,9 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
     <div class="row1">
-        <div class="container-fluid padding_btm_lr">
-            <div class="form-horizontal_row2">
-            @if(Session::has('error_auth'))
-                <span class="help-block">
-                    <strong>{{ Session::get('error_auth') }}</strong>
-                </span>
-            @endif
+        <div class="container-fluid">
+            <div class="form-horizontal_row5">
+            
             @if(isset($redirect) && isset($_GET['title']))
                 <form class="form-horizontal" role="form" method="POST" action="{{url('/submit?redirect='.$redirect.'&title='.$_GET['title'].'&description='.$_GET['description'].'&id='.$_GET['id']) }}" >
             @elseif(isset($redirect) && isset($_GET['t_title']))
@@ -16,6 +12,11 @@
                 <form class="form-horizontal" role="form" method="POST" action="{{route('login.submit') }}" >
             @endif
                     <h4 class="login">Login</h4>
+                    @if(Session::has('error_auth'))
+                        <span class="help-block login_help_block">
+                            <strong>{{ Session::get('error_auth') }}</strong>
+                        </span>
+                    @endif
                     {{ csrf_field() }}
                     <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="col-sm-4 control-label">Email</label>

@@ -11,7 +11,7 @@
 		@if(count($faq_data))
 
 			@foreach($faq_data as $data)
-				<a href="#" class="faq_anchor">
+				<a href="javascript:;" class="faq_anchor">
 					<h4 data-toggle="collapse" data-target="#ans{{$data->id}}">
 						<div class="col-md-1">
 							Ques: 

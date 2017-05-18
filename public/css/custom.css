@@ -825,3 +825,12 @@ td p{
 }
 
 /*image box css end*/
+
+
+.login_help_block{
+  color: #ea1212;
+  text-shadow: 1px 4px 4px lightgreen;
+  float: left;
+  width: 100%;
+  text-align: center;
+}

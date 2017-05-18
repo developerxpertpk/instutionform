@@ -38,7 +38,6 @@ class FrontendforumController extends BaseController
     public function createForumView($id){
 
     	if(is_numeric($id)){
-            
     		$school_data=School::find($id)->first();
     		return view('forum.forum_create')->with('schooldata',$school_data)
                                             ->with('school_id',$id);
@@ -46,8 +45,6 @@ class FrontendforumController extends BaseController
     	$schools=School::all();
     	return view('forum.forum_create')->with('schools',$schools);
     }
-
-
 
     /*For submitting Forum*/
     public function createforum(Request $request){
@@ -62,10 +59,10 @@ class FrontendforumController extends BaseController
             $school_id= $_GET['id'];
         }
         
-        if(!Auth::check()){
+        /*if(!Auth::check()){
 
             return redirect('/login?redirect=/forum&id='.$school_id.'&title='.$title.'&description='.$description);
-        }
+        }*/
         if(empty($request->description)){
             $rules=array(
                     'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
@@ -94,6 +91,10 @@ class FrontendforumController extends BaseController
             return view('forum.forum_create')->with('error',$errors)
                                             ->with('school_id',$school_id);
         } else {
+
+            if(!Auth::check()){
+                return redirect('/login?redirect=/forum&id='.$school_id.'&title='.$title.'&description='.$description);
+            }
 
             $forum = new Forum;
             $forum->title=$title;

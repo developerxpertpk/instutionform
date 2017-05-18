@@ -62,7 +62,7 @@ class LoginController extends Controller
       $validator= Validator::make($data,$rules);
 
       if ($validator->fails()) {
-         return Redirect::back()->withErrors($validator);
+         return Redirect::back()->withInput()->withErrors($validator);
       }
 
       // store email and password in variables
@@ -110,7 +110,7 @@ class LoginController extends Controller
       }else{
          //if no email and password match then redirect to registration
          Session::flash('error_auth','Incorrect email or password');
-         return back();
+         return back()->withInput();
       }
        
    }

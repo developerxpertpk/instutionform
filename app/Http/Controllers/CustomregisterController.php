@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use File;
 use Storage;
 
-class CustomregisterController extends Controller
+class CustomregisterController extends BaseController
 {
 
 	public function showloginform(){
@@ -17,13 +18,18 @@ class CustomregisterController extends Controller
    
    public function insert(Request $request){
 
+
+      $result=DB::select("SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".env('DB_DATABASE')."' AND TABLE_NAME = 'users'");
+                          
+      $user_id=$result[0]->AUTO_INCREMENT;
+
 		$rules=array(
 				'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
             'lname' => 'required|max:255|regex:/^[\pL\s]+$/u',
             'email' => 'required|email|max:255|unique:users|regex:/^[a-zA-Z0-9@_.]*$/',
             'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9@_. ]*$/',
             'image' => 'image',
-            'address' => 'required',
+            'address' => 'required|regrex:/^[a-zA-Z0-9# ,.]*$/',
 			);
 
 		$validator = Validator::make($request->all(), $rules);
@@ -48,11 +54,7 @@ class CustomregisterController extends Controller
          if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
          
             $fileName = $file->getClientOriginalName();
-            if( count(User::all()) ){
-               $user_id = User::orderBy('id','DESC')->first()->id+1;
-            }else{
-               $user_id=1;
-            }
+            
             
             $userfolder_path = 'upload/users/user'.'_'.$user_id.'/images/profile_pic/current_dp';
             $userfolder_path_1 = 'upload/users/user'.'_'.$user_id.'/images/profile_pic';

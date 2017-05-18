@@ -1,6 +1,52 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 
+<div class="row2">
+    <div class="container-fluid">
+        <div class="form-horizontal_row2">
+            <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{url('/create_thread')}}">
+
+                {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{isset($forum_id) ? $forum_id : ''}}">
+                
+                <h4 class="discuss">Start a Discussion</h4>
+                
+                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                    <label for="title" class="col-sm-4 control-label">Title</label>
+                    <div class="col-sm-8">
+                        <input id="title" type="text" class="form-control" name="title" value="" required autofocus>
+                        @if ($errors->has('title'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('title') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                    <label for="description" class="col-sm-4 control-label">Description</label>
+                    <div class="col-sm-8">
+                        <textarea name="description" id="review_area" class="form-control" placeholder=""></textarea>
+                        @if ($errors->has('description'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('description') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-success btn-lg">Submit</button>  
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
 <div class="container"><br/>
 	<div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -69,6 +115,6 @@
             </table>
 		</div>
 	</div>
-@endif
+@endif -->
 
 @endsection

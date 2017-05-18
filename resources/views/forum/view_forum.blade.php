@@ -1,7 +1,7 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 
-<div class="container ">
+<div class="container padding_btm">
 	<h2>Forum</h2>
 	<h1 class="center-block text-center">{{ $forum->title }}</h1>
 
