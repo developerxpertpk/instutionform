@@ -11,6 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
     <title> Admin dashboard </title>
     <!-- addes juery -->
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
@@ -22,9 +23,9 @@
     <script src="{{asset('js/validate.min.js')}}"></script>
 
     <script type="text/javascript" src="{{asset('js/additional-methods.min.js')}}"></script>
-    {{--<script src="{{asset('js/jquery-ui.js')}}"></script>--}}
-    <script src="{{asset('js/ajax_rating.js') }}"></script>
-    <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
+    <script src="{{asset('js/jquery-ui.js')}}"></script>
+    {{--<script src="{{asset('js/ajax_rating.js') }}"></script>--}}
+    {{--<script src="{{asset('js/ajax_edit_rating.js') }}"></script>--}}
     <script src="{{ asset('js/jquery-validation.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
@@ -74,113 +75,42 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation </span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{route('admin.dashboard')}}">Admin </a>
+                <a class="navbar-brand" href="{{route('admin.dashboard')}}"> Admin </a>
+
             </div>
             <div></div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
+
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong> </strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong></strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong></strong>
-                                        </h5>
-                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{  Auth::user()->fname." ".Auth::user()->lname }}<b class="caret"></b></a>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ asset('upload/users/user_'.Auth::user()->id.'/images/profile_pic/current_dp/'.Auth::user()->image)}}" onerror="this.src='{{asset('image/user.png')}}'" width="30px" height="30px">
+
+                        {{  Auth::user()->fname." ".Auth::user()->lname }}<b class="caret"></b></a>
+
                     <ul class="dropdown-menu">
                         <li>
-                           <a href=" {{ route('admin.profile') }}"> <i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                           <a href=" {{ route('admin.profile') }}"> <i class="fa fa-fw fa-user fa-x3"></i> Profile</a>
                         </li>
 
                         <li>
                             <a href= "{{ route('admin.changepwd') }}" ><i class="fa fa-fw fa-gear"></i> Change Password</a>
                         </li>
+                        <li>
+                            <a href="{{ route('edit_profile')}}"> <i class="fa fa-pencil" aria-hidden="true"></i>Edit Account</a>
+                        </li>
 
                         <li class="divider">logout</li>
                         <li>
                             <a href="{{ route('logout') }}"
-
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -219,7 +149,7 @@
                         <ul id="cms" class="collapse">
 
                             <li>
-                                <a href="{{route('content')}}"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Static Content</a>
+                                <a href="{{route('content.index')}}"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Static Content</a>
                             </li>
                             <li>
                                 <a href="{{ route('freq_ask_ques')}}"> <i class="fa fa-quora" aria-hidden="true"></i> FAQ's</a>
@@ -246,8 +176,7 @@
             </div>
         <!-- /#page-wrapper -->
       </div>
+
  </div>
-
 </body>
-
 </html>

@@ -2,17 +2,24 @@
 @extends ('layouts.admin.adminLayout')
 
 @section('content')
-
-<div class="container fluid">
-	<div class="container"> 
-	     <h2 class="page-header"><strong>
-                 Admin Profile </strong></h2>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">
+                    Admin Profile
+                </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active"><i></i>Profile </li>
+                </ol>
+            </div>
+        </div>
 
 		<div class="row">
-
     	<div class="col-xs-6 col-sm-6 col-md-6">
             <div class="col-md-6 admin-profile ">
-               <img src="{{asset('/upload')}}/{{ Auth::user()->image }}" onerror="this.src='{{asset('image/user.png')}}'">
+               <img src="{{asset('upload/users/user_'.Auth::user()->id.'/images/profile_pic/current_dp/'.Auth::user()->image)}}" onerror="this.src='{{asset('image/user.png')}}'">
             </div>
         </div>
 
@@ -35,7 +42,6 @@
                 <strong>Gender:</strong>
                 {{ Auth::user()->gender }}
             </div>
-
         </div>
 
          <div class="col-xs-6 col-sm-6 col-md-6">
@@ -60,10 +66,8 @@
                     @else
                     <button class="btn btn-danger"> Inactive </button>
                     @endif
-
             </div>
         </div>
-      
       </div>
       </div>
       </div>

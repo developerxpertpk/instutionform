@@ -1,7 +1,7 @@
 @extends('layouts.admin.adminLayout')
 @section('content')
     <div class="page-wraper">
-         <div class=" conatiner-fluid">
+         <div class="conatiner-fluid">
              <div class="row">
                  <h2 class="page-header">
                      <i class="fa fa-star fa-1x"> Rating & Reviews</i>
@@ -12,6 +12,9 @@
                      <li class="breadcrumb-item active"> <i class="fa fa-pencil" aria-hidden="true"></i>Edit </li>
                  </ol>
              </div>
+
+             {{-- script for ajax--}}
+
 
          <div class="row school-show show-rounder">
              <div class="row school_profile col-md-6">
@@ -25,7 +28,7 @@
                      @endif
                  </div>
 
-                 <div class="col-md-7">
+                 <div class="col-md-7 school_detail">
                      <h4> School Name : </h4>
                      <h5>  {{ $school_rating->schools->school_name }}  </h5>
                      <h4> country :</h4>
@@ -41,13 +44,13 @@
 
              <div class="profile_image col-md-5">
                  @if(isset($school_rating) && count($school_rating))
-                     <img src="{{asset('upload/user/'.$school_rating->users->image)}}" onerror="this.src='{{asset('image/user.png')}}'">
+                     <img src="{{asset('upload/users/user_'.$school_rating->users->id.'/images/profile_pic/current_dp/'.$school_rating->users->image)}}" onerror="this.src='{{asset('image/user.png')}}'">
                  @else
                      <img src="{{asset('image/user.png')}}"/>
                  @endif
              </div>
 
-             <div class="col-md-7">
+             <div class="col-md-7 school_detail">
                  <h4> User Name :</h4>
                  <h5>  {{ $school_rating->users->fname.' ' .$school_rating->users->fname }}  </h5>
                  <h4> Email :</h4>
@@ -68,7 +71,7 @@
          </div>
 
         <div class="school-rating row">
-            <div class="col-sm-12 col-sm-offset-4">
+            <div class="col-sm-8 col-sm-offset-4">
                 <strong><i class="fa fa-star" aria-hidden="true"></i> School  Rating </strong>
 
                 <div class="edit-rating">
@@ -100,10 +103,10 @@
 
             </div>
 
-            <div class="col-md-12 col-md-offset-4">
-
-                <form method="post" action="{{ route('update_review',$school_rating->id)}}">
+            <div class="col-md-8 col-md-offset-4">
+                <form method ="post" action ="{{ route('update_review',$school_rating->id)}}">
                 {{ csrf_field() }}
+
                     <label> <i class="fa fa-pencil" aria-hidden="true"></i> Edit Review</label>
 
                     <input type="hidden" name="user_id" value="{{ $school_rating->users->id }}">
@@ -114,9 +117,9 @@
                     </div>
 
                     <div class="form-group">
-                        <buttton type="submit" class="btn btn-primary"> Submit </buttton>
+                        {{--<buttton type="submit" class="btn btn-primary"> Submit </buttton>--}}
+                        <input type="submit" value="submit"/>
                     </div>
-
                 </form>
             </div>
 
@@ -124,4 +127,6 @@
      </div>
     </div>
 </div>
+    {{-- ajax script --}}
+    <script src="{{asset('js/ajax_edit_rating.js') }}"></script>
 @endsection

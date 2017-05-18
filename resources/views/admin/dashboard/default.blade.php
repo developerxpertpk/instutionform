@@ -3,18 +3,20 @@
 @section('content')
     <div class="page-wraper">
         <div class="conatiner-fluid">
+            <div class="row">
                 <div class="col-lg-12">
-
-                        <h3 class="page-header"> Error Page </h3>
-
-                     <div class="pull-right">
-                         <a  href="{{ route('admin.dashboard') }}"> <button class="btn btn-primery"> back  </button></a>
-                     </div>
-
-                    <div class="row ">
-                        <h4> 404 Error data not found</h4>
-                    </div>
+                    <h1 class="page-header">
+                        Error
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    </ol>
                 </div>
+            </div>
+
+            <div class="row">
+                <h4> Data Not Found </h4>
+            </div>
 
 	  @if ($message = Session::get('success'))
 	  	<?php echo "$message"; ?>

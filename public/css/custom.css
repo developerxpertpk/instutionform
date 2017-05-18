@@ -131,8 +131,42 @@
 .school_document_img{
     margin:auto 0;
 }
+/* css for school edit*/
+ .school_image_update{
+     border: 1px solid red;
+     padding: 1%;
+     margin-bottom: 30%;
+     float: left;
+     width: 100%;
+ }
+ .school_image_update img{
+     float:left;
+     width:100%;
+ }
+ .custom_buttom{
+     float: left;
+     width: 100%;
+     margin-top: 2px;
+ }
 
 /* css for school show */
+ /*school-img*/
+
+ .school-gallary{
+     float:left;
+ }
+
+ .school-img img{
+     float: right;
+     width: 200px;
+     height: 200px;
+     border-radius: 90px;
+     padding:1%;
+ }
+.school-documents{
+ float: left;
+ width: 100%;
+ }
  .show-rounder {
      border:1px solid black;
      border-bottom-left-radius: 1%;
@@ -165,13 +199,18 @@
     margin:0 auto;
     font-family: cursive;
 }
- .school_detail h4 {
-     color:red;
+ .school_detail h5 {
+     color: #555;
+     font-family: sans-serif;
  }
- .school_detail h5{
-     color:blue;
+ .school_detail h4 {
+     color: #000;
+     font-family: sans-serif;
  }
  .error{
+     color:red;
+ }
+ .help-block{
      color:red;
  }
 
@@ -274,75 +313,27 @@
 
 /* Ende of school ratings*/
 
- @-webkit-keyframes bounce {
-  from, 20%, 53%, 80%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-  }
+ /* css for edit admin page*/
+.edit_body{
+    padding: 15px;
+    border: 3px solid red;
 
-  40%, 43% {
-    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    -webkit-transform: translate3d(0, -30px, 0);
-    transform: translate3d(0, -30px, 0);
-  }
-
-  70% {
-    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    -webkit-transform: translate3d(0, -15px, 0);
-    transform: translate3d(0, -15px, 0);
-  }
-
-  90% {
-    -webkit-transform: translate3d(0,-4px,0);
-    transform: translate3d(0,-4px,0);
-  }
 }
-
-@keyframes bounce {
-  from, 20%, 53%, 80%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-  }
-
-  40%, 43% {
-    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    -webkit-transform: translate3d(0, -30px, 0);
-    transform: translate3d(0, -30px, 0);
-  }
-
-  70% {
-    -webkit-animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    -webkit-transform: translate3d(0, -15px, 0);
-    transform: translate3d(0, -15px, 0);
-  }
-
-  90% {
-    -webkit-transform: translate3d(0,-4px,0);
-    transform: translate3d(0,-4px,0);
-  }
+.edit_admin_profile{
+    margin-bottom:20px;
 }
-
-.bounce {
-  -webkit-animation-name: bounce;
-  animation-name: bounce;
-  -webkit-transform-origin: center bottom;
-  transform-origin: center bottom;
+ .edit_admin_profile img{
+     float: left;
+     width: 200px;
+     border-radius: 62%;
+     border: 1px dotted red;
+     padding: 1%;
+     height: 200px;
+ }
+.edit_ad_details{
+    border:1px solid black;
 }
-
-.animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
+ /* end of css*/
 
 .delete_user_none{
   display: none;

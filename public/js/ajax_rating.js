@@ -1,13 +1,11 @@
 
 $(document).ready(function(){
-        $.ajaxSetup({
+    $.ajaxSetup({
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
     var school_id = $('input[name=hidden_input]').val();
-
     $.ajax({
         method:'POST',
         url:'check_ratings',
@@ -28,20 +26,17 @@ $(document).ready(function(){
             }
         },
         error:function(){
-            console.log('error');
+            console.log('error show school');
         }
 
     });
-
-
     function user_rating() {
         $("#demo1  .stars").click(function () {
-
             var rating = $(this).attr('value');
             var school_id = $('input[name=hidden_input]').val();
             $.ajax({
                 method:'POST',
-                url:'admin_rating',
+                url:'/admin_rating',
                 data:{
                     "school_id": school_id,
                     "rating": rating,
@@ -57,7 +52,7 @@ $(document).ready(function(){
                     }
                 },
                 error: function (response){
-                    console.log('error here');
+                    console.log('error here show school');
                 },
 
             });

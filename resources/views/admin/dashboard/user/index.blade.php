@@ -7,27 +7,20 @@
 
     <!-- Page Heading -->
     <div class="row">
-
         <h1 class="page-header">
         Manage users
         </h1>
-
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
             <li class="breadcrumb-item active">Uesr List</li>
           </ol>
 
     </div>
-
-
-
-  <div class="col-lg-12 col-md-12 col-sm-12 margin-tb">
-
+      <div class="row margin-tb">
         <div class="pull-left">
             <a class="btn btn-success" href="{{ route('user.create') }}" > Add User
             </a>
         </div>
-
         <div class="pull-right user-search">
 
                 {!! Form::open(['method' => 'GET', 'url' => '/search'] ) !!}
@@ -79,7 +72,7 @@
       @if($user->role->role == 'user')
         <tr>
           <td>{{ ++$i }}</td>
-          <td> <img src="{{asset('/upload/'.$user->image) }}"  onerror="this.src='{{ asset('upload/default_user.jpg' )}}'" width="100px" height="100px" border-radius="50px" > </td>
+          <td> <img src="{{asset('/upload/users/user_'.$user->id.'/images/profile_pic/current_dp/'.$user->image) }}"  onerror="this.src='{{ asset('upload/default_user.jpg' )}}'" width="100px" height="100px" border-radius="50px" > </td>
           <td>{{ $user->fname }}</td>
           <td>{{ $user->lname }}</td>
           <td>{{ $user->email }}</td>

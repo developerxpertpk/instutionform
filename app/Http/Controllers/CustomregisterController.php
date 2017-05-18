@@ -24,7 +24,7 @@ class CustomregisterController extends BaseController
       $user_id=$result[0]->AUTO_INCREMENT;
 
 		$rules=array(
-				'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
+            'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
             'lname' => 'required|max:255|regex:/^[\pL\s]+$/u',
             'email' => 'required|email|max:255|unique:users|regex:/^[a-zA-Z0-9@_.]*$/',
             'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9@_. ]*$/',
