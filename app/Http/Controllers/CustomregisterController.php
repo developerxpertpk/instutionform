@@ -17,19 +17,13 @@ class CustomregisterController extends BaseController
 	}
    
    public function insert(Request $request){
-
-
-      $result=DB::select("SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".env('DB_DATABASE')."' AND TABLE_NAME = 'users'");
-                          
-      $user_id=$result[0]->AUTO_INCREMENT;
-
 		$rules=array(
-            'fname' => 'required|max:255|regex:/^[\pL\s]+$/u',
-            'lname' => 'required|max:255|regex:/^[\pL\s]+$/u',
+            'fname' => 'required|max:255|regex:/^[a-zA-Z]*$/',
+            'lname' => 'required|max:255|regex:/^[a-zA-Z]*$/',
             'email' => 'required|email|max:255|unique:users|regex:/^[a-zA-Z0-9@_.]*$/',
             'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9@_. ]*$/',
             'image' => 'image',
-            'address' => 'required|regrex:/^[a-zA-Z0-9# ,.]*$/',
+            'address' => 'required|regex:/^[a-zA-Z0-9# ,.]*$/',
 			);
 
 		$validator = Validator::make($request->all(), $rules);
@@ -52,6 +46,11 @@ class CustomregisterController extends BaseController
          $extention = $file->getClientOriginalExtension();
 
          if($extention == 'jpg' || $extention == 'png' || $extention == 'jpeg' ){
+
+            $result=DB::select("SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '".env('DB_DATABASE')."' AND TABLE_NAME = 'users'");
+
+            $user_id=$result[0]->AUTO_INCREMENT;
+
          
             $fileName = $file->getClientOriginalName();
             

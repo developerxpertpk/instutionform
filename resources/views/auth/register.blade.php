@@ -1,6 +1,6 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
-<div class="row1 padding_btm_lr">
+<div class="row1 ">
     <div class="form-horizontal_row1">
         <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{ route('user.register') }}">
             <div class="container-fluid">
