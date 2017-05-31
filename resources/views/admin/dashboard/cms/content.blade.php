@@ -58,7 +58,7 @@
 					<td>{!!  str_limit($pages->content,50,'...') !!}</td>
 					<td>
 				{{-- Button {{ route('content.show',$pages->id) }}for show--}}
-				<a href="/{{$pages->slug}}" target="_blank" type="button" class="btn btn-success">
+				<a href="{{url('/'.$pages->slug)}}" target="_blank" type="button" class="btn btn-success">
 					Show
 				</a>
 				{{-- Button for edit--}}

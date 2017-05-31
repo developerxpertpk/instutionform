@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -44,8 +45,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($this->isHttpException($exception))
-        {
+
+
+        if($this->isHttpException($exception)){
             switch ($exception->getStatusCode()) 
                 {
                 // not found
@@ -62,10 +64,13 @@ class Handler extends ExceptionHandler
                     return $this->renderHttpException($exception);
                 break;
             }
-        }
-        else
-        {
-                return parent::render($request, $exception);
+        }/*elseif ($exception instanceof TokenMismatchException){
+
+            //redirect to a form. Here is an example of how I handle mine
+            return redirect($request->fullUrl())->with('csrf_error',"Opps! Seems you couldn't submit form for a longtime. Please try again");
+        }*/else{
+
+            return parent::render($request, $exception);
         }
         // return parent::render($request, $exception);
     }

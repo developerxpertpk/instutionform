@@ -79,6 +79,10 @@ class CustomregisterController extends BaseController
       }
 
       $insert->save();
-      return redirect()->route('show.login');	
+      $notification=array(
+                  'message' => 'You have been successfully registered!!', 
+                  'alert-type' => 'success'
+               );
+      return redirect()->route('show.login')->with($notification);	
 	}
 }

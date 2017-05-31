@@ -65,11 +65,25 @@ class User extends Authenticatable
     }
 
     public function reporting_forum(){
-        return $this->hasMany('App\Reporting_forum','user_id');
+        return $this->hasMany('App\Reportedforum','user_id');
     }
 
     public function reported_threads(){
         return $this->hasMany('App\Reported_thread','user_id');
     }
 
+    // this is a recommended way to declare event handlers
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($user) { // before delete() method call this
+             $user->school_ratings()->delete();
+             $user->bookmarked_schools()->delete();
+             $user->forums()->delete();
+             $user->threads()->delete();
+             $user->reporting_forum()->delete();
+             $user->reported_threads()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 }

@@ -605,9 +605,17 @@
   display: -ms-inline-flexbox;
   /*display: inline-flex;*/
 }
-/*.t_school:hover {
-  color:red;
-}*/
+.n_school{
+  margin-top: 15px;
+}
+
+.n_school:hover {
+  opacity: 0.8;
+}
+
+.t_school:hover {
+  opacity: 0.8;
+}
 
 .faq_anchor{
   color: inherit;
@@ -824,4 +832,8 @@ td p{
   float: left;
   width: 100%;
   text-align: center;
+}
+
+.delete_user_bookmark{
+  font-size: 20px;
 }

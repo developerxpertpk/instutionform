@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\School;
-use App\location;
+use App\Location;
 use App\Document;
 use Carbon\Carbon;
 use App\School_rating;
@@ -247,10 +247,28 @@ class SchoolController extends Controller
     {
         //function to destroy datd
         $school = School::find($id);
-        $school->school_images()->delete();
+        $test=$school->locations;
+        $forums=$school->forums;
+
+        foreach($forums as $forum){
+
+            foreach ($forum->threads as $thread) {
+
+                foreach ($thread->thread_comments as $thread_comment) {
+                    
+                    foreach ($thread_comment->thread_comment_likes_dislikes as $thread_ld) {
+                        $thread_ld->delete();
+                    }
+                    $thread_comment->delete();
+                }
+                $thread->delete();
+            }
+            $forum->delete();
+        }
+
         $school->delete();
-        $school->locations()->delete();
-        $school->school_details()->delete();
+        $test->delete();
+        // $school->school_details()->delete();
         return redirect()->route('school.index')
             ->with('success', 'Deleted successfully');
     }
@@ -394,7 +412,7 @@ class SchoolController extends Controller
             // update location and school
             $id=$request->school_id;
             $loc_id = School::find($id)->location_id;
-            location::find($loc_id)->update($request->all());
+            Location::find($loc_id)->update($request->all());
             School::find($id)->update($request->all());
 
             // code for  update images

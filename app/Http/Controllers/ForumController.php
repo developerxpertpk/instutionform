@@ -19,11 +19,23 @@ class ForumController extends Controller
     }
 
     public function destroy($id){
-         Forum::find($id)->delete();
-         return redirect()->route('forum.index')
+        $forum=Forum::find($id);
+
+        foreach ($forum->threads as $thread) {
+
+            foreach ($thread->thread_comments as $thread_comment) {
+                
+                foreach ($thread_comment->thread_comment_likes_dislikes as $thread_ld) {
+                    $thread_ld->delete();
+                }
+                $thread_comment->delete();
+            }
+            $thread->delete();
+        }
+
+        $forum->delete();
+        return redirect()->route('forum.index')
                            ->with('success','Forum data deleted Successfully');
-
-
     }
 
     public function show($id){

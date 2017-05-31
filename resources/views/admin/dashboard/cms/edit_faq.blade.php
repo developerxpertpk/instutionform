@@ -9,7 +9,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('content') }}">Static Page</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('content.index') }}">Static Page</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('freq_ask_ques') }}">FAQ'Q</a></li>
                         <li class="breadcrumb-item active">FAQ's Edit </li>
                     </ol>

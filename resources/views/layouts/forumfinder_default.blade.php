@@ -11,11 +11,12 @@
         <link rel="stylesheet" href="{{ asset('css/custom_project.css')}}">
         <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/coding.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/toastr.css')}}">
         <!-- close -->
 
         <!-- js scripts  -->
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-        <script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
         <!-- /js scripts close -->
 
         <link rel="shortcut icon" href="/css/style.css">
@@ -27,12 +28,12 @@
         .margin_bottom{
             margin-bottom: 10px !important;
         }
-    </style>
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
+        </style>
+        <script>
+            window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+            ]) !!};
+        </script>
     </head>
     <body>
         <header>
@@ -127,6 +128,28 @@
                 </div>
             </div>
         </footer>
+        <script type="text/javascript">
+            @if(Session::has('message'))
+                var type = "{{ Session::get('alert-type', 'info') }}";
+                switch(type){
+                    case 'info':
+                        toastr.info("{{ Session::get('message') }}");
+                        break;
+                    
+                    case 'warning':
+                        toastr.warning("{{ Session::get('message') }}");
+                        break;
+
+                    case 'success':
+                        toastr.success("{{ Session::get('message') }}");
+                        break;
+
+                    case 'error':
+                        toastr.error("{{ Session::get('message') }}");
+                        break;
+                }
+              @endif
+        </script>
 
         <!-- Ajax Script -->
         <script type="text/javascript" charset="utf-8" >
@@ -613,13 +636,7 @@
             });  
         </script>
         <!-- /Ajax Script -->
-        <script type="text/javascript">
-             CKEDITOR.replace('review_area');
-
-             $('#review_login_link').click(function(){
-                edit_user();
-             });
-        </script>
+        
         <script type="text/javascript">
             $(document).ready(function(){
                 $('.share_via_email').click(function(){
@@ -644,6 +661,10 @@
                     }, 1000);
                     return false;
                 });
+
+                /*$('#review_login_link').click(function(){
+                    edit_user();
+                 });*/
             });
         </script>
 
@@ -652,6 +673,37 @@
                 $(".clickable-row").click(function() {
                     window.location = $(this).attr("href");
                 });
+
+                $(".delete_user_bookmark").hover(function(){
+                    $(".delete_user_bookmark i").css('font-size','25px');
+                    $(".delete_user_bookmark i").attr('class','fa fa-trash delete_user_bookmark');
+                },function(){
+                    $(".delete_user_bookmark i").css('font-size','20px');
+                    $(".delete_user_bookmark i").attr('class','fa fa-trash-o delete_user_bookmark');
+                });
+
+                $('.delete_user_bookmark').click(function(){
+                    // alert('asddf');
+                    var b_id=$(".delete_user_bookmark i").attr('id');
+
+                    $.ajax({
+                        url:"{{url('bookmark_school_delete')}}",
+                        method:"POST",
+                        data:{'bookmark_id':b_id},
+
+                        success:function(response){
+                            if(response == 404){
+                                console.log('not deleted');
+                            }else{
+                                $('#row_'+b_id).remove();
+                            }
+                        },
+                        error:function(response){
+                            console.log("error in deleting user school bookmark");
+                        }
+                    });
+                });
+
             });
         </script>
     </body>

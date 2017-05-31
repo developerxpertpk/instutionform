@@ -1,8 +1,9 @@
 @extends('layouts.forumfinder_default')
 @section('user_content')
 
-<div class="row2">
-    <div class="container-fluid">
+<script src="{{asset('js/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+<div class="row2" style="background:rgba(0, 0, 0, 0) url('{{asset('image/hands.jpg')}}') no-repeat scroll 0 0 / cover ;">
+    <div class="container">
         <div class="form-horizontal_row2">
             <form class="form-horizontal" role="form" method="POST"  enctype="multipart/form-data" action="{{url('/create_thread')}}">
 
@@ -44,7 +45,11 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+     CKEDITOR.replace('review_area');
 
+     
+</script>
 
 <!-- 
 <div class="container"><br/>

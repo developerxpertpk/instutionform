@@ -33,15 +33,14 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-    {
+    public function index(){
         
-        if(Auth::user()->role->role == 'admin'){
+        /*if(Auth::user()->role->role == 'admin'){
             return redirect()->to('admin/dashboard');
-        }else{
-            $bookmarked_schools=Bookmarked_school::where('user_id','=',Auth::id())->paginate(15);
-            return view('user.user_bookmarks')->with('bookmarked_schools',$bookmarked_schools);
-        }
+        }else{*/
+        $bookmarked_schools=Bookmarked_school::where('user_id','=',Auth::id())->paginate(15);
+        return view('user.user_bookmarks')->with('bookmarked_schools',$bookmarked_schools);
+        // }
     }    
 
     public function my_profile(){

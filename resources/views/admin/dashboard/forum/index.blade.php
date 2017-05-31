@@ -58,12 +58,12 @@
 
              <a href="{{route('forum.show',$data->id)}}" class="btn btn-success"> View </a>
              <!-- Button for  Delete-->
-             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal01">
+             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{$data->id}}">
                  Delete
              </button>
 
              <!-- Modal  for delete with id=01-->
-             <div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal fade" id="myModal_{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                  <div class="modal-dialog" role="data">
                      <div class="modal-content">
 

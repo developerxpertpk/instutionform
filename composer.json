@@ -11,7 +11,8 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
-        "nayjest/laravel-doctrine-dbal": "^1.0"
+        "nayjest/laravel-doctrine-dbal": "^1.0",
+        "needim/noty": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -30,4 +30,14 @@ class Forum extends Model
         return  $this->hasMany('App\Thread','forum_id');
     }    
 
+    // this is a recommended way to declare event handlers
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($forum) { // before delete() method call this
+             $forum->reported_forum()->delete();
+             $forum->forum_likes()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 }

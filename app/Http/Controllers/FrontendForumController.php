@@ -70,7 +70,7 @@ class FrontendforumController extends BaseController
         }else{
             $rules=array(
                     'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
-                    'description' => 'regex:/^[a-zA-Z0-9,#.-:\' "<>]*$/',
+                    'description' => 'required|max:2000',
                 );
         }
             

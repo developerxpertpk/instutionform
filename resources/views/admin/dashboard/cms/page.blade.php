@@ -7,7 +7,7 @@
 		}	
 	</style>
 
-	<div class="jumbotron jumbotron-fluid">
+	<div class="jumbotron-fluid">
 		<div class="container">
 			<div class="row">
 				<div class="div_static col-lg-12 col-md-12 col-sm-12 col-xs-12">

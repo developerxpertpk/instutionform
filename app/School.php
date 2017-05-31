@@ -29,7 +29,7 @@ class School extends Model
     }
 
     public function news(){
-        return $this->hasMany('App\News','school_id');
+        return $this->hasMany('App\School_news','school_id');
     }
 
     public function school_ratings(){
@@ -42,5 +42,33 @@ class School extends Model
 
     public function forums(){
             return  $this->hasMany( 'App\Forum','school_id');
+    }
+
+    // this is a recommended way to declare event handlers
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($school) { // before delete() method call this
+                // $school->locations()->delete();
+                $school->school_images()->delete();
+                $school->news()->delete();
+                $school->school_ratings()->delete();
+                $school->bookmarked_schools()->delete();
+
+                /*$forum=$school->forums();
+                echo "<pre>";
+                foreach ($forum as $key => $value) {
+                    print_r($value->);
+                }
+                die();
+                $forum->reported_forum()->delete();
+                $forum->forum_likes()->delete();
+
+                $thread=$forum->threads();
+                $thread->thread_likes()->delete();
+                $thread->thread_comments()->delete();
+                $thread->reported_threads()->delete();*/
+                // do the rest of the cleanup...
+        });
     }
 }

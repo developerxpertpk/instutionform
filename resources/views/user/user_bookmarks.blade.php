@@ -14,8 +14,8 @@
                   <td class='clickable-row' href="/show_school/{{$bookmarked_school->schools->id}}" width="15%">{{$bookmarked_school->schools['locations']->city }}</td>
                   <td class='clickable-row' href="/show_school/{{$bookmarked_school->schools->id}}" width="15%">{{$bookmarked_school->schools['locations']->state }}</td>
                   <td class='clickable-row' href="/show_school/{{$bookmarked_school->schools->id}}" width="15%">{{$bookmarked_school->schools['locations']->country }}</td>
-                  <td width="15%">
-                     <i id="{{$bookmarked_school->id}}" style="font-size: 20px;" class="fa fa-trash-o delete_user_bookmark" aria-hidden="true"></i>
+                  <td width="15%" class="delete_user_bookmark">
+                     <i id="{{$bookmarked_school->id}}" style="font-size: 20px;" class="fa fa-trash-o" aria-hidden="true"></i>
                   </td>
                </tr>
 

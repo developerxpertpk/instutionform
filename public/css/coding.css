@@ -615,14 +615,12 @@ margin-top:0%;
 }
   
 .row3{
-  background:rgba(0, 0, 0, 0) url("../../image/thinkkk.jpg") no-repeat scroll 0 0 / cover ;
   float: left;
   width:100%;
 }
 
   /*Discussion*/
 .row2{
-  background:rgba(0, 0, 0, 0) url("../../image/hands.jpg") no-repeat scroll 0 0 / cover ;
   float: left;
   min-width:100%;
   min-height: 100%;

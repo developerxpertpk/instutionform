@@ -55,8 +55,8 @@ class LoginController extends Controller
          );
 
       $rules=array(
-         'email' => 'required|email|max:255|regex:/^[a-zA-Z0-9@_.]*$/',
-         'password' => 'required|regex:/^[a-zA-Z0-9@_. ]*$/',
+         'email' => 'required|email',
+         'password' => 'required',
          );
 
       $validator= Validator::make($data,$rules);
@@ -100,7 +100,14 @@ class LoginController extends Controller
 
          //check  user role id 2 
          if(Auth::user()->role_id == '2' && Auth::user()->status =='1') {  
-            return redirect('/');
+            
+            /*for successfull notification*/
+            $notification=array(
+                  'message' => 'Welcome '.Auth::user()->fname.'!!', 
+                  'alert-type' => 'warning'
+               );
+
+            return Redirect()->to('/')->with($notification);
          }  
 
          // check admin role id == 1
@@ -127,7 +134,11 @@ class LoginController extends Controller
 
    public function logout(){
       Auth::logout();
-      return redirect('/');
+      $notification=array(
+                  'message' => 'You are logged out!!', 
+                  'alert-type' => 'warning'
+               );
+      return Redirect()->to('/')->with($notification);
    }
 
 }

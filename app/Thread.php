@@ -31,4 +31,15 @@ class Thread extends Model
     public function reported_threads(){
         return $this->hasMany('App\Reported_thread','thread_id');
     }
+
+    // this is a recommended way to declare event handlers
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($thread) { // before delete() method call this
+             $thread->thread_likes()->delete();
+             $thread->reported_threads()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 }

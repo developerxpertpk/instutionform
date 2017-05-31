@@ -255,7 +255,7 @@
 
 		<h3>Post a reply</h3>
 		<div class="col-sm-10 reply_form table-bordered">
-			<form action="{{url('/threads/'.$thread->id.'/reply_submit')}}" id="@if(Auth::check()) {{'post_reply_form'}}  @else {{''}} @endif" method="post" enctype="Multipart/form-data" accept-charset="utf-8">
+			<form action="@if(Auth::check()) {{url('/threads/'.$thread->id.'/reply_submit')}} @else {{'javascript:;'}} @endif" id="@if(Auth::check()) {{'post_reply_form'}}  @else {{''}} @endif" method="post" enctype="Multipart/form-data" accept-charset="utf-8">
 				{{ csrf_field() }}
 				<br>
 				<div class="form-group {{ $errors->has('comment') ? ' has-error' : '' }}">

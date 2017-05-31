@@ -86,28 +86,28 @@ class UnregisteredController extends BaseController
         
         $particular_school=School::where('id','=',$id)->get();
 
-        foreach ($particular_school as $school) {
-            if(!$school->school_ratings->isEmpty()){
+        if(count($particular_school)){
+            foreach ($particular_school as $school) {
+                if(!$school->school_ratings->isEmpty()){
 
-                $rating=$school->school_ratings;
-                $rate= 0;
+                    $rating=$school->school_ratings;
+                    $rate= 0;
 
-                foreach($rating as $ratings){
-                    $rate+=$ratings->ratings;
+                    foreach($rating as $ratings){
+                        $rate+=$ratings->ratings;
+                    }
+
+                    $div= count($rating);
+
+                    $avg_rating=round($rate/$div);
+
+                    return view('user.guests.view_school')
+                                            ->with('avg_rating',$avg_rating)
+                                            ->with('particular_school',$particular_school);
                 }
-
-                $div= count($rating);
-
-                $avg_rating=round($rate/$div);
-
-                return view('user.guests.view_school')
-                                        ->with('avg_rating',$avg_rating)
-                                        ->with('particular_school',$particular_school);
-            }else{
-                return view('user.guests.view_school')->with('particular_school',$particular_school);
+                // return view('user.guests.view_school')->with('particular_school',$particular_school);
             }
         }
-        
         return view('user.guests.view_school')->with('particular_school',$particular_school);
     }
     /* /Close*/

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use App\School_rating;
+use App\School_image;
 use App\Bookmarked_school;
 
 
@@ -19,11 +20,40 @@ class AjaxCallsController extends Controller
         $distance=100;
         $latitude=$request->latitude;
         $longitude=$request->longitude;
+        $images=array();
+        $result=array();
 
+        /*echo 'SELECT locations.*,schools.*,school_images.image FROM locations,schools left join school_images on schools.id = school_images.id where locations.`id` = schools.location_id AND  '.$distance.' >= ( ((ACOS( SIN( ('.$latitude.' * PI( ) /180 ) ) * SIN( (locations.latitude * PI( ) /180 ) ) + COS( ('.$latitude.' * PI( ) /180 )) * COS( (locations.latitude * PI( ) /180 )) * COS( (('.$longitude.' - locations.longitude) * PI( ) /180 )))) *180 / PI( )) *60 * 1.1515)';
+        die();*/
+        $results=DB::select(DB::raw('SELECT locations.*,schools.school_name,schools.id as school_id FROM locations,schools left join school_images on schools.id = school_images.id where locations.`id` = schools.location_id AND  '.$distance.' >= ( ((ACOS( SIN( ('.$latitude.' * PI( ) /180 ) ) * SIN( (locations.latitude * PI( ) /180 ) ) + COS( ('.$latitude.' * PI( ) /180 )) * COS( (locations.latitude * PI( ) /180 )) * COS( (('.$longitude.' - locations.longitude) * PI( ) /180 )))) *180 / PI( )) *60 * 1.1515)'));
 
-        $result=DB::select(DB::raw('SELECT locations.*,schools.* FROM locations,schools left join school_images on schools.id = school_images.id where locations.`id` = schools.location_id AND '.$distance.' >= ( ((ACOS( SIN( ('.$latitude.' * PI( ) /180 ) ) * SIN( (locations.latitude * PI( ) /180 ) ) + COS( ('.$latitude.' * PI( ) /180 )) * COS( (locations.latitude * PI( ) /180 )) * COS( (('.$longitude.' - locations.longitude) * PI( ) /180 )))) *180 / PI( )) *60 * 1.1515)'));
+        $count=count($results);
+        
+        if($count > 8){
+            $count = 8;
+        }
 
-        return response($result); 
+        for($i=0; $i<$count; $i++){
+            $result[]=$results[$i];
+        }
+
+        for($i=0; $i<$count; $i++){
+            $images[$i]=$result[$i]->school_id;
+
+            $images[$i]=School_image::where('school_id','=',$images[$i])->first();
+            if(count($images[$i])){
+                $images[$i]=$images[$i]->image;
+            }else{
+                $images[$i]=null;
+            }
+        }
+        // print_r($images);
+        // die();
+
+        return response()->json(array(
+            'results' => $result,
+            'images' => $images
+            ) ); 
     }
     /*----close----*/
 

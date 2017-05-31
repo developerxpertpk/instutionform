@@ -19,4 +19,14 @@ class Thread_comment extends Model
     public function thread_comment_likes_dislikes(){
     	return $this->hasMany('App\Thread_comment_likes_dislike','thread_comment_id');
     }
+
+    // this is a recommended way to declare event handlers
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($thread_ld) { // before delete() method call this
+             $thread_ld->thread_comment_likes_dislikes()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 }

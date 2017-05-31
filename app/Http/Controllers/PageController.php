@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Page;
+use App\School_rating;
 use App\Freq_ask_question;
 
 class PageController extends Controller
@@ -25,7 +26,15 @@ class PageController extends Controller
     public function home()
     {
         $page = Page::orderBy('id', 'DESC')->where('active', '=', 0)->get();
-        return view('forum&finder_welcome')->with('page', $page);
+
+        $popular_schools=School_rating::having(DB::raw('avg(ratings)'),'>',4.5)
+                                            ->groupBy('school_id')
+                                            ->orderBy(DB::raw('avg(ratings)'))
+                                            ->limit(8)
+                                            ->get();
+
+        return view('forum&finder_welcome')->with('page', $page)
+                                            ->with('popular_schools', $popular_schools);
 
     }
 
@@ -79,7 +88,7 @@ class PageController extends Controller
             $page->content = $request['content'];
             $page->save();
 
-            return redirect()->route('content')
+            return redirect()->route('content.index')
                 ->with('success', 'page uploaded successfully');
 
         }
@@ -95,10 +104,9 @@ class PageController extends Controller
 
 
     // update function to update page
-    public function update_page(Request $request, $id)
-    {
+    public function update_page(Request $request, $id){
         Page::find($id)->update($request->all());
-        return redirect()->route('content')
+        return redirect()->route('content.index')
             ->with('success','Page Updated Successfully');
     }
 

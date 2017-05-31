@@ -39,7 +39,7 @@ class FrontendthreadController extends BaseController
         }*/
         $rules=array(
             'title' => 'required|max:150|regex:/^[a-zA-Z0-9,#.-:? ]*$/',
-            'description' => 'required',
+            'description' => 'required|max:2000',
         );
     
 
